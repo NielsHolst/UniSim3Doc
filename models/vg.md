@@ -13,10 +13,6 @@ $$
 
 $$\def{\cxx}{CO~2~}$$
 
-\(
-   \def\RR{{\bf R}}
-   \def\bold#1{{\bf #1}}
-\)
 
 # Virtual greenhouse model
 
