@@ -7,10 +7,10 @@ url: https://NielsHolst.github.io/UniSim3Doc
 aux_links:
   Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
-include:
-  - virtual-greenhouse.md
-  - models/virtual-greenhouse.md
-  - models/vg.md
+# include:
+  # - virtual-greenhouse.md
+  # - models/virtual-greenhouse.md
+  # - models/vg.md
   
 exclude:
   - illustrations/
