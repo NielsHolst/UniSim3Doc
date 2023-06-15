@@ -3,6 +3,7 @@ title: Virtual_greenhouse
 layout: default
 ---
 $$
+\require{newcommand}
 \newcommand{\sp}[2]{\mathbb{S}_\text{#1}^\text{#2}}
 \newcommand{\dsp}[2]{\Delta\mathbb{S}_\text{#1}^\text{#2}}
 \newcommand{\spr}[2]{\mathbb{S}_\text{#1}^{\text{#2*}}}
