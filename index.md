@@ -7,7 +7,13 @@ This is a *bare-minimum* template to create a Jekyll site that uses the [Just th
 
 Test link to md file:
 
-[Virtual greenhouse](models/virtual-greenhouse.md)
+[Virtual greenhouse md](models/virtual-greenhouse.md)
+
+[Virtual greenhouse html](models/virtual-greenhouse.html)
+
+[Local md](local.md)
+
+[Local html](local.html)
 
 Test Latex $$\alpha=\beta$$ xyz
 
