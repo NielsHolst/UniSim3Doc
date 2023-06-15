@@ -7,11 +7,15 @@ This is a *bare-minimum* template to create a Jekyll site that uses the [Just th
 
 Test link to md file:
 
-[Virtual greenhouse md](models/virtual-greenhouse.md)
 
-[Virtual greenhouse html](models/virtual-greenhouse.html)
+[Virtual greenhouse html models](models/virtual-greenhouse.html)
 
-[Local md](local.md)
+[vg html models](models/vg.html)
+
+[Virtual greenhouse html root](virtual-greenhouse.html)
+
+[vg html root](vg.html)
+
 
 [Local html](local.html)
 
