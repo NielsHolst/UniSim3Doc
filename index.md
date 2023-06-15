@@ -5,7 +5,11 @@ layout: home
 
 This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.
 
-Test Latex $\alpha=\beta$
+Test link to md file:
+
+[Virtual greenhouse](models/virtual-greenhouse.md)
+
+Test Latex $$\alpha=\beta$$ xyz
 
 Block:
 $$
@@ -14,7 +18,7 @@ $$
 
 
 text $$ E = mc^2 $$ text. 
- 
+
 text
 
 $$\begin{aligned}
