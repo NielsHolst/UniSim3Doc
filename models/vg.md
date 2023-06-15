@@ -13,6 +13,11 @@ $$
 
 $$\def{\cxx}{CO~2~}$$
 
+\(
+   \def\RR{{\bf R}}
+   \def\bold#1{{\bf #1}}
+\)
+
 # Virtual greenhouse model
 
 *Niels Holst, Aarhus University, Denmark, 25 May 2023.*
@@ -22,6 +27,8 @@ x $$\alpha \beta$$ y
 x $$\coo$$ y
 
 x $$\cxx$$ y
+
+x $$\RR$$ y
 
 ## R scripts
 
