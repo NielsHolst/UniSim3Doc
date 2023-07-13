@@ -1,3 +1,7 @@
+---
+title: saccharina
+layout: home
+---
 
 # The saccharina model
 
