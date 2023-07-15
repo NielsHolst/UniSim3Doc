@@ -163,7 +163,7 @@ process_line = function(s) {
   if (E$start[1] > 1) {
     from = 1
     to   = E$start[1] - 1
-    M = rbind(M, data.frame(From=from, To=to, Type="text", Index=NA, Value=substr(s, from, to)))
+    M = rbind(M, data.frame(i=0, From=from, To=to, Type="text", Index=NA, Value=substr(s, from, to)))
   }
 
   for (i in 1:n) {
@@ -181,12 +181,19 @@ process_line = function(s) {
       type = "macro"
       macro = macro_ix
     }  
-    M = rbind(M, data.frame(From=from, To=to, Type=type, Index=macro_ix, Value=value))
+    M = rbind(M, data.frame(i=i, From=from, To=to, Type=type, Index=macro_ix, Value=value))
 
     # Add text after escaped text
     from  = E$end[i] + 1
-    to    = if (i<n) E$start[i+1]-1 else nchar(s)
-    if (from > to) break
+    if (i < n) {
+      no_text = (from == E$start[i+1])
+      if (no_text) next
+      to  = E$start[i+1]-1
+    } else {
+      eol = (from > nchar(s))
+      if (eol) break
+      to  = nchar(s)
+    }
     value = substr(s, from, to)
     
     # Extract macro arguments
@@ -197,32 +204,30 @@ process_line = function(s) {
       if (A$From[1] > 1) {
         from = 1
         to   = A$To[1] - 1
-        M = rbind(M, data.frame(From=from, To=to, Type="text", Index=NA, Value=substr(value, from, to)))
+        M = rbind(M, data.frame(i=i, From=from, To=to, Type="text", Index=NA, Value=substr(value, from, to)))
       }
       for (j in 1:a) {
         # Add argument
         from  = A$From[j]
         to    = A$To[j]
         type  = "arg"
-        M = rbind(M, data.frame(From=from, To=to, Type="arg", Index=j, Value=substr(value, from, to)))
+        M = rbind(M, data.frame(i=i, From=from, To=to, Type="arg", Index=j, Value=substr(value, from, to)))
       }
       # Add trailing text
       from  = A$To[a] + 1
       to    = nchar(value)
       if (from <= to) {
-        M = rbind(M, data.frame(From=from, To=to, Type="text", Index=NA, Value=substr(value, from, to)))
+        M = rbind(M, data.frame(i=i, From=from, To=to, Type="text", Index=NA, Value=substr(value, from, to)))
       }
     } else {
     # Or extract text
       from = E$end[i] + 1
       to   = if (i < n) E$start[i+1] - 1 else nchar(s)
       if (from <= to) {
-        M = rbind(M, data.frame(From=from, To=to, Type="text", Index=NA, Value=substr(s, from, to)))
+        M = rbind(M, data.frame(i=i, From=from, To=to, Type="text", Index=NA, Value=substr(s, from, to)))
       }
     }
-    rownames(M) = {}
-    M
-  }
+  } # end loop 
   M
 
   # Collate text and macro tokens
@@ -264,23 +269,22 @@ dest_names = paste0(".", source_names)
 source_names
 dest_names
 
-# i = 3
-# lines = read_file(source_names[i])
-# macros = extract_macros(lines)
-# discard_lines = 1:(max(macros$LineNumber)+1)
-# lines = lines[-discard_lines]
-# process_line(lines[959])
-
-
 # Create any missing destination folders
 create_dest_dirs()
 
-for (i in 1:length(source_names)) {
+# for (i in 1:length(source_names)) {
+for (i in 2:2) {
   lines = read_file(source_names[i])
   macros = extract_macros(lines)
   if (!is.null(macros)) {
     discard_lines = 1:(max(macros$LineNumber)+1)
     lines = lines[-discard_lines]    
+
+    # s = lines[101]
+    # process_line(s)
+    # s = "\\frac{a}{b}"
+    # process_line(s)
+
     lines = aaply(lines, 1, process_line)
     lines = aaply(lines, 1, double_single_dollars)
 
@@ -288,3 +292,5 @@ for (i in 1:length(source_names)) {
   }
   write_file(dest_names[i], lines)
 }
+
+

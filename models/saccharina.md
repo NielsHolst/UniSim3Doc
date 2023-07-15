@@ -1,7 +1,3 @@
----
-title: saccharina
-layout: home
----
 
 # The saccharina model
 
@@ -102,25 +98,25 @@ Note: For consistency we should define $${[\mathcal{S}^{P}]}>0$$. This will not 
 Under non-limiting growing conditions, the plant will attain its maximum concentration of all three elements. We can infer the distribution of biomass among the three compartments that will then be attained. From the above we have
 $$
 \begin{equation}\begin{split}
-{[\mathcal{W}^{C}]_{max}} &= \frac{\mathcal{S}^{dw}}{X} \\[6pt]
-{[\mathcal{W}^{N}]_{max}} &= \frac{\mathcal{S}^{dw}}{X} \\[6pt]
-{[\mathcal{W}^{P}]_{max}} &= \frac{\mathcal{P}^{dw}}{X} \\[6pt]
+{[\mathcal{W}^{C}]_{max}} &= \frac{{\mathcal{S}^{dw}}{[\mathcal{S}^{C}]}+{\mathcal{C}^{dw}}{[\mathcal{C}^{C}]}}{{\mathcal{W}^{dw}}} \\[6pt]
+{[\mathcal{W}^{N}]_{max}} &= \frac{{\mathcal{S}^{dw}}{[\mathcal{S}^{N}]}+{\mathcal{N}^{dw}}{[\mathcal{N}^{N}]}}{{\mathcal{W}^{dw}}} \\[6pt]
+{[\mathcal{W}^{P}]_{max}} &= \frac{{\mathcal{P}^{dw}}{[\mathcal{P}^{P}]}}{{\mathcal{W}^{dw}}} \\[6pt]
 1 &= {\mathcal{S}^{dw}}+{\mathcal{C}^{dw}}+{\mathcal{N}^{dw}}+{\mathcal{P}^{dw}}
 \end{split}\end{equation}
 $$
 Solving these four equations for the unknown biomasses, we get
 $$
 \begin{equation}\begin{split}
-{\mathcal{S}^{dw}} &= {w_\mathcal{S}}
-{\mathcal{C}^{dw}} &= {w_\mathcal{C}}
-{\mathcal{N}^{dw}} &= {w_\mathcal{N}}
-{\mathcal{P}^{dw}} &= {w_\mathcal{P}}
+{\mathcal{S}^{dw}} &= {w_\mathcal{S}}{\mathcal{W}^{dw}} \\[6pt]
+{\mathcal{C}^{dw}} &= {w_\mathcal{C}}{\mathcal{W}^{dw}} \\[6pt]
+{\mathcal{N}^{dw}} &= {w_\mathcal{N}}{\mathcal{W}^{dw}} \\[6pt]
+{\mathcal{P}^{dw}} &= {w_\mathcal{P}}{\mathcal{W}^{dw}} \\[6pt]
 {w_\mathcal{S}} &= \frac{{w_\mathcal{S}}'}{k}=0.1861,\quad {w_\mathcal{C}} = \frac{{w_\mathcal{C}}'}{k}=0.6615,
          \quad {w_\mathcal{N}} = \frac{{w_\mathcal{N}}'}{k}=0.1251, \quad {w_\mathcal{P}} = \frac{{[\mathcal{W}^{P}]_{max}}}{{[\mathcal{P}^{P}]}}=0.02727\\[6pt]
-{w_\mathcal{S}}' &= ({[\mathcal{C}^{C}]}
-{w_\mathcal{C}}' &= ({[\mathcal{S}^{C}]}
-{w_\mathcal{N}}' &= ({[\mathcal{S}^{C}]}
-k      &= {[\mathcal{S}^{C}]}
+{w_\mathcal{S}}' &= ({[\mathcal{C}^{C}]}{[\mathcal{N}^{N}]}{[\mathcal{W}^{P}]_{max}} - {[\mathcal{C}^{C}]}{[\mathcal{N}^{N}]}{[\mathcal{P}^{P}]} + {[\mathcal{C}^{C}]}{[\mathcal{P}^{P}]}{[\mathcal{W}^{N}]_{max}} + {[\mathcal{N}^{N}]}{[\mathcal{P}^{P}]}{[\mathcal{W}^{C}]_{max}})/k\\[6pt]
+{w_\mathcal{C}}' &= ({[\mathcal{S}^{C}]}{[\mathcal{N}^{N}]}{[\mathcal{P}^{P}]} - {[\mathcal{S}^{C}]}{[\mathcal{N}^{N}]}{[\mathcal{W}^{P}]_{max}} - {[\mathcal{S}^{C}]}{[\mathcal{P}^{P}]}{[\mathcal{W}^{N}]_{max}} + {[\mathcal{S}^{N}]}{[\mathcal{P}^{P}]}{[\mathcal{W}^{C}]_{max}} - {[\mathcal{N}^{N}]}{[\mathcal{P}^{P}]}{[\mathcal{W}^{C}]_{max}})/k\\[6pt]
+{w_\mathcal{N}}' &= ({[\mathcal{S}^{C}]}{[\mathcal{P}^{P}]}{[\mathcal{W}^{N}]_{max}} + {[\mathcal{C}^{C}]}{[\mathcal{S}^{N}]}{[\mathcal{P}^{P}]} - {[\mathcal{C}^{C}]}{[\mathcal{S}^{N}]}{[\mathcal{W}^{P}]_{max}} - {[\mathcal{C}^{C}]}{[\mathcal{P}^{P}]}{[\mathcal{W}^{N}]_{max}} - {[\mathcal{S}^{N}]}{[\mathcal{P}^{P}]}{[\mathcal{W}^{C}]_{max}})/k\\[6pt]
+k      &= {[\mathcal{S}^{C}]}{[\mathcal{N}^{N}]}{[\mathcal{P}^{P}]} + {[\mathcal{C}^{C}]}{[\mathcal{S}^{N}]}{[\mathcal{P}^{P}]} - {[\mathcal{C}^{C}]}{[\mathcal{N}^{N}]}{[\mathcal{P}^{P}]}
 \end{split}\label{eq_ideal_proportions}\end{equation}
 $$
 
@@ -203,7 +199,7 @@ $$
 $$
 where $${\Delta\mathcal{U}}$$ is the realised daily supply with respect to the demand $${\left<\Delta\mathcal{U}\right>}$$. The acquisition efficiency $$a$$ is  applied to the product of resource density $$X$$ and plant density $$Y$$. The units of the parameters and variables differ whether eq. $$\ref{eq_b_g_response}$$ is applied to the uptake of carbon, nitrogen or phosphorus. The relation has the shape of a saturation curve, which is linear under meagre conditions (small $$XY$$) with a slope of $$aY\Delta t$$; it approaches the demand $${\left<\Delta\mathcal{U}\right>}$$ when conditions are rich (large $$XY$$):
 
-<img src="..\media
+<img src="..\media\models\saccharina\b-g-resp.png" style="zoom:50%;" />
 
 The resource variable $$X$$ is sunlight intensity for carbon acquisition and water concentrations of dissolved nitrogen and phosphorus for the other two elements. The uptake efficiency $$a$$ takes care of converting the units of $$X$$ into $${\Delta\mathcal{U}}$$. 
 
@@ -218,7 +214,7 @@ Empirically, plant growth is measured as an increase in biomass. This is due to 
 The biomass demand for structural growth is
 $$
 \begin{equation}
-{\left<\Delta\mathcal{S}^{dw}\right>} =\varphi_T\,\varphi_{sal}\,g\,{\mathcal{S}^{dw}}
+{\left<\Delta\mathcal{S}^{dw}\right>} =\varphi_T\,\varphi_{sal}\,g\,{\mathcal{S}^{dw}}\Delta t
 \label{eq_dSdw}
 \end{equation}
 $$
@@ -232,11 +228,11 @@ $$
 
 The temperature response ($$\varphi_T$$) is piece-wise linear with two breakpoints:
 
-<img src="..\media
+<img src="..\media\models\saccharina\T-response.png" style="zoom:8%;" />
 
 The salinity response ($$\varphi_{sal}$$) is likewise piece-wise linear with two breakpoints, the first one at 50% response:
 
-<img src="..\media
+<img src="..\media\models\saccharina\sal-response.png" style="zoom:8%;" />
 
 ### Stores
 
@@ -244,9 +240,9 @@ The demands for the storage of carbon $${\left<\Delta\mathcal{C}^{C} \right>}$$,
 $$
 \begin{equation}
 \begin{split}
-{\left<\Delta\mathcal{C}^{C} \right>} &= {[\mathcal{C}^{C}]}\,\left
-{\left<\Delta\mathcal{N}^{N} \right>} &= {[\mathcal{N}^{N}]}\,\left
-{\left<\Delta\mathcal{P}^{P} \right>} &= {[\mathcal{P}^{P}]}\,\left
+{\left<\Delta\mathcal{C}^{C} \right>} &= {[\mathcal{C}^{C}]}\,\left\lfloor{w_\mathcal{C}}{\mathcal{W}^{dw}} \;-\; {\mathcal{C}^{dw}}\right\rfloor_0 \\[6pt]
+{\left<\Delta\mathcal{N}^{N} \right>} &= {[\mathcal{N}^{N}]}\,\left\lfloor{w_\mathcal{N}}{\mathcal{W}^{dw}} \;-\; {\mathcal{N}^{dw}}\right\rfloor_0 \\[6pt]
+{\left<\Delta\mathcal{P}^{P} \right>} &= {[\mathcal{P}^{P}]}\,\left\lfloor{w_\mathcal{P}}{\mathcal{W}^{dw}} \;-\; {\mathcal{P}^{dw}}\right\rfloor_0 
 \end{split}
 \label{eq_store_demands_dw}
 \end{equation}
@@ -257,14 +253,14 @@ For each demand, the first term represents the ideal dry weight of the store in 
 
 The maintenance (i.e., dark) respiration was measured at 20℃ in the laboratory by Davison et al. (1991) and Nepper-Davidsen et al. (2019) who found, respectively, values of 1.0 and 1.5 μmol O~2~ /g fw/h. We can convert these into g glucose/g dw by the conversion ratio,
 $$
-1 \frac{\mu
+1 \frac{\mu\text{mol O}_2}{\text{g fw } \times \text{ h}} \times
 \frac{1\text{ g fw}}{0.09\text{ g dw}} \times
 \frac{180\text{ g dw/mol glucose}}{6 \text{ mol O}_2 \text{/mol glucose}} \times
-\frac{24\text{ h}}{1 \text{ d}} =0.00800 \frac{\text{g glucose}}{\text{g dw}\times
+\frac{24\text{ h}}{1 \text{ d}} =0.00800 \frac{\text{g glucose}}{\text{g dw}\times\text{d}}
 $$
 The above estimates at 1.0 and 1.5 μmol O~2~ /g fw/h give us a respiration rate at 20℃ ($$r_{20}$$) in the range,
 $$
-r_{20} \in [8;12] \frac{\text{mg glucose}}{\text{g dw }\times
+r_{20} \in [8;12] \frac{\text{mg glucose}}{\text{g dw }\times\text{ d}}
 $$
 which matches the range of 7-13 mg glucose/g dw/d typical of crop leaves (de Wit 1978, p. 51). We adjust this respiration rate by temperature assuming $$Q_{10}$$ = 1.05 (Davison et al. 1991), which gives us the temperature-dependent respitation rate ($$r_T$$; g glucose/g dw/d ),
 $$
@@ -273,7 +269,7 @@ $$
 The daily carbon demand for maintenance respiration $${\left<\Delta\mathcal{M}^{C}\right>}$$ (g C/m) then becomes
 $$
 {\left<\Delta\mathcal{M}^{C}\right>} = \frac{72\text{ g C}}{180\text{ g glucose}}\times
-r_T\, {\mathcal{W}^{dw}}
+r_T\, {\mathcal{W}^{dw}}\Delta t
 $$
 
 ### Exudation cost
@@ -284,9 +280,9 @@ We assume that the exudation rates of carbon, nitrogen and phosphorus (at rates 
 $$
 \begin{equation}
 \begin{split}
-{\left<\Delta\mathcal{E}^{C}\right>} &= \epsilon^C{\mathcal{W}^{dw}}
-{\left<\Delta\mathcal{E}^{N}\right>} &= \epsilon^N{\mathcal{W}^{dw}}
-{\left<\Delta\mathcal{E}^{P}\right>} &= \epsilon^P{\mathcal{W}^{dw}}
+{\left<\Delta\mathcal{E}^{C}\right>} &= \epsilon^C{\mathcal{W}^{dw}}\Delta t\\[6pt]
+{\left<\Delta\mathcal{E}^{N}\right>} &= \epsilon^N{\mathcal{W}^{dw}}\Delta t\\[6pt]
+{\left<\Delta\mathcal{E}^{P}\right>} &= \epsilon^P{\mathcal{W}^{dw}}\Delta t
 \end{split}
 \label{eq_exudation}
 \end{equation}
@@ -315,7 +311,7 @@ $$
 The total daily carbon demand to cover building costs $${\left<\Delta\mathcal{B}^{C}\right>}$$ (g C/m) is then
 $$
 \begin{equation}
-{\left<\Delta\mathcal{B}^{C}\right>} = {\lambda_\mathcal{S}}
+{\left<\Delta\mathcal{B}^{C}\right>} = {\lambda_\mathcal{S}}{\left<\Delta\mathcal{S}^{dw}\right>} +{\lambda_\mathcal{C}}{\left<\Delta\mathcal{C}^{dw}\right>} +{\lambda_\mathcal{N}}{\left<\Delta\mathcal{N}^{dw}\right>}
 \label{eq_building_cost}
 \end{equation}
 $$
@@ -355,11 +351,11 @@ Consider these calibration data:
 The columns `Wtotal`, `Cconc` and `Nconc` correspond to the variables $${\mathcal{W}^{dw}}$$, $${[\mathcal{W}^{C}]}$$ and $${[\mathcal{W}^{N}]}$$. For the columns `A` and `L` we define the variables: leaf area $$A_l$$ (m^2^/m) and leaf length $$L$$ (m).  We will assume that the status of the stores do not affect leaf area or length. Thus in our model, $$A_l$$ and $$L$$  depend on the structural biomass $${\mathcal{S}^{dw}}$$ not the total biomass $${\mathcal{W}^{dw}}$$. Structural biomass is not directly observable but we can derive it, knowing the carbon and nitrogen concentrations. We've got 
 $$
 \begin{split}
-{[\mathcal{W}^{C}]} &= \frac{{[\mathcal{S}^{C}]}
-{[\mathcal{W}^{N}]} = \frac{{[\mathcal{S}^{N}]}
+{[\mathcal{W}^{C}]} &= \frac{{[\mathcal{S}^{C}]}{\mathcal{S}^{dw}}+{[\mathcal{C}^{C}]}{\mathcal{C}^{dw}}}{{\mathcal{W}^{dw}}} \quad\and\quad 
+{[\mathcal{W}^{N}]} = \frac{{[\mathcal{S}^{N}]}{\mathcal{S}^{dw}}+{[\mathcal{N}^{N}]}{\mathcal{N}^{dw}}}{{\mathcal{W}^{dw}}} \quad\and\quad 
 {\mathcal{W}^{dw}} = {\mathcal{S}^{dw}}+{\mathcal{C}^{dw}}+{\mathcal{N}^{dw}}
-\quad
-{\mathcal{S}^{dw}} &= {\mathcal{W}^{dw}}
+\quad\implies \\[6pt]
+{\mathcal{S}^{dw}} &= {\mathcal{W}^{dw}}\frac{{[\mathcal{C}^{C}]} \left({[\mathcal{W}^{N}]} - {[\mathcal{N}^{N}]}\right) \;+\; {[\mathcal{N}^{N}]} {[\mathcal{W}^{C}]}}{{[\mathcal{C}^{C}]} \left({[\mathcal{S}^{N}]} - {[\mathcal{N}^{N}]}\right) \;+\; {[\mathcal{N}^{N}]}{[\mathcal{S}^{C}]}}
 \end{split}
 $$
 from which we can add another column `Wstruct` as an estimate of $${\mathcal{S}^{dw}}$$:
@@ -398,7 +394,7 @@ A_i=\frac{A_l}{A_z}
 $$
 It follows that the canopy is exposed to a light intensity of $$A_zI_d$$ (mol PAR/m/d). The units are derived as
 $$
-\frac{{\text{m}^2} \text{ crown zone}}{\text{m}}\cdot
+\frac{{\text{m}^2} \text{ crown zone}}{\text{m}}\cdot\frac{\text{mol PAR}}{{\text{m}^2} \text{ sea surface}\cdot \text{d}}=
 \frac{\text{mol PAR}}{\text{m}\cdot \text{d}}
 $$
 The two measures of area may seem incommensurable at first glance. That they are the same is most easily seen if one considers the crown zone area in its maximum extent. This occurs when it is spread out horizontally and reaches its maximum width of $$2L$$. Thus, with $$L=0.8$$ m the crown zone would cover $$1.6$$ m^2^ sea surface per m line. This would be the area exposed to the incoming sunlight $$I_d$$. With $$c_Z<2$$ (eq. $$\ref{eq_crown_zone}$$) the exposed area would be less, and at the minimum $$s_Z=1$$ it would be only $$0.8$$ m^2^/m.
@@ -409,14 +405,14 @@ I_a = A_zI_d\{1-exp(-k_lA_i)\}
 $$
 The relations all ultimately depend on $${\mathcal{S}^{dw}}$$ as illustrated here with $$c_Z=2$$ m and $$k_l=0.7$$:
 
-![carbon-supply](..\media
+![carbon-supply](..\media\models\saccharina\carbon-supply.png)
 
 The leaf area index is always high and the fraction of light intercepted (`fabs` in the figure) close to 100%. This means that the extent of the crown zone $$A_z$$ is more decisive for light absorption than the leaf area $$A_l$$, and that $$c_Z$$ is more influential than $$k_l$$, which we can safely leave at $$k_l=0.7$$. According to this reasoning, line-grown plants are expected to be morphologically distinguishable from solitary plants, due to the dense foliage, with narrower and maybe thinner leaves (showing etiolated growth).
 
 $$I_a$$ corresponds to the resource density $$X$$ in eq. $$\ref{eq_b_g_response}$$, where we plug it in:
 $$
 \begin{equation}
-{\Delta\mathcal{U}^{C}}={\left<\Delta\mathcal{U}^{C}\right>}
+{\Delta\mathcal{U}^{C}}={\left<\Delta\mathcal{U}^{C}\right>}\left\{1-exp\left( 
   -\frac{\alpha\,\psi^N I_a\Delta t}
   {{\left<\Delta\mathcal{U}^{C}\right>}}
 \right) \right\}
@@ -428,16 +424,16 @@ The photosynthetic efficiency $$\alpha$$ (g C/mol PAR) converts the absorbed lig
 The value of $$\alpha$$ can be estimated from Sogn Andersen et al. (2013, Fig. 3):
 $$
 \begin{split}
-\alpha &= 0.23\frac{\mu
-&=0.23\cdot421.5\frac{\mu
-&=0.969\cdot10^{-5}\frac{\text{g C}}{\text{dm}^2\cdot
-&=0.969\cdot10^{-5}\frac{100}{3600}\frac{\text{g C}}{\mu
+\alpha &= 0.23\frac{\mu\text{mol O}_2}{\text{g fw}\cdot\text{h}} / \frac{\mu\text{mol PAR}}{\text{m}^2\cdot\text{s}} \\[6pt]
+&=0.23\cdot421.5\frac{\mu\text{g C}}{\text{dm}^2\cdot\text{h}} / \frac{\mu\text{mol PAR}}{\text{m}^2\cdot\text{s}} \\[6pt]
+&=0.969\cdot10^{-5}\frac{\text{g C}}{\text{dm}^2\cdot\text{h}} / \frac{\mu\text{mol PAR}}{\text{m}^2\cdot\text{s}} \\[6pt]
+&=0.969\cdot10^{-5}\frac{100}{3600}\frac{\text{g C}}{\mu\text{mol PAR}} \\[6pt]
 &=2.69\frac{\text{g C}}{\text{mol PAR}}
 \end{split}
 $$
 The response ($$\psi^N$$) to plant nitrogen forms a piece-wise linear response with two breakpoints, 
 
-<img src="..\media
+<img src="..\media\models\saccharina\N-response.png" style="zoom:8%;" />
 
 ### Nitrogen and phosphorus supply
 
@@ -456,11 +452,11 @@ $$
 
 with nitrogen acquisition efficiency $$\beta$$ in units,
 $$
-\frac{\text{g N}}{\text{m}^2\text{/m}\cdot \mu
+\frac{\text{g N}}{\text{m}^2\text{/m}\cdot \mu\text{M N}\cdot\text{d}}
 $$
 and phosphorus acquisition efficiency $$\gamma$$ in units,
 $$
-\frac{\text{g P}}{\text{m}^2\text{/m}\cdot \mu
+\frac{\text{g P}}{\text{m}^2\text{/m}\cdot \mu\text{M P}\cdot\text{d}}
 $$
 These acquisition functions (eq. $$\ref{eq_NP_supply}$$) are simpler than the one for carbon (eq. $$\ref{eq_sUC}$$). This is because we assume that the concentration of dissolved nitrogen and phosphorus, unlike light, is not attenuated as water passes through the canopy. Hence, for these nutrients we base uptake on leaf area $$A_l$$ rather than leaf area index $$A_i$$. There will, locally, be a slight drop in nutrient concentrations as they are taken up by the plants but we assume that water currents will quickly reinstate the ambient concentrations.
 
@@ -481,7 +477,7 @@ During each allocation step, priority is given to the resources just acquired: $
 
 The `allocation.R` script demonstrates the logic applied during allocation by the function `take`. In step 1, for example, when carbon for maintenance respiration is allocated, it is written like this
 $$
-{\text{take}\;}
+{\text{take}\;}{\left<\Delta\mathcal{M}^{C}\right>}{\quad\text{from}\quad}{\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}} {\quad\text{giving}\quad}{\Delta\mathcal{M}^{C}}
 $$
 This corresponds to a call of the `take` function with `demand` equal to $${\left<\Delta\mathcal{M}^{C}\right>}$$, `sources` equal to the vector $$({\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}})$$, and with the function result (local variable `supply`) assigned to $${\Delta\mathcal{M}^{C}}$$.
 
@@ -510,7 +506,7 @@ In the following, `ask for` has the same functionality as `take`, except that it
 
 First, carbon needed for respiration is taken,
 $$
-{\text{take}\;}
+{\text{take}\;}{\left<\Delta\mathcal{M}^{C}\right>}{\quad\text{from}\quad}{\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}} {\quad\text{giving}\quad}{\Delta\mathcal{M}^{C}}
 $$
 
 If the uptaken carbon $${\Delta\mathcal{U}^{C}}$$ was not sufficient to meet the demand $${\left<\Delta\mathcal{M}^{C}\right>}$$ then the deficit was drawn from the carbon store $${\mathcal{C}^{C}}$$ by the `take` function. We must keep track of the carbon store before and after allocation to calculate any loss to the store ($${\Delta\mathcal{C}^{dw}}_1$$; g dw/m) in this step,
@@ -520,11 +516,11 @@ $$
 If the carbon store was exhausted without the demand being fulfilled, we need to recycle structural biomass $${\Delta\mathcal{S}^{dw}}_1$$ (g dw/m) to cover the deficit:
 $$
 \begin{equation}
-{\Delta\mathcal{S}^{dw}}_1= \left
+{\Delta\mathcal{S}^{dw}}_1= \left\lceil\frac{{\Delta\mathcal{M}^{C}}-{\left<\Delta\mathcal{M}^{C}\right>}}{{[\mathcal{S}^{C}]}}\right\rceil^0
 \label{eq_maintenance_deficit}
 \end{equation}
 $$
-If $${\Delta\mathcal{S}^{dw}}
+If $${\Delta\mathcal{S}^{dw}}\lt 0$$ then steps 2 to 6 below are skipped and all remaining allocations set to zero, i.e. $${\Delta\mathcal{S}^{dw}}_{i>1}=0$$, $${\Delta\mathcal{C}^{dw}}_{i>1}=0$$, $${\Delta\mathcal{N}^{dw}}_{i>1}=0$$ and $${\Delta\mathcal{P}^{dw}}_{i>1}=0$$.
 
 On exit from step 1:
 
@@ -538,9 +534,9 @@ On exit from step 1:
 We take carbon, nitrogen and phosphorus exudates from the following sources,
 $$
 \begin{split}
-{\text{take}\;}
-{\text{take}\;}
-{\text{take}\;}
+{\text{take}\;}{\left<\Delta\mathcal{E}^{C}\right>}&{\quad\text{from}\quad}{\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}} &{\quad\text{giving}\quad}{\Delta\mathcal{E}^{C}}\\[6pt]
+{\text{take}\;}{\left<\Delta\mathcal{E}^{N}\right>}&{\quad\text{from}\quad}{\Delta\mathcal{U}^{N}},{\mathcal{N}^{N}} &{\quad\text{giving}\quad}{\Delta\mathcal{E}^{N}}\\[6pt]
+{\text{take}\;}{\left<\Delta\mathcal{E}^{P}\right>}&{\quad\text{from}\quad}{\Delta\mathcal{U}^{P}},{\mathcal{W}^{P}} &{\quad\text{giving}\quad}{\Delta\mathcal{E}^{P}}
 \end{split}
 $$
 If any resource is limiting, i.e if $${\Delta\mathcal{E}^{C}}<{\left<\Delta\mathcal{E}^{C}\right>}$$ or $${\Delta\mathcal{E}^{N}}<{\left<\Delta\mathcal{E}^{N}\right>}$$ or $${\Delta\mathcal{E}^{P}}<{\left<\Delta\mathcal{E}^{P}\right>}$$, then structural biomass will not be recycled to make up for the lack. This is in contrast to basic metabolism in step 1, which was strictly obligatory. Thus stressed plants might exude less than demanded. We define the supply/demand ratios for exudation (which are useful descriptors of this aspect of plant performance) by
@@ -561,7 +557,7 @@ $$
 $$
 On exit from step 2:
 
-* The demands for exudation may not have been met: $${\phi^C_\mathcal{E}}
+* The demands for exudation may not have been met: $${\phi^C_\mathcal{E}}\le1 \and {\phi^N_\mathcal{E}}\le1 \and {\phi^P_\mathcal{E}}\le1$$.
 * Resources $${\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}},{\Delta\mathcal{U}^{N}},{\mathcal{N}^{N}},{\Delta\mathcal{U}^{P}}$$ and $${\mathcal{W}^{P}}$$  may have decreased.
 * For any store $${\mathcal{C}^{C}}$$, $${\mathcal{N}^{N}}$$ or $${\mathcal{P}^{P}}$$ that decreased, store dry matter was lost, respectively, $${\Delta\mathcal{C}^{dw}}_2 \lt 0$$, $${\Delta\mathcal{N}^{dw}}_2 \lt 0$$ or $${\Delta\mathcal{P}^{dw}}_2 \lt 0$$.
 
@@ -570,19 +566,19 @@ On exit from step 2:
 Structural growth uses carbon and nitrogen for structural tissue plus carbon to cover the building costs. To find out which resource is more limiting for structural growth, carbon or nitrogen, we tentatively ask for the allocation of both. For the carbon demand, we add the building costs,
 $$
 \begin{split}
-&{\text{ask for}\;}
-&{\text{ask for}\;}
+&{\text{ask for}\;}{\left<\Delta\mathcal{S}^{C} \right>}\left(1+\frac{{\lambda_\mathcal{S}}}{{[\mathcal{S}^{C}]}}\right)&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}} &&{\quad\text{giving}\quad}{\Delta\mathcal{S}^{C}}_0\left(1+\frac{{\lambda_\mathcal{S}}}{{[\mathcal{S}^{C}]}}\right) \\[6pt]
+&{\text{ask for}\;}{\left<\Delta\mathcal{S}^{N} \right>}&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{N}},{\mathcal{N}^{N}} &&{\quad\text{giving}\quad}{\Delta\mathcal{S}^{N}}_0
 \end{split}
 $$
 We  convert the tentative supplies $${\Delta\mathcal{S}^{C}}_0$$ and $${\Delta\mathcal{S}^{N}}_0$$ to the corresponding biomass decrement. The supply that gives the smaller increment governs the outcome:
 $$
 \begin{split}
-&{\text{if}\quad}
-&\quad
-&\quad
+&{\text{if}\quad}\frac{{\Delta\mathcal{S}^{C}}_0}{{[\mathcal{S}^{C}]}}<\frac{{\Delta\mathcal{S}^{N}}_0}{{[\mathcal{S}^{N}]}} {\quad\text{then}\quad} \\[6pt]
+&\quad{\text{take}\;}{\left<\Delta\mathcal{S}^{C} \right>}\left(1+\frac{{\lambda_\mathcal{S}}}{{[\mathcal{S}^{C}]}}\right)&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}}&&{\quad\text{giving}\quad}{\Delta\mathcal{S}^{C}}\left(1+\frac{{\lambda_\mathcal{S}}}{{[\mathcal{S}^{C}]}}\right) \\[6pt]
+&\quad{\text{take}\;}\frac{{[\mathcal{S}^{N}]}}{{[\mathcal{S}^{C}]}}{\Delta\mathcal{S}^{C}}&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{N}},{\mathcal{N}^{N}} &&{\quad\text{giving}\quad}{\Delta\mathcal{S}^{N}} \\[6pt]
 &{\text{else}\quad}\\[6pt]
-&\quad
-&\quad
+&\quad{\text{take}\;}{\left<\Delta\mathcal{S}^{N} \right>}&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{N}},{\mathcal{N}^{N}} &&{\quad\text{giving}\quad}{\Delta\mathcal{S}^{N}} \\[6pt]
+&\quad{\text{take}\;}\frac{{[\mathcal{S}^{C}]}}{{[\mathcal{S}^{N}]}}{\Delta\mathcal{S}^{N}}\left(1+\frac{{\lambda_\mathcal{S}}}{{[\mathcal{S}^{C}]}}\right)&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}} &&{\quad\text{giving}\quad}{\Delta\mathcal{S}^{C}}\left(1+\frac{{\lambda_\mathcal{S}}}{{[\mathcal{S}^{C}]}}\right)
 \end{split}
 $$
 
@@ -606,7 +602,7 @@ $$
 $$
 On exit from step 3:
 
-* The demand for structural growth may not have been met, $${\phi_\mathcal{S}}
+* The demand for structural growth may not have been met, $${\phi_\mathcal{S}}\le1$$.
 * Resources $${\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}},{\Delta\mathcal{U}^{N}}$$ and $${\mathcal{N}^{N}}$$ may have decreased.
 * For any store $${\mathcal{C}^{C}}$$ or $${\mathcal{N}^{N}}$$ that decreased, store dry matter was lost, respectively, $${\Delta\mathcal{C}^{dw}}_3 \lt 0$$ or $${\Delta\mathcal{N}^{dw}}_3 \lt 0$$.
 
@@ -615,8 +611,8 @@ On exit from step 3:
 We need nitrogen for the store itself plus carbon to cover the building costs. This means that both nitrogen and carbon could be limiting. As in step 3, we tentatively ask for the allocation of both,
 $$
 \begin{split}
-&{\text{ask for}\;}
-&{\text{ask for}\;}
+&{\text{ask for}\;}{\left<\Delta\mathcal{N}^{N} \right>}&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{N}} &&{\quad\text{giving}\quad}{\Delta\mathcal{N}^{N}}_N \\[6pt]
+&{\text{ask for}\;}{\lambda_\mathcal{N}}\frac{{\left<\Delta\mathcal{N}^{N} \right>}}{{[\mathcal{N}^{N}]}}&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}} &&{\quad\text{giving}\quad}{\lambda_\mathcal{N}}\frac{{\Delta\mathcal{N}^{N}}_C}{{[\mathcal{N}^{N}]}}
 \end{split}
 $$
 First, we ask for the demanded nitrogen $${\left<\Delta\mathcal{N}^{N} \right>}$$ to be covered by the nitrogen that was just uptaken. As a result we get the nitrogen-limited supply $${\Delta\mathcal{N}^{N}}_N \le {\left<\Delta\mathcal{N}^{N} \right>}$$.
@@ -628,13 +624,13 @@ $$
 \begin{split}
 &{\text{if}\quad} {\Delta\mathcal{N}^{N}}_N < {\Delta\mathcal{N}^{N}}_C &&{\quad\text{then}\quad} \\[6pt]
 
-&\quad
-&\quad
+&\quad{\text{take}\;}{\left<\Delta\mathcal{N}^{N} \right>}&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{N}} &&{\quad\text{giving}\quad}{\Delta\mathcal{N}^{N}} \\[6pt]
+&\quad{\text{take}\;}{\lambda_\mathcal{N}}\frac{{\Delta\mathcal{N}^{N}}}{{[\mathcal{N}^{N}]}}&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}} \\[6pt]
 
 &{\text{else}\quad}\\[6pt]
 
-&\quad
-&\quad
+&\quad{\text{take}\;}{\lambda_\mathcal{N}}\frac{{\left<\Delta\mathcal{N}^{N} \right>}}{{[\mathcal{N}^{N}]}}&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{C}},{\mathcal{C}^{C}} &&{\quad\text{giving}\quad}{\lambda_\mathcal{N}}\frac{{\Delta\mathcal{N}^{N}}}{{[\mathcal{N}^{N}]}} \\[6pt]
+&\quad{\text{take}\;}{\Delta\mathcal{N}^{N}}&&{\quad\text{from}\quad}{\Delta\mathcal{U}^{N}} 
 \end{split}
 $$
 
@@ -665,7 +661,7 @@ On exit from step 4:
 
 The supply to the carbon store and the associated building cost can only be taken from the just fixated carbon,
 $$
-{\text{take}\;}
+{\text{take}\;}{\left<\Delta\mathcal{C}^{C} \right>}\left(1+ \frac{{\lambda_\mathcal{C}}}{{[\mathcal{C}^{C}]}}\right){\quad\text{from}\quad}{\Delta\mathcal{U}^{C}}{\quad\text{giving}\quad}{\Delta\mathcal{C}^{C}}\left(1+\frac{{\lambda_\mathcal{C}}}{{[\mathcal{C}^{C}]}}\right)
 $$
 
 Allocation to the carbon store (g dw/m) in step 5 is then
@@ -685,7 +681,7 @@ On exit from step 5:
 
 There is only one source to supply the phosphorus store and there is no building cost,
 $$
-{\text{take}\;}
+{\text{take}\;}{\left<\Delta\mathcal{P}^{P} \right>}{\quad\text{from}\quad}{\Delta\mathcal{U}^{P}}{\quad\text{giving}\quad}{\Delta\mathcal{P}^{P}}
 $$
 Allocation to the phosphorus store (g dw/m) in step 6 is then
 $$
@@ -697,7 +693,7 @@ $$
 $$
 On exit from step 6:
 
-* The demand of the phosphorus store may not have been met, $${\phi_\mathcal{P}}
+* The demand of the phosphorus store may not have been met, $${\phi_\mathcal{P}}\le1$$
 * $${\Delta\mathcal{U}^{P}}$$ may have decreased.
 
 ### Roundup
@@ -715,7 +711,7 @@ Note that any $$\Delta$$ is either $$\le0$$ or $$\ge 0$$; no $$\Delta$$ can atta
 
 The total  building costs (eq. $$\ref{eq_building_cost}$$) are 
 $$
-{\Delta\mathcal{B}^{C}} = {\lambda_\mathcal{S}}
+{\Delta\mathcal{B}^{C}} = {\lambda_\mathcal{S}}{\Delta\mathcal{S}^{dw}}_3 + {\lambda_\mathcal{N}}{\Delta\mathcal{N}^{dw}}_4+ {\lambda_\mathcal{C}}{\Delta\mathcal{C}^{dw}}_5
 $$
 
 
@@ -738,15 +734,15 @@ The uptake rates for nitrogen and phosphorus  (eq. $$\ref{eq_NP_supply}$$)  inte
 * $$\beta=0.27$$ 
 * $$\gamma=0.30$$
 
-This figure shows the driving variables  on the left $$\big(I_d, [N_{water}], [P_{water}]\big)$$, and simulated and observed plant concentrations on the right $$\big({[\mathcal{W}^{C}]},{[\mathcal{W}^{N}]},{[\mathcal{W}^{P}]}
+This figure shows the driving variables  on the left $$\big(I_d, [N_{water}], [P_{water}]\big)$$, and simulated and observed plant concentrations on the right $$\big({[\mathcal{W}^{C}]},{[\mathcal{W}^{N}]},{[\mathcal{W}^{P}]}\big)$$:
 
-![](D:\Documents
+![](D:\Documents\sites\ecolmod3\media\models\saccharina\callibration-concentrations.png)
 
 The upper brown lines show the upper limits on the respective concentrations. The model overshoots a bit because of the roughness of the time step (1 day). The two lower brown lines for $${[\mathcal{W}^{N}]}$$ show the critical limits for its influence on plant photosynthesis. 
 
 The  model is very sensitive to plant nitrogen $${[\mathcal{W}^{N}]}$$ as seen in the simulated biomass $${\mathcal{W}^{dw}}$$ and leaf area $$A_l$$:
 
-![calibration-biomass-area](..\media
+![calibration-biomass-area](..\media\models\saccharina\calibration-biomass-area.png)
 
 The dip in biomass at the of April is due to low plant nitrogen $${[\mathcal{W}^{N}]}$$ concomitant with low light $$I_d$$.
 
@@ -758,7 +754,7 @@ In model verification, we expose the model to different scenarios to check its r
 
 In this scenario there was no sunlight, $$I_d=0$$. We expect the plant to exhaust itself by maintenance respiration and exudation. First, we check the biomass and leaf area:
 
-![verification-darkness](..\media
+![verification-darkness](..\media\models\saccharina\verification-darkness.png)
 
 We see the expected exponential decline of the biomass, while the initial increase in leaf area is due to mobilisation of stores to build structural tissue. Yet, the initial, tiny increase looks suspicious. Let's study the details of the biomass compartments in the first few time steps:
 
@@ -773,6 +769,6 @@ We see the expected exponential decline of the biomass, while the initial increa
 
 That tiny increment turns out to be nitrogen! The nitrogen store was initialised at a value $${\mathcal{S}^{dw}}=0.075$$ g dw/m that turned out to be out of balance with the nitrogen concentration in the water. As there are no upper limits to the rate of nutrient uptake, besides those set by the demands, the plant quickly made up for that imbalance and took up a large quantity of nitrogen in just one day. The needed building costs were taken from the carbon store.
 
-Another issue ia that, in the longer run,  plant concentrations of nitrogen and phosphorus, drift out of control:![verification-darkness-conc](..\media
+Another issue ia that, in the longer run,  plant concentrations of nitrogen and phosphorus, drift out of control:![verification-darkness-conc](..\media\models\saccharina\verification-darkness-conc.png)
 
 This happens because the model respires carbon from the structural tissue to meet the demand of basic metabolism (eq. $$\ref{eq_maintenance_deficit}$$), while leaving the stores alone. This needs to be fixed, even though it is not known exactly how the plant would react to extreme light limitation. A simple measure would be to carry out all steps of the allocation procedure, even when step 1 (maintenance respiration) leads to a carbon deficit. The model will also benefit from this by making it simpler: a carbon deficit is no longer considered an exceptional case.
