@@ -8,7 +8,11 @@ aux_links:
   Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
 exclude:
-  - illustrations/
-  - src/
+  - doc-md/
+  - media-ppt/
+  - old/
+  - process/
+  - LICENSE
+  - README.md
   - Gemfile
   - Gemfile.lock

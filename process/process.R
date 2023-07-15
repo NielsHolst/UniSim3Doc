@@ -2,7 +2,7 @@ rm(list=ls(all=TRUE))
 library(plyr)
 library(stringr)
 
-setwd("~/sites/UniSim3Doc/src")
+setwd("~/sites/UniSim3Doc")
 
 create_dest_dirs = function() {
 
@@ -263,17 +263,23 @@ process_line = function(s) {
 # Main
 #
 
-# Set source and destination names
+# Find source file names 
 source_names = list.files(full.names=TRUE, recursive=TRUE,pattern="\\.md$")
-dest_names = paste0(".", source_names)
+is_md_source = str_detect(source_names, "-md")
+is_readme = str_detect(source_names, "README")
+source_names = subset(source_names, is_md_source & !is_readme)
+
+
+# Set destination file names
+dest_names = str_replace(source_names, "-md", "")
 source_names
 dest_names
 
 # Create any missing destination folders
 create_dest_dirs()
 
-# for (i in 1:length(source_names)) {
-for (i in 2:2) {
+for (i in 1:length(source_names)) {
+# for (i in 2:2) {
   lines = read_file(source_names[i])
   macros = extract_macros(lines)
   if (!is.null(macros)) {

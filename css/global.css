@@ -19,6 +19,9 @@ html {
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   background-color: var(--col-background);
 }
+img {
+  max-width: 100%;
+}
 p {
   font-size: 15px;
   line-height: 1.5;

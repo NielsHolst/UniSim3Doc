@@ -1,14 +1,3 @@
----
-title: VirtualGreenhouse
-layout: default
----
-$$
-\newcommand{\sp}[2]{\mathbb{S}_\text{#1}^\text{#2}}
-\newcommand{\dsp}[2]{\Delta\mathbb{S}_\text{#1}^\text{#2}}
-\newcommand{\spr}[2]{\mathbb{S}_\text{#1}^{\text{#2*}}}
-\newcommand{\dspr}[2]{\Delta\mathbb{S}_\text{#1}^{\text{#2*}}}
-\newcommand{\coo}{CO~2~}
-$$
 # Virtual greenhouse model
 
 *Niels Holst, Aarhus University, Denmark, 25 May 2023.*
@@ -33,7 +22,7 @@ library(reshape2)
 
 ## Model structure
 
-The model is updated iteratively in a loop at a time step of $\Delta t$ (s), typically in a range of 2 to 5 minutes; however, the energy and water [budgets](#budgets) may be resolved at a finer time step as needed (dividing $\Delta t$ into $n$ sub-steps). The model runs from the chosen start date until the end date; however, beneath the surface it will always start 24 hours before the start date to allow model state variables to evolve from their initial values and reach realistic values.
+The model is updated iteratively in a loop at a time step of $$\Delta t$$ (s), typically in a range of 2 to 5 minutes; however, the energy and water [budgets](#budgets) may be resolved at a finer time step as needed (dividing $$\Delta t$$ into $$n$$ sub-steps). The model runs from the chosen start date until the end date; however, beneath the surface it will always start 24 hours before the start date to allow model state variables to evolve from their initial values and reach realistic values.
 
 Model components are updated in the following order:
 
@@ -99,9 +88,9 @@ A `global` box is declared to hold global settings, i.e., parameters that serve 
 
 ### Greenhouse dimensions
 
-The greenhouse consists of $n$ spans each of width $w$ (m), length $\ell$ (m) and wall height $h$ (m). Each span has a roof on top angled at $u$ (&deg;). 
+The greenhouse consists of $$n$$ spans each of width $$w$$ (m), length $$\ell$$ (m) and wall height $$h$$ (m). Each span has a roof on top angled at $$u$$ (&deg;). 
 
-<img src="../media/models/vg/greenhouse-dimensions.png" style="zoom:20%;" />
+<img src="../../media/models/vg/greenhouse-dimensions.png" style="zoom:20%;" />
 
 From these parameters we can derive several measures of greenhouse geometry. The area of a single face, either side, end or roof, is
 $$
@@ -131,14 +120,14 @@ V_{gh} = n\ell A_{end}'
 \label{greenhouse_volume}
 \end{equation}
 $$
-Further useful measures are the cover/area ratio $C_{ai}$ (m^2^ cover/m^2^ ground),
+Further useful measures are the cover/area ratio $$C_{ai}$$ (m^2^ cover/m^2^ ground),
 $$
 \begin{equation}
 C_{ai} = \frac{A_{cover}}{A_{gh}}
 \label{eq_cai}
 \end{equation}
 $$
-and the volumetric area index $V_{ai}$ (m) (also known as the average height),
+and the volumetric area index $$V_{ai}$$ (m) (also known as the average height),
 $$
 \begin{equation}
 V_{ai}=\frac{V_{gh}}{A_{gh}}
@@ -146,7 +135,7 @@ V_{ai}=\frac{V_{gh}}{A_{gh}}
 \end{equation}
 $$
 
-Furthermore, the density of air $\rho_{air}=1.19$ kg/m^3^ and it heat capacity $C_{air}=1\,020$ J/kg/K leads to the heat capacity of indoors air $C_{gh}$ (J/K/m^2^ ground),
+Furthermore, the density of air $$\rho_{air}=1.19$$ kg/m^3^ and it heat capacity $$C_{air}=1\,020$$ J/kg/K leads to the heat capacity of indoors air $$C_{gh}$$ (J/K/m^2^ ground),
 $$
 \begin{equation}
 C_{gh} = \rho_{air} C_{air} V_{ai}
@@ -197,13 +186,13 @@ Box construction{
 
 ### Volumes
 
-The greenhouse model holds three volumes: **indoors**,  **outdoors** and **soil**. The indoors holds **state variables**, while the outdoors and soil hold **driving variables**. All three hold temperature $T$ (&deg;C), while indoors and outdoors hold relative humidity $H^\%$ (%) and CO~2~ concentration $[CO_2]^{ppm}$ as well. In some relations other units are more convenient, e.g. absolute humidity $H^{abs}$ (kg/m^3^),  water vapour pressure $H^{pres}$ (Pa), or absolute CO~2~ concentration $[CO_2]^{abs}$ (g/m^3^). The variable are subscripted to denote the volume, e.g., for temperature $T_{in}$, $T_{out}$ and $T_{soil}$.
+The greenhouse model holds three volumes: **indoors**,  **outdoors** and **soil**. The indoors holds **state variables**, while the outdoors and soil hold **driving variables**. All three hold temperature $$T$$ (&deg;C), while indoors and outdoors hold relative humidity $$H^\%$$ (%) and CO~2~ concentration $$[CO_2]^{ppm}$$ as well. In some relations other units are more convenient, e.g. absolute humidity $$H^{abs}$$ (kg/m^3^),  water vapour pressure $$H^{pres}$$ (Pa), or absolute CO~2~ concentration $$[CO_2]^{abs}$$ (g/m^3^). The variable are subscripted to denote the volume, e.g., for temperature $$T_{in}$$, $$T_{out}$$ and $$T_{soil}$$.
 
 Volumes may exchange heat and humidity with neighbouring volumes and layers.
 
 ### Layers
 
-Besides layers the greenhouse and its environment is conceptualised as a stack of $i=1..n$ horizontal layers. This is a typical stack:
+Besides layers the greenhouse and its environment is conceptualised as a stack of $$i=1..n$$ horizontal layers. This is a typical stack:
 
 1. sky
 2. cover (e.g., glass)
@@ -223,15 +212,15 @@ The radiative properties of each layer is parameterised for three intervals of t
 
 PAR is a subset of the short-wave radiation. The PAR budget is resolved only to compute how much is absorbed by the plant canopy. Its quantum units reflect this purpose. In contrast, the short- and long-wave radiation both contribute to the radiative exchange of heat among layers. Remember that W = J/s. 
 
-<img src="..\media\models\vg\layers.png" alt="energy-budget-layers" style="zoom:50%;" />
+<img src="../../media/models/vg/layers.png" alt="energy-budget-layers" style="zoom:50%;" />
 
 
 
-Each layer $i$ is characterised by its radiative properties: **absorptivity** $(\alpha^r_i$), **reflectivity** $(\rho^r_i)$ and **transmissivity** $(\tau^r_i)$ for radiation coming from **above** and similarly for radiation coming from **below** $(\alpha{^r_i}',\rho{^r_i}',\tau{^r_i}')$, all for each type of radiation $r$ (*PAR*, *sw*, *lw*). The radiative parameters always add up to unity,   $\alpha^r_i+\rho^r_i+\tau^r_i=1$ and  $\alpha{^r_i}'+\rho{^r_i}'+\tau{^r_i}'=1$. We apply the common engineering assumption that **emissivity** equals the absorptivity for long-wave radiation, i.e. for all layers $\epsilon_i=\alpha_i^{lw}$ and $\epsilon_i'={\alpha_i^{lw}}'$. 
+Each layer $$i$$ is characterised by its radiative properties: **absorptivity** $$(\alpha^r_i$$), **reflectivity** $$(\rho^r_i)$$ and **transmissivity** $$(\tau^r_i)$$ for radiation coming from **above** and similarly for radiation coming from **below** $$(\alpha{^r_i}',\rho{^r_i}',\tau{^r_i}')$$, all for each type of radiation $$r$$ (*PAR*, *sw*, *lw*). The radiative parameters always add up to unity,   $$\alpha^r_i+\rho^r_i+\tau^r_i=1$$ and  $$\alpha{^r_i}'+\rho{^r_i}'+\tau{^r_i}'=1$$. We apply the common engineering assumption that **emissivity** equals the absorptivity for long-wave radiation, i.e. for all layers $$\epsilon_i=\alpha_i^{lw}$$ and $$\epsilon_i'={\alpha_i^{lw}}'$$. 
 
-The superscript $r$ was left out of the figure above for simplification but it is important, as it allows different parameter settings for different radiation intervals. This is essential, e.g. for the distinct difference in transmissivity of glass for short- *vs.* long-wave radiation. Moreover, the separate parameter sets for down- and upgoing radiation allow for asymmetry, e.g., of screens.
+The superscript $$r$$ was left out of the figure above for simplification but it is important, as it allows different parameter settings for different radiation intervals. This is essential, e.g. for the distinct difference in transmissivity of glass for short- *vs.* long-wave radiation. Moreover, the separate parameter sets for down- and upgoing radiation allow for asymmetry, e.g., of screens.
 
-Layers are further described by their area-specific heat capacity ($C_i$; J/K/m^2^ ground) and temperature ($T_i$; &deg;C).
+Layers are further described by their area-specific heat capacity ($$C_i$$; J/K/m^2^ ground) and temperature ($$T_i$$; &deg;C).
 
 #### Boxscript example with cover and screens
 
@@ -348,7 +337,7 @@ Box construction{
 }
 ```
 
-Any layer has 11 input ports defining its basic radiative properties (lines 14-21), $U$-values (lines 22-23) and heat capacity (line 24).  `Cover` boxes holds two additional inputs (lines 25-26) specifying the current status of whitening ('chalk'), which is provided by the `chalk` actuator. In a similar vein, `Screen` boxes hold one additional input `state`, which refers to a screen actuator. From the code above, you can infer that in this model there are three screen actuators:
+Any layer has 11 input ports defining its basic radiative properties (lines 14-21), $$U$$-values (lines 22-23) and heat capacity (line 24).  `Cover` boxes holds two additional inputs (lines 25-26) specifying the current status of whitening ('chalk'), which is provided by the `chalk` actuator. In a similar vein, `Screen` boxes hold one additional input `state`, which refers to a screen actuator. From the code above, you can infer that in this model there are three screen actuators:
 
 * `actuators/screens/energy`which determines the position of the `energy` screen
 * `actuators/screens/shade` which determines the position of the `shade1` and `shade2` screens
@@ -360,7 +349,7 @@ In addition to `cover` and `screens`, each face has a weight parameter that is u
 
 #### Radiative exchange
 
-Radiation might be emitted by a layer, both down- and upwards, in terms of PAR ($E_i^{par},\,{E_i^{par}}'$; &#956;mol/m^2^/s) and short- and long-wave radiation ($E_i^{sw},\,{E_i^{sw}}',\, E_i^{lw},\,{E_i^{lw}}'$; W/m^2^). For some layers (sky, cover, screen, floor) , the emission of long-wave radiation is calculated from their temperature, according to the [Stefan-Boltzmann Law](https://en.wikipedia.org/wiki/Stefan%E2%80%93Boltzmann_law),
+Radiation might be emitted by a layer, both down- and upwards, in terms of PAR ($$E_i^{par},\,{E_i^{par}}'$$; &#956;mol/m^2^/s) and short- and long-wave radiation ($$E_i^{sw},\,{E_i^{sw}}',\, E_i^{lw},\,{E_i^{lw}}'$$; W/m^2^). For some layers (sky, cover, screen, floor) , the emission of long-wave radiation is calculated from their temperature, according to the [Stefan-Boltzmann Law](https://en.wikipedia.org/wiki/Stefan%E2%80%93Boltzmann_law),
 $$
 \begin{equation}
 \begin{split}
@@ -370,15 +359,15 @@ E_{i}^{lw} & =\sigma\epsilon_i'(T_i+T_0)^4 \\[6pt]
 \label{stefan_boltzmann}
 \end{equation}
 $$
-where $T_0=273.15$ &deg;C converts to absolute temperature.  For other layers (growth light, plant canopy, heat pipe), the emission is calculated by specific sub-models..
+where $$T_0=273.15$$ &deg;C converts to absolute temperature.  For other layers (growth light, plant canopy, heat pipe), the emission is calculated by specific sub-models..
 
-The emitted radiation is intercepted by neighbouring layers, its ultimate fate determined by the characteristics (absorptivity, reflectivity, transmissivity) of the whole stack of layers, as worked out in the [energy budget](#energy-budget). The net radiative absorption of a layer (i.e. its absorption minus emission) is denoted by  ($A_i^{par},\,{A_i^{par}}'$; &#956;mol/m^2^/s) and ($A_i^{sw},\,{A_i^{sw}}',\, A_i^{lw},\,{A_i^{lw}}'$; W/m^2^).
+The emitted radiation is intercepted by neighbouring layers, its ultimate fate determined by the characteristics (absorptivity, reflectivity, transmissivity) of the whole stack of layers, as worked out in the [energy budget](#energy-budget). The net radiative absorption of a layer (i.e. its absorption minus emission) is denoted by  ($$A_i^{par},\,{A_i^{par}}'$$; &#956;mol/m^2^/s) and ($$A_i^{sw},\,{A_i^{sw}}',\, A_i^{lw},\,{A_i^{lw}}'$$; W/m^2^).
 
 #### Convection and conduction
 
-The exchange of heat between layer $i$'s upper and lower surface and the confronting volume is described by $U_i$ on the upper side and $U_{i}'$ on the lower side (both in W/K/m^2^). The mechanism of heat exchange is convection for air volumes and conduction for the soil volume but despite that they are all superscripted as $A_i^{conv}$.
+The exchange of heat between layer $$i$$'s upper and lower surface and the confronting volume is described by $$U_i$$ on the upper side and $$U_{i}'$$ on the lower side (both in W/K/m^2^). The mechanism of heat exchange is convection for air volumes and conduction for the soil volume but despite that they are all superscripted as $$A_i^{conv}$$.
 
-The convective/conductive heat absorbed by layer $i$ (W/m^2^) from the volume above and below is, respectively,
+The convective/conductive heat absorbed by layer $$i$$ (W/m^2^) from the volume above and below is, respectively,
 $$
 \begin{equation}
 \begin{split}
@@ -388,15 +377,15 @@ A_i^{conv} &= U_i(T_{Vi}-T_i) \\[6pt]
 \label{u_heat}
 \end{equation}
 $$
-where the temperature of the volume above and below layer $i$ is denoted by $T_{Vi}$ and $T_{Vi}'$, respectively.
+where the temperature of the volume above and below layer $$i$$ is denoted by $$T_{Vi}$$ and $$T_{Vi}'$$, respectively.
 
 #### Advection 
 
 ##### Ventilation rate integration
 
-Advective heat transfer occurs when outdoors air replaces indoors air. This is due to intentional ventilation as well as inadvertent leakage. We formulate the ventilation rate as, "how many times greenhouse air is replaced per hour" $v$ (h$^{-1}$).
+Advective heat transfer occurs when outdoors air replaces indoors air. This is due to intentional ventilation as well as inadvertent leakage. We formulate the ventilation rate as, "how many times greenhouse air is replaced per hour" $$v$$ (h$$^{-1}$$).
 
-During a time step $\Delta t$ the indoors temperature $T_{in}$ and absolute humidity $H_{in}^{abs}$ will approach the outdoors $T_{out}$ and $H_{out}^{abs}$. Considering either variable and assuming a perfect mixture of air inside the greenhouse, the rate of change in the indoors variable $y_{in}$ is
+During a time step $$\Delta t$$ the indoors temperature $$T_{in}$$ and absolute humidity $$H_{in}^{abs}$$ will approach the outdoors $$T_{out}$$ and $$H_{out}^{abs}$$. Considering either variable and assuming a perfect mixture of air inside the greenhouse, the rate of change in the indoors variable $$y_{in}$$ is
 $$
 \frac{dy_{in}}{dt} = v(y_{out}-y_{in})
 $$
@@ -407,18 +396,18 @@ y_{in}(t) = y_{out} - \left[y_{out}-y_{in}(0) \right]\,exp(-vt)
 \label{eq_advection}
 \end{equation}
 $$
-The relation is illustrated by the `advection.R` script with $T_{out}$ at 20&deg;C and $T_{in}(0)$ either 15&deg;C or 25&deg;C. The ventilation rate was set at $v=3$ $\text{h}^{-1}$.
+The relation is illustrated by the `advection.R` script with $$T_{out}$$ at 20&deg;C and $$T_{in}(0)$$ either 15&deg;C or 25&deg;C. The ventilation rate was set at $$v=3$$ $$\text{h}^{-1}$$.
 
-![](../media/models/vg/advection.png)
+![](../../media/models/vg/advection.png)
 
-To calculate the change in indoors temperature $\Delta T_{in}$ during a time step $\Delta t$ (s) eq. $\ref{eq_advection}$ can be rewritten as
+To calculate the change in indoors temperature $$\Delta T_{in}$$ during a time step $$\Delta t$$ (s) eq. $$\ref{eq_advection}$$ can be rewritten as
 $$
 \begin{equation}
 \Delta T_{in} = [T_{out} - T_{in}(0)] \left[1-exp\left(-\frac{v}{3600 \text{ s/h}}\Delta t \right)\right]
 \label{eq_advection_temp}
 \end{equation}
 $$
-With a time step of, for example $\Delta t=2$ minutes, the decrease (blue curve) or increase (red curve) in indoors temperature would be $\Delta T_{in}=0.48$ K (by eq. $\ref{eq_advection_temp}$). Assuming a volumetric area index of $V_{ai}=3.94$ m^3^/m^2^ (eq. $\ref{average_height}$) and with air heat capacity $C_{air}=1\,214$ J/m^3^/K, we get the following energy flux (positive in the case of the red curve),
+With a time step of, for example $$\Delta t=2$$ minutes, the decrease (blue curve) or increase (red curve) in indoors temperature would be $$\Delta T_{in}=0.48$$ K (by eq. $$\ref{eq_advection_temp}$$). Assuming a volumetric area index of $$V_{ai}=3.94$$ m^3^/m^2^ (eq. $$\ref{average_height}$$) and with air heat capacity $$C_{air}=1\,214$$ J/m^3^/K, we get the following energy flux (positive in the case of the red curve),
 $$
 \begin{equation}
 A_{in}^{adv} = 0.48 \text{ K} \cdot 1\,214
@@ -428,27 +417,27 @@ A_{in}^{adv} = 0.48 \text{ K} \cdot 1\,214
 \label{eq_advection_energy}
 \end{equation}
 $$
-The change in indoors absolute humidity $\Delta H_{in}^{abs}$ can be arrived at in a similar fashion.
+The change in indoors absolute humidity $$\Delta H_{in}^{abs}$$ can be arrived at in a similar fashion.
 
-Eq. $\ref{eq_advection_temp}$ is an example of a local integral; it is solved assuming everything else remains constant. It is applied here because high values of $v$ could make a straightforward Euler integration imprecise. In this case, the difference is not so great. Euler integration would have yielded
+Eq. $$\ref{eq_advection_temp}$$ is an example of a local integral; it is solved assuming everything else remains constant. It is applied here because high values of $$v$$ could make a straightforward Euler integration imprecise. In this case, the difference is not so great. Euler integration would have yielded
 $$
 \Delta T_{in} = [T_{out} - T_{in}(0)] \frac{v}{3600 \text{ s/h}}\Delta t = 0.50 \text{ K}
 $$
 
 ##### Maximum ventilation rate
 
-The maximum ventilation rate $v_{max}$ (h$^{-1}$) is obtained when the vents are fully open. What this ventilation rate amounts to depends on the wind speed $w$ (m/s) and the difference between the indoors $T_{in}$ and outdoors $T_{out}$ temperature (&deg;C):
+The maximum ventilation rate $$v_{max}$$ (h$$^{-1}$$) is obtained when the vents are fully open. What this ventilation rate amounts to depends on the wind speed $$w$$ (m/s) and the difference between the indoors $$T_{in}$$ and outdoors $$T_{out}$$ temperature (&deg;C):
 $$
 \begin{equation}
 v_{max} = \frac{A_{vent}}{A_{gh}}\sqrt{(c_w w)^2 + \left(c_T \lfloor T_{in}-T_{out}\rfloor_0 \right)^2}
 \label{eq_vent_max}
 \end{equation}
 $$
-with discharge coefficients for wind $c_w$ (s/m/h) and temperature $c_T$ (/K/h). The total discharge is found by vector addition, considering the two forces operating independently (orthogonally). It is applied to the relative vent area; $A_{vent}$ (m^2^) is the total area of vents and $A_{gh}$ (m^2^) is the greenhouse floor area. 
+with discharge coefficients for wind $$c_w$$ (s/m/h) and temperature $$c_T$$ (/K/h). The total discharge is found by vector addition, considering the two forces operating independently (orthogonally). It is applied to the relative vent area; $$A_{vent}$$ (m^2^) is the total area of vents and $$A_{gh}$$ (m^2^) is the greenhouse floor area. 
 
 #### Latent heat
 
-Latent heat is related to the phase change between water in the gas and the liquid phase. The phase change costs (by evaporation) or releases (by condensation) energy according to the latent heat of water vapourisation $\lambda=2\,454$ kJ/kg.  
+Latent heat is related to the phase change between water in the gas and the liquid phase. The phase change costs (by evaporation) or releases (by condensation) energy according to the latent heat of water vapourisation $$\lambda=2\,454$$ kJ/kg.  
 
 In the model, transpiration cools the canopy and condensation heats the cover. The transpired water adds to air humidity, which is then considered to have increased its content of latent heat. Water vapour bears latent heat in the sense that if it condenses, the heat used for the initial phase change from liquid to gas, will be used in the phase change back from gas to liquid.
 
@@ -458,21 +447,21 @@ The model does not include the cooling effect of water evaporating from wet surf
 
 ## Sky layer
 
-The radiation emitted downwards from the sky includes $E_{sky}^{par}$, $E_{sky}^{sw}$ and $E_{sky}^{lw}$. PAR and short wave radiation originates from the sun, while long wave radiation is emitted from the sky as such.
+The radiation emitted downwards from the sky includes $$E_{sky}^{par}$$, $$E_{sky}^{sw}$$ and $$E_{sky}^{lw}$$. PAR and short wave radiation originates from the sun, while long wave radiation is emitted from the sky as such.
 
-While $E_{sky}^{sw}$ is measured routinely, this is not the case for $E_{sky}^{par}$. It can be approximated by  $E_{sky}^{par}=0.5E_{sky}^{sw}$. 
+While $$E_{sky}^{sw}$$ is measured routinely, this is not the case for $$E_{sky}^{par}$$. It can be approximated by  $$E_{sky}^{par}=0.5E_{sky}^{sw}$$. 
 
-Sky emissivity $\epsilon_{sky}$ (and thereby sky absorptivity $\alpha_{sky}$) is estimated from the dew point temperature $T_{dew}$ (&deg;C) by the empirical relation (ref.)
+Sky emissivity $$\epsilon_{sky}$$ (and thereby sky absorptivity $$\alpha_{sky}$$) is estimated from the dew point temperature $$T_{dew}$$ (&deg;C) by the empirical relation (ref.)
 $$
 \epsilon_{sky} = \left\lceil 0.732 + 0.00635T_{dew}\right\rceil^1
 $$
-Sky temperature $T_{sky}$ (&deg;C) is then derived from outdoors temperature $T_{out}$ (&deg;C) according to [Karn et al. 2019](https://onlinelibrary.wiley.com/doi/full/10.1002/htj.21459) 
+Sky temperature $$T_{sky}$$ (&deg;C) is then derived from outdoors temperature $$T_{out}$$ (&deg;C) according to [Karn et al. 2019](https://onlinelibrary.wiley.com/doi/full/10.1002/htj.21459) 
 $$
 T_{sky} = \sqrt[4]{\epsilon_{sky}}(T_{out} + T_0) - T_0
 $$
-where $T_0=273.15$ &deg;C.
+where $$T_0=273.15$$ &deg;C.
 
-Sky reflectivity $\rho_{sky}$ is zero and consequently transmissivity is $\tau_{sky}=1-\epsilon_{sky}$.
+Sky reflectivity $$\rho_{sky}$$ is zero and consequently transmissivity is $$\tau_{sky}=1-\epsilon_{sky}$$.
 
 ## Cover layer
 
@@ -480,14 +469,14 @@ The cover layer is commonly made out of glass with the following typical charact
 
 | Glass properties                       | PAR  | Short-wave | Long-wave |
 | -------------------------------------- | ---- | ---------- | --------- |
-| $\alpha, \alpha', \epsilon, \epsilon'$ | 0.1  | 0.1        | 0.9       |
-| $\rho, \rho'$                          | 0.1  | 0.1        | 0.1       |
-| $\tau, \tau'$                          | 0.8  | 0.8        | 0.0       |
+| $$\alpha, \alpha', \epsilon, \epsilon'$$ | 0.1  | 0.1        | 0.9       |
+| $$\rho, \rho'$$                          | 0.1  | 0.1        | 0.1       |
+| $$\tau, \tau'$$                          | 0.8  | 0.8        | 0.0       |
 
 
 In general, the six faces of the greenhouse may carry different covers with different radiative properties. For the cover layer as a whole, each radiative parameter is summarised as the average over all faces, weighed by face area.
 
-The density of window glass is typically $2.5$ kg/m^2^/mm, which with a thickness of $4$ mm gives a density of $10$ kg/m^2^ cover. The heat capacity of glass is $840$ J/kg/K ([Engineering Toolbox, 2023](https://www.engineeringtoolbox.com/specific-heat-capacity-d_391.html)). If we furthermore assume a cover/ground ratio of $1.24$ m^2^ cover/m^2^ ground (eq. $\ref{eq_cai}$), we get a heat capacity of the cover of
+The density of window glass is typically $$2.5$$ kg/m^2^/mm, which with a thickness of $$4$$ mm gives a density of $$10$$ kg/m^2^ cover. The heat capacity of glass is $$840$$ J/kg/K ([Engineering Toolbox, 2023](https://www.engineeringtoolbox.com/specific-heat-capacity-d_391.html)). If we furthermore assume a cover/ground ratio of $$1.24$$ m^2^ cover/m^2^ ground (eq. $$\ref{eq_cai}$$), we get a heat capacity of the cover of
 $$
 \begin{equation}
 C_{cover}= 10 \text{ kg/m}^2\text{ cover} \cdot
@@ -497,16 +486,16 @@ C_{cover}= 10 \text{ kg/m}^2\text{ cover} \cdot
 \label{eq_c_glass}
 \end{equation}
 $$
-The cover emits long-wave radiation symmetrically down and up according to the Stefan-Boltzmann Law (eq. $\ref{stefan_boltzmann}$).
+The cover emits long-wave radiation symmetrically down and up according to the Stefan-Boltzmann Law (eq. $$\ref{stefan_boltzmann}$$).
 
-The $U$-values over both the inner and outer surface can be expected to increase with the wind; immobile air is a very good insulator. For the outer surface of the cover, we use the empirical relation,
+The $$U$$-values over both the inner and outer surface can be expected to increase with the wind; immobile air is a very good insulator. For the outer surface of the cover, we use the empirical relation,
 $$
 \begin{equation}
 U_{wind} = 2.8+1.2\cdot w^{0.8}
 \label{eq_u_wind}
 \end{equation}
 $$
-where $w$ is the outdoors wind speed (m/s). The $U$-value of the inner surface is set to $1.2$ W/K/m^2^.
+where $$w$$ is the outdoors wind speed (m/s). The $$U$$-value of the inner surface is set to $$1.2$$ W/K/m^2^.
 
 ### Cover averaging
 
@@ -514,9 +503,9 @@ Since the six cover faces may differ in their characteristics, we may need to av
 
 #### Cover averaging of radiative parameters
 
-Let's assume that the two end faces differ from the other four faces; we set $\alpha=0.15$, $\rho=0.35$ and $\tau=0.60$ at the ends walls, while elsewhere, $\alpha=0.10$, $\rho=0.10$ and $\tau=0.80$. In the full model, these values have been corrected for the effects of [chalking](#chalk-actuator) before the averaging. Furthermore, let's weigh the end walls by $w_{end}=0.25$ and one side by $w_{side1}=0.20$ while the rest have full weight $w_{other}=1.0$. 
+Let's assume that the two end faces differ from the other four faces; we set $$\alpha=0.15$$, $$\rho=0.35$$ and $$\tau=0.60$$ at the ends walls, while elsewhere, $$\alpha=0.10$$, $$\rho=0.10$$ and $$\tau=0.80$$. In the full model, these values have been corrected for the effects of [chalking](#chalk-actuator) before the averaging. Furthermore, let's weigh the end walls by $$w_{end}=0.25$$ and one side by $$w_{side1}=0.20$$ while the rest have full weight $$w_{other}=1.0$$. 
 
-For the radiative parameters ($\alpha$, $\rho$ and $\tau$), we get their weighted averages ($\alpha_{cover}$, $\rho_{cover}$ and $\tau_{cover}$) for the cover as whole by 
+For the radiative parameters ($$\alpha$$, $$\rho$$ and $$\tau$$), we get their weighted averages ($$\alpha_{cover}$$, $$\rho_{cover}$$ and $$\tau_{cover}$$) for the cover as whole by 
 $$
 \begin{equation}
 \begin{split}
@@ -530,7 +519,7 @@ $$
 \label{eq_q_cover}
 \end{equation}
 $$
-where subscript $i$ stands for the six cover faces, and $A_i$ (m^2^) is the area of each face. Since $\alpha^0+\rho^0+\tau^0=1$ is not guaranteed, these values are subsequently rescaled to a sum of $1$.
+where subscript $$i$$ stands for the six cover faces, and $$A_i$$ (m^2^) is the area of each face. Since $$\alpha^0+\rho^0+\tau^0=1$$ is not guaranteed, these values are subsequently rescaled to a sum of $$1$$.
 
 With the numbers above and the illustrative [greenhouse dimensions](#greenhouse-dimensions) we have (with parameters pair-wise in the order: roofs, sides, ends)
 $$
@@ -550,18 +539,18 @@ $$
 \tau_{cover} &= 0.795 
 \end{split}
 $$
-The roof faces are dominating by their size; hence the average parameter values are close to the roof values. If we change all weights to one $w_i=1$, we get a larger impact of the ends: $\alpha_{cover}=0.102$, $\rho_{cover}=0.115$ and $\alpha_{cover}=0.783$.
+The roof faces are dominating by their size; hence the average parameter values are close to the roof values. If we change all weights to one $$w_i=1$$, we get a larger impact of the ends: $$\alpha_{cover}=0.102$$, $$\rho_{cover}=0.115$$ and $$\alpha_{cover}=0.783$$.
 
 #### Cover averaging of heat capacity
 
-Heat capacity is averaged to apply to the greenhouse ground area (eq. $\ref{eq_c_glass}$). If, for example, the largest area is covered by glass with a heat capacity of $C_{glass}=8\,400$ J/K/m^2^ cover, while the ends have a more sturdy material with  $C_{sturdy}=18\,000$ J/K/m^2^ cover, we can calculate the total heat capacity of the cover per greenhouse area $C_{cover}$ (J/K/m^2^ ground) as
+Heat capacity is averaged to apply to the greenhouse ground area (eq. $$\ref{eq_c_glass}$$). If, for example, the largest area is covered by glass with a heat capacity of $$C_{glass}=8\,400$$ J/K/m^2^ cover, while the ends have a more sturdy material with  $$C_{sturdy}=18\,000$$ J/K/m^2^ cover, we can calculate the total heat capacity of the cover per greenhouse area $$C_{cover}$$ (J/K/m^2^ ground) as
 $$
 \begin{equation}
 C_{cover} = \frac{\sum_{i=1}^6 A_iC_i}{A_{gh}}
 \label{eq_c_cover}
 \end{equation}
 $$
-where $A_{gh}$ (m^2^) is the ground area of the greenhouse. We apply no weights to the different greenhouse faces, other than their areas, when averaging the heat capacity.
+where $$A_{gh}$$ (m^2^) is the ground area of the greenhouse. We apply no weights to the different greenhouse faces, other than their areas, when averaging the heat capacity.
 
 Using the the illustrative [greenhouse dimensions](#greenhouse-dimensions) we have
 $$
@@ -575,24 +564,24 @@ which gives us
 $$
 C_{cover} = 11\,177\text{ J/K/m}^2\text{ ground}
 $$
-As expected, this heat capacity is larger than the one calculated for and all-glass greenhouse $C_{cover}=10\,421$ J/K/m^2^ ground in eq. $\ref{eq_c_glass}$.
+As expected, this heat capacity is larger than the one calculated for and all-glass greenhouse $$C_{cover}=10\,421$$ J/K/m^2^ ground in eq. $$\ref{eq_c_glass}$$.
 
 #### Cover averaging of U-values
 
-The $U_i$ values (W/K/m^2^ cover) are conductances (one for each face, $i=1..6$). They can also be looked upon as resistances by taking their inverse, $R_i=1/U_i$. If we assume that the six resistances work like electrical resistors in parallel, we get the total resistance of the greenhouse cover $R_{cover}$ as
+The $$U_i$$ values (W/K/m^2^ cover) are conductances (one for each face, $$i=1..6$$). They can also be looked upon as resistances by taking their inverse, $$R_i=1/U_i$$. If we assume that the six resistances work like electrical resistors in parallel, we get the total resistance of the greenhouse cover $$R_{cover}$$ as
 $$
 \frac{1}{R_{cover}} = \sum_{i=1}^6\frac{1}{R_i}
 $$
-It follows that conductances are simply additive. Thus the conductance of the greenhouse cover as a whole is arrived at by the sum of the faces. Relating this to the ground area of the greenhouse $A_{gh}$ (m^2^ ground), we get
+It follows that conductances are simply additive. Thus the conductance of the greenhouse cover as a whole is arrived at by the sum of the faces. Relating this to the ground area of the greenhouse $$A_{gh}$$ (m^2^ ground), we get
 $$
 \begin{equation}
 U_{cover} = \frac{1}{A_{gh}}\sum_{i=1}^6A_iU_i
 \label{eq_u_cover}
 \end{equation}
 $$
-As for heat capacity (eq. $\ref{eq_c_cover}$), we apply no weights to the different greenhouse faces, other than their areas.
+As for heat capacity (eq. $$\ref{eq_c_cover}$$), we apply no weights to the different greenhouse faces, other than their areas.
 
-For example, If the cover material has $U_{glass}=1.2$ W/K/m^2^, except for the end walls which have $U_{poly}=0.3$ W/K/m^2^, we get with the illustrative [greenhouse dimensions](#greenhouse-dimensions), 
+For example, If the cover material has $$U_{glass}=1.2$$ W/K/m^2^, except for the end walls which have $$U_{poly}=0.3$$ W/K/m^2^, we get with the illustrative [greenhouse dimensions](#greenhouse-dimensions), 
 $$
 \begin{split}
 \bar{A} &= (5\,459,5\,459,350,350,394,394) \text{ m}^2\text{ cover} \\[6pt]
@@ -605,7 +594,7 @@ $$
 U_{cover} = 1.42 \text{ W/K/m}^2\text{ ground}
 $$
 
-The reason why the average $U_{cover}$ is larger than any $U_i$ is that the ground area is smaller than the cover area. 
+The reason why the average $$U_{cover}$$ is larger than any $$U_i$$ is that the ground area is smaller than the cover area. 
 
 ## Screen layer
 
@@ -613,17 +602,17 @@ Screens are often constructed with asymmetric radiative properties. Here, for ex
 
 | Screen properties                | Long-wave radiation |
 | -------------------------------- | ------------------- |
-| $\alpha', \epsilon'$ (polyester) | 0.57                |
-| $\rho'$ (polyester)              | 0.43                |
-| $\alpha, \epsilon$ (aluminium)   | 0.07                |
-| $\rho$ (aluminium)               | 0.93                |
-| $\tau', \tau$                    | 0.0                 |
+| $$\alpha', \epsilon'$$ (polyester) | 0.57                |
+| $$\rho'$$ (polyester)              | 0.43                |
+| $$\alpha, \epsilon$$ (aluminium)   | 0.07                |
+| $$\rho$$ (aluminium)               | 0.93                |
+| $$\tau', \tau$$                    | 0.0                 |
 
 The values in the table are for long-wave radiation only. They are most likely different for short-wave radiation but documentation for the physical characteristics of screens are hard to come by; manufacturers seem reluctant to provide the information.
 
-Screens may be more or less drawn . If we denote how much a curtain is drawn by its position $p\in[0;1]$ then the effective radiation parameters are calculates as $p\alpha$,  $p\rho$ and $1-p\alpha-p\rho$, and likewise for $\alpha'$, $\rho'$ and $\tau'$. For the screen layer of the greenhouse as a whole, each radiative parameter is summarised as the average over all the six faces, weighed by face area, as for the cover layer. If screens are kept half-drawn for extended periods, or if faces differ much in screen material, this averaging could turn out highly unrealistic. If the greenhouse is equipped with more than one layer of screens, the screens are stacked as separate, independent layers.
+Screens may be more or less drawn . If we denote how much a curtain is drawn by its position $$p\in[0;1]$$ then the effective radiation parameters are calculates as $$p\alpha$$,  $$p\rho$$ and $$1-p\alpha-p\rho$$, and likewise for $$\alpha'$$, $$\rho'$$ and $$\tau'$$. For the screen layer of the greenhouse as a whole, each radiative parameter is summarised as the average over all the six faces, weighed by face area, as for the cover layer. If screens are kept half-drawn for extended periods, or if faces differ much in screen material, this averaging could turn out highly unrealistic. If the greenhouse is equipped with more than one layer of screens, the screens are stacked as separate, independent layers.
 
-Screens may be constructed of composite materials which complicates the calculation of their heat capacity. For the screen exemplified here, we found quite close values of $C_{polyester}=1.1$ J/K/g and $C_{Al}=0.89$ J/K/g. Assuming that polyester is the dominant material and a screen density of $80$ g/m^2^ screen, we get a heat capacity of the screen of
+Screens may be constructed of composite materials which complicates the calculation of their heat capacity. For the screen exemplified here, we found quite close values of $$C_{polyester}=1.1$$ J/K/g and $$C_{Al}=0.89$$ J/K/g. Assuming that polyester is the dominant material and a screen density of $$80$$ g/m^2^ screen, we get a heat capacity of the screen of
 $$
 \begin{equation}
 C_{screen}= 80 \text{ g/m}^2\text{ screen} \cdot
@@ -633,30 +622,30 @@ C_{screen}= 80 \text{ g/m}^2\text{ screen} \cdot
 \label{eq_c_screen}
 \end{equation}
 $$
-This calculation implies that all six greenhouses faces are equally covered  with the same screen. If that is not the case then $S_{screen}$ must be found by calculating the heat capacity of each face separately and adding them up to give $S_{screen}$. Note that the calculated heat capacity of the screen is ~100 times less that of a glass cover (eq. $\ref{eq_c_glass}$).
+This calculation implies that all six greenhouses faces are equally covered  with the same screen. If that is not the case then $$S_{screen}$$ must be found by calculating the heat capacity of each face separately and adding them up to give $$S_{screen}$$. Note that the calculated heat capacity of the screen is ~100 times less that of a glass cover (eq. $$\ref{eq_c_glass}$$).
 
-The screen emits long-wave radiation according to the Stefan-Boltzmann Law (eq. $\ref{stefan_boltzmann}$). With the example above, the radiation would be asymmetric because downwards and upwards emissivity differ; this screen was designed to keep the heat indoors.
+The screen emits long-wave radiation according to the Stefan-Boltzmann Law (eq. $$\ref{stefan_boltzmann}$$). With the example above, the radiation would be asymmetric because downwards and upwards emissivity differ; this screen was designed to keep the heat indoors.
 
 ### Screen averaging
 
-The averaging of screens in a layer follows the same principles as [cover averaging](#cover-averaging), except that screens also have a position $p\in[0;1]$. In a given layer, there may be screens on some layers but not on others; these are given full transparency, $\tau=\tau'=1$.
+The averaging of screens in a layer follows the same principles as [cover averaging](#cover-averaging), except that screens also have a position $$p\in[0;1]$$. In a given layer, there may be screens on some layers but not on others; these are given full transparency, $$\tau=\tau'=1$$.
 
-Thus for the radiative parameter $q$ (i.e. $\alpha$, $\rho$,  $\alpha'$ or $\rho'$), we get the weighted average $q_{screen}$ for the screen layer as a whole (cf. eq. $\ref{eq_q_cover}$),
+Thus for the radiative parameter $$q$$ (i.e. $$\alpha$$, $$\rho$$,  $$\alpha'$$ or $$\rho'$$), we get the weighted average $$q_{screen}$$ for the screen layer as a whole (cf. eq. $$\ref{eq_q_cover}$$),
 $$
 q_{screen}=\frac{\sum_{i=1}^6p_iw_iA_iq_i}{\sum_{i=1}^6p_iw_iA_i}
 $$
-with transmissivity as in eq. $\ref{eq_tau_cover}$,
+with transmissivity as in eq. $$\ref{eq_tau_cover}$$,
 $$
 \begin{split}
 \tau_{screen} &= 1 - \alpha_{screen} - \rho_{screen} \\[6pt]
 \tau_{screen}' &= 1 - \alpha_{screen}' - \rho_{screen}'
 \end{split}
 $$
-The heat capacity and U-value of screens is assumed to be in effect only when they are drawn. Hence we get (cf. eqs. $\ref{eq_c_cover}$ and $\ref{eq_u_cover}$) the total heat capacity of the screen layer $C_{screen}$ (J/K/m^2^ ground),
+The heat capacity and U-value of screens is assumed to be in effect only when they are drawn. Hence we get (cf. eqs. $$\ref{eq_c_cover}$$ and $$\ref{eq_u_cover}$$) the total heat capacity of the screen layer $$C_{screen}$$ (J/K/m^2^ ground),
 $$
 C_{screen} = \frac{\sum_{i=1}^6 p_iA_iC_i}{A_{gh}}
 $$
-and  the total U-value of the screen layer $U_{screen}$ (W/K/m^2^ ground),
+and  the total U-value of the screen layer $$U_{screen}$$ (W/K/m^2^ ground),
 $$
 U_{screen} = \frac{1}{A_{gh}}\sum_{i=1}^6p_iA_iU_i
 $$
@@ -668,27 +657,27 @@ Screen layers function just like any other layer (see [Layers](#layers)).  Thus 
 
 ## Growth light layer 
 
-Lamps are installed to provide growth light. Even so, their production of heat is a significant side effect. Light is traditionally emitted downwards from a position above the canopy. If the installed lamp power (including any ballast or driver needed by the lamps) is $P_{lamp}$ (W/m^2^) and the PAR efficiency is $e_{lamp}$ (&mu;mol PAR/J) then the emission of PAR downwards $E_{lamp}^{par}$  and upwards ${E_{lamp}^{par}}'$ (&mu;mol PAR/m^2^) is
+Lamps are installed to provide growth light. Even so, their production of heat is a significant side effect. Light is traditionally emitted downwards from a position above the canopy. If the installed lamp power (including any ballast or driver needed by the lamps) is $$P_{lamp}$$ (W/m^2^) and the PAR efficiency is $$e_{lamp}$$ (&mu;mol PAR/J) then the emission of PAR downwards $$E_{lamp}^{par}$$  and upwards $${E_{lamp}^{par}}'$$ (&mu;mol PAR/m^2^) is
 $$
 \begin{split}
-E_{lamp}^{par} &= e_{lamp}P_{lamp} \\
+E_{lamp}^{par} &= e_{lamp}P_{lamp} \\\
 {E_{lamp}^{par}}' &= 0
 \end{split}
 $$
-Lamps may loose efficiency with age, which is reflected in a reduced $e_{lamp}$.
+Lamps may loose efficiency with age, which is reflected in a reduced $$e_{lamp}$$.
 
-Energy is dissipated from the lamps  by three routes: short-waved and long-waved radiation and convection. The proportions are denoted $p_{lamp}^{sw}$, $p_{lamp}^{lw}$ and $p_{lamp}^{conv}$, where $p_{lamp}^{sw}+p_{lamp}^{lw}+p_{lamp}^{conv}=1$. While the short-wave radiation is assumed to be heading only downwards, the long-wave radiation and convective heat are both assumed to be emitted equally downward and upwards. Thus we have
+Energy is dissipated from the lamps  by three routes: short-waved and long-waved radiation and convection. The proportions are denoted $$p_{lamp}^{sw}$$, $$p_{lamp}^{lw}$$ and $$p_{lamp}^{conv}$$, where $$p_{lamp}^{sw}+p_{lamp}^{lw}+p_{lamp}^{conv}=1$$. While the short-wave radiation is assumed to be heading only downwards, the long-wave radiation and convective heat are both assumed to be emitted equally downward and upwards. Thus we have
 $$
 \begin{split}
-E_{lamp}^{sw} &= p_{lamp}^{sw}P_{lamp} \\
+E_{lamp}^{sw} &= p_{lamp}^{sw}P_{lamp} \\\
 {E_{lamp}^{sw}}' &= 0\\[6pt]
-E_{lamp}^{lw} &= \\
+E_{lamp}^{lw} &= \\\
 {E_{lamp}^{lw}}' &= p_{lamp}^{lw}P_{lamp}/2 \\[6pt]
-E_{lamp}^{conv} &= \\
+E_{lamp}^{conv} &= \\\
 {E_{lamp}^{conv}}' &= p_{lamp}^{conv}P_{lamp}/2 \\[6pt]
 \end{split}
 $$
-The growth light layer has a 100% transmissivity ($\tau=\tau'=1$) and is attributed neither a temperature nor a heat capacity.
+The growth light layer has a 100% transmissivity ($$\tau=\tau'=1$$) and is attributed neither a temperature nor a heat capacity.
 
 ## Plant canopy layer
 
@@ -696,21 +685,21 @@ The growth light layer has a 100% transmissivity ($\tau=\tau'=1$) and is attribu
 $$
 R_n=H+LE+M+J\quad\left[\text{W/m}^2\right]
 $$
-The equation states (in her notation) that the energy of net radiation absorbed by the canopy $R_n$ is spent on 
+The equation states (in her notation) that the energy of net radiation absorbed by the canopy $$R_n$$ is spent on 
 
-* convective heat loss to the greenhouse air $H$ 
-* heat for the evaporation of water needed for transpiration $LE$
-* photosynthate production $M$
-* heat storage in the canopy $J$
+* convective heat loss to the greenhouse air $$H$$ 
+* heat for the evaporation of water needed for transpiration $$LE$$
+* photosynthate production $$M$$
+* heat storage in the canopy $$J$$
 
-Like Stanghellini we will ignore $M$ and $J$ in the energy budget (they both make quite small contributions to the total budget) and follow her logic which leads to, surprisingly, that $H$ does not need to be taken explicitly into account either.
+Like Stanghellini we will ignore $$M$$ and $$J$$ in the energy budget (they both make quite small contributions to the total budget) and follow her logic which leads to, surprisingly, that $$H$$ does not need to be taken explicitly into account either.
 ### Radiative properties
 
-[Goudriaan (1977)](https://library.wur.nl/WebQuery/wurpubs/70980) provides equations (his eqs. 2.21 and 2.26) to calculate the reflectivity of a plant canopy with leaf area index $L_{ai}$ and extinction coefficient $k$. The reflection coefficient $\rho_h$ depends on the scattering coefficient $\sigma$,
+[Goudriaan (1977)](https://library.wur.nl/WebQuery/wurpubs/70980) provides equations (his eqs. 2.21 and 2.26) to calculate the reflectivity of a plant canopy with leaf area index $$L_{ai}$$ and extinction coefficient $$k$$. The reflection coefficient $$\rho_h$$ depends on the scattering coefficient $$\sigma$$,
 $$
 \rho_h=\frac{1-\sqrt{1-\sigma}}{1+\sqrt{1-\sigma}}
 $$
-$\sigma$ is a species-dependent parameter commonly set to $\sigma=0.2$ ([Kropff and Laar 1993, p.38](https://research.wur.nl/en/publications/modelling-crop-weed-interactions)), which gives $\rho_h=0.0557$.
+$$\sigma$$ is a species-dependent parameter commonly set to $$\sigma=0.2$$ ([Kropff and Laar 1993, p.38](https://research.wur.nl/en/publications/modelling-crop-weed-interactions)), which gives $$\rho_h=0.0557$$.
 
 The original eq. 2.26 includes the reflectivity of the surface underneath the canopy (the floor in our case). However, we will resolve the distribution of radiation among the greenhouse layers otherwise. Consequently, we can set the reflectivity of the underlying surface in the original equation to zero. Thus we get the reflectivity of the canopy, which is symmetric for up- and down-going radiation, based on his eq.2.26,
 $$
@@ -720,7 +709,7 @@ $$
 \label{eq_rho}
 \end{equation}
 $$
-where superscript $r$ denotes $par$, $sw$ or $lw$ radiation. Commonly found values for $k^{par}$ and $k^{sw}$ are in the range $0.7$ to $0.8$, while leaves are impenetrable to long-wave radiation resulting in $k^{lw}=1$.
+where superscript $$r$$ denotes $$par$$, $$sw$$ or $$lw$$ radiation. Commonly found values for $$k^{par}$$ and $$k^{sw}$$ are in the range $$0.7$$ to $$0.8$$, while leaves are impenetrable to long-wave radiation resulting in $$k^{lw}=1$$.
 
 The absorptivity of the canopy is simply
 $$
@@ -737,7 +726,7 @@ $$
 \label{eq_tau}
 \end{equation}
 $$
-The `plant-canopy-layer.R` script shows how the parameters change with increasing leaf area index for short-wave ($k=0.7$) and long-wave radiation ($k=1$):
+The `plant-canopy-layer.R` script shows how the parameters change with increasing leaf area index for short-wave ($$k=0.7$$) and long-wave radiation ($$k=1$$):
 
 ![](..\media\models\vg\plant-canopy-layer.png)
 
@@ -760,32 +749,32 @@ with
 
 * plant and indoors climate variables
 
-  * $T_{plant}$ : Canopy temperature (&deg;C) 
+  * $$T_{plant}$$ : Canopy temperature (&deg;C) 
 
-  * $T_{in}$ : Indoors air temperature (&deg;C)
+  * $$T_{in}$$ : Indoors air temperature (&deg;C)
 
-  * $L_{ai}$ : Leaf area index (m^2^ leaf/m^2^ ground)
+  * $$L_{ai}$$ : Leaf area index (m^2^ leaf/m^2^ ground)
 
-  * $r_i=r_i^{H_2O}$ : Internal (stomatal) leaf resistance against water vapour (s/m)
+  * $$r_i=r_i^{H_2O}$$ : Internal (stomatal) leaf resistance against water vapour (s/m)
 
-  * $r_e=r_e^{H_2O}$ : External (boundary layer) leaf resistance against water vapour (s/m)
+  * $$r_e=r_e^{H_2O}$$ : External (boundary layer) leaf resistance against water vapour (s/m)
 
-  *  $A_{plant}^{rad}$: Net radiation absorbed by the canopy (W/m^2^)
+  *  $$A_{plant}^{rad}$$: Net radiation absorbed by the canopy (W/m^2^)
 
-  * $H_{in}^{pres}$ : Indoors air vapour pressure (Pa)
+  * $$H_{in}^{pres}$$ : Indoors air vapour pressure (Pa)
 
-  * $H_{sat}^{pres}$ : Saturated air vapour pressure (Pa), a function of $T_{in}$
+  * $$H_{sat}^{pres}$$ : Saturated air vapour pressure (Pa), a function of $$T_{in}$$
 
 * physical variables
-  * $\delta$ : Slope of saturated vapour pressure curve (Pa/K)
+  * $$\delta$$ : Slope of saturated vapour pressure curve (Pa/K)
 
 * physical constants and approximations
-  * $\lambda$: Latent heat of vapourisation of water ($2\,454$ kJ/kg )
-  * $\gamma$: The psychrometric constant, which tells how the partial pressure of water vapour changes with changes in air temperature ($67.71$ Pa/K at standard air pressure)
-  * $\rho_a$: Air density, which depends on air pressure, air humidity and temperature [(Shelquist, 2023)](https://wahiduddin.net/calc/density_altitude.htm); here assumed constant ($1.19$ kg/m^3^) 
-  * $C_a$: Air heat capacity, which depends on air humidity and temperature [(Powder Process, 2023)](https://powderprocess.net/Tools_html/Air/Air_Humid_Specific_Heat.html); here assumed constant ($1\,020$ J/kg/K)
+  * $$\lambda$$: Latent heat of vapourisation of water ($$2\,454$$ kJ/kg )
+  * $$\gamma$$: The psychrometric constant, which tells how the partial pressure of water vapour changes with changes in air temperature ($$67.71$$ Pa/K at standard air pressure)
+  * $$\rho_a$$: Air density, which depends on air pressure, air humidity and temperature [(Shelquist, 2023)](https://wahiduddin.net/calc/density_altitude.htm); here assumed constant ($$1.19$$ kg/m^3^) 
+  * $$C_a$$: Air heat capacity, which depends on air humidity and temperature [(Powder Process, 2023)](https://powderprocess.net/Tools_html/Air/Air_Humid_Specific_Heat.html); here assumed constant ($$1\,020$$ J/kg/K)
 
-The saturated vapour pressure $H_{sat}(T)$ as a function of temperature is described by the empirical equation [(FAO, 2023, eq. 11)](https://www.fao.org/3/x0490e/x0490e07.htm),
+The saturated vapour pressure $$H_{sat}(T)$$ as a function of temperature is described by the empirical equation [(FAO, 2023, eq. 11)](https://www.fao.org/3/x0490e/x0490e07.htm),
 $$
 \begin{equation}
 H_{sat}(T) = 610.8\cdot\exp\left(\frac{17.27\cdot T}{T+237.3}\right)
@@ -794,9 +783,9 @@ H_{sat}(T) = 610.8\cdot\exp\left(\frac{17.27\cdot T}{T+237.3}\right)
 $$
 It increases with temperature, as seen in the figure:
 
-![](../media/models/vg/svp.png)
+![](../../media/models/vg/svp.png)
 
-The slope $\delta(T)$ as a function of temperature is described by the empirical equation [(FAO, 2023, eq. 13)](https://www.fao.org/3/x0490e/x0490e07.htm),
+The slope $$\delta(T)$$ as a function of temperature is described by the empirical equation [(FAO, 2023, eq. 13)](https://www.fao.org/3/x0490e/x0490e07.htm),
 $$
 \begin{equation}
 \delta(T) = \frac{4098}{(T+237.3)^2}\cdot H_{sat}(T)
@@ -805,39 +794,39 @@ $$
 $$
 The slope is increasing with temperature too, as seen in the figure:
 
-<img src="../media/models/vg/svp-slope.png" style="zoom:66%;" />
+<img src="../../media/models/vg/svp-slope.png" style="zoom:66%;" />
 
-The internal leaf (stomatal) resistance against water vapour $r_i^{H_2O}$ is computed by the Ball-Barry (ref.) function,
+The internal leaf (stomatal) resistance against water vapour $$r_i^{H_2O}$$ is computed by the Ball-Barry (ref.) function,
 $$
 \begin{equation}
 r_i^{H_2O} = \left[ g_0 + g_1\frac{H_{in}^{rel}}{100\%}\frac{P_n}{c_{in}^{CO_2}} \right]^{-1}
 \label{eq_ri}
 \end{equation}
 $$
-with species-specific coefficients that we here set to $g_0=0.1$ m/s and $g_1=1.64$ m^3^/mol. Other variables are
+with species-specific coefficients that we here set to $$g_0=0.1$$ m/s and $$g_1=1.64$$ m^3^/mol. Other variables are
 
-* $H_{in}^{rel}$: Relative humidity of the indoors air (%)
-* $c_{in}^{CO_2}$: Indoors CO~2~ concentration (ppm)
-*  $P_n:$ Net photosynthetic rate (μmol CO~2~ / leaf m^2^ / s)
+* $$H_{in}^{rel}$$: Relative humidity of the indoors air (%)
+* $$c_{in}^{CO_2}$$: Indoors CO~2~ concentration (ppm)
+*  $$P_n:$$ Net photosynthetic rate (μmol CO~2~ / leaf m^2^ / s)
 
-Here is an example, how $r_i^{H_2O}$ behaves with increasing humidity at various CO~2~ levels and with $P_n=2.0$ μmol CO~2~ / m^2^ leaf / s. There is not much variation from the maximum set by $g_0^{-1}$:
+Here is an example, how $$r_i^{H_2O}$$ behaves with increasing humidity at various CO~2~ levels and with $$P_n=2.0$$ μmol CO~2~ / m^2^ leaf / s. There is not much variation from the maximum set by $$g_0^{-1}$$:
 
-![](../media/models/vg/internal-resistance.png)
+![](../../media/models/vg/internal-resistance.png)
 
-The external leaf (boundary layer) resistance to water vapour $r_e^{H_2O}$ can be computed according to  [Stanghellini (1987, eq. 2.53)](https://research.wur.nl/en/publications/transpiration-of-greenhouse-crops-an-aid-to-climate-management):
+The external leaf (boundary layer) resistance to water vapour $$r_e^{H_2O}$$ can be computed according to  [Stanghellini (1987, eq. 2.53)](https://research.wur.nl/en/publications/transpiration-of-greenhouse-crops-an-aid-to-climate-management):
 $$
 \begin{equation}
 r_e^{H_2O} = \frac{1\,174\sqrt{\ell}}{\sqrt[4]{\ell |T_{plant}-T_{in}| + 207u^2 }}
 \label{eq_re_stangh}
 \end{equation}
 $$
-where $\ell$ characterizes leaf dimensions and $u$ (m/s) is air velocity at the leaf surface. The constants $1\,174$ and $207$ were estimated empirically in a tomato crop by Stanghellini.
+where $$\ell$$ characterizes leaf dimensions and $$u$$ (m/s) is air velocity at the leaf surface. The constants $$1\,174$$ and $$207$$ were estimated empirically in a tomato crop by Stanghellini.
 
-This figure shows the behaviour of $r_e^{H_2O}$ with increasing wind speed, at different leaf temperatures and leaf dimensions with $T_{in}=24$&deg;C:
+This figure shows the behaviour of $$r_e^{H_2O}$$ with increasing wind speed, at different leaf temperatures and leaf dimensions with $$T_{in}=24$$&deg;C:
 
-![](../media/models/vg/external-resistance.png)
+![](../../media/models/vg/external-resistance.png)
 
-Both $\ell$ and $u$ are difficult to estimate. $\ell$ should be smaller for smaller leaves. $u$ should increase with the greenhouse ventilation rate (or if rotors are running) and decrease with $L_{ai}$, as a denser canopy will reduce the average wind speed at leaf surfaces. 
+Both $$\ell$$ and $$u$$ are difficult to estimate. $$\ell$$ should be smaller for smaller leaves. $$u$$ should increase with the greenhouse ventilation rate (or if rotors are running) and decrease with $$L_{ai}$$, as a denser canopy will reduce the average wind speed at leaf surfaces. 
 
 **Note:** Due to all the uncertainties, we use a fixed value in the model defaulting to 
 $$
@@ -846,9 +835,9 @@ r_e^{H_2O}=200 \text{ s/m}
 \label{eq_re}
 \end{equation}
 $$
-Everything above taken together, we get the following linear response of plant temperature $T_{plant}$ (eq. $\ref{eq_t_plant}$) to the radiation absorbed by canopy $A_{plant}^{rad}$ with $L_{ai}=1.9$. The indoors temperature was set at $T_{in}=25$&deg;C and is shown as a black line in the figure: 
+Everything above taken together, we get the following linear response of plant temperature $$T_{plant}$$ (eq. $$\ref{eq_t_plant}$$) to the radiation absorbed by canopy $$A_{plant}^{rad}$$ with $$L_{ai}=1.9$$. The indoors temperature was set at $$T_{in}=25$$&deg;C and is shown as a black line in the figure: 
 
-<img src="..\media\models\vg\leaf-temperature.png" style="zoom:67%;" />
+<img src="../../media/models/vg/leaf-temperature.png" style="zoom:67%;" />
 
 Clearly, a high air humidity works against  plant transpiration and leads to a higher leaf temperature, even above the ambient temperature of the greenhouse: Relatively cool leaves are a sign of a sound microclimate.
 
@@ -856,7 +845,7 @@ Clearly, a high air humidity works against  plant transpiration and leads to a h
 
 Note:  The figures in this sub-section were generated by the `5-energy-budget-plant.R` script.
 
-The model of canopy transpiration rate $H_{plant}^{trans}$ (kg/m^2^ ground/s) is taken from [Stanghellini (1987 ,eq. 3.4)](https://research.wur.nl/en/publications/transpiration-of-greenhouse-crops-an-aid-to-climate-management):
+The model of canopy transpiration rate $$H_{plant}^{trans}$$ (kg/m^2^ ground/s) is taken from [Stanghellini (1987 ,eq. 3.4)](https://research.wur.nl/en/publications/transpiration-of-greenhouse-crops-an-aid-to-climate-management):
 $$
 \begin{equation}
 H_{plant}^{trans} = 
@@ -867,25 +856,25 @@ H_{plant}^{trans} =
 \label{eq_transpiration}
 \end{equation}
 $$
-with symbols defined as for eq. $\ref{eq_t_plant}$. With the same parameter settings as for the previous figure, we get this transpiration rate of the canopy (shown in units of g/m^2^ ground/min):
+with symbols defined as for eq. $$\ref{eq_t_plant}$$. With the same parameter settings as for the previous figure, we get this transpiration rate of the canopy (shown in units of g/m^2^ ground/min):
 
-![](../media/models/vg/leaf-transpiration.png)
+![](../../media/models/vg/leaf-transpiration.png)
 
 Obviously, transpiration is larger in a drier climate and it increases with the absorbed radiation. Note that leaf temperature (previous figure) too increased with absorbed radiation. This means that the increase in transpiration with increased absorbed radiation was not sufficient to keep leaf temperature constant; that would have acquired an even higher transpiration.
 
-The phase change from water (in the plant) to water vapour (in the greenhouse air) causes an increase in the latent heat carried by the air. This heat, which is equal to $\lambda H_{plant}^{trans}$, is shown in the figure below,
+The phase change from water (in the plant) to water vapour (in the greenhouse air) causes an increase in the latent heat carried by the air. This heat, which is equal to $$\lambda H_{plant}^{trans}$$, is shown in the figure below,
 
-![](../media/models/vg/leaf-latent-heat.png)
+![](../../media/models/vg/leaf-latent-heat.png)
 
-The 1:1 dashed line has been added to highlight the balance between the radiation absorbed by the canopy and the latent heat lost from the canopy. Below the line the canopy is warmer than the air, above the line the canopy is cooler than the air. Compare this with the figure of canopy temperature above. At a relative humidity of 90%, both the blue lines cross the respective reference lines at *ca.* $110$ W/m^2^. This verifies the consistency of eqs. $\ref{eq_t_plant}$ and $\ref{eq_transpiration}$. The radiative energy absorbed by the canopy ends up in latent heat bound in the air and in the heating of the canopy itself. 
+The 1:1 dashed line has been added to highlight the balance between the radiation absorbed by the canopy and the latent heat lost from the canopy. Below the line the canopy is warmer than the air, above the line the canopy is cooler than the air. Compare this with the figure of canopy temperature above. At a relative humidity of 90%, both the blue lines cross the respective reference lines at *ca.* $$110$$ W/m^2^. This verifies the consistency of eqs. $$\ref{eq_t_plant}$$ and $$\ref{eq_transpiration}$$. The radiative energy absorbed by the canopy ends up in latent heat bound in the air and in the heating of the canopy itself. 
 
-The convective model of heat transfer does not match the complex physiology and physics of the canopy layer; all heat fluxes are taken care of by eqs. $\ref{eq_t_plant}$ and $\ref{eq_transpiration}$. Therefore the canopy layer is given a $U$-value of zero to make it fit into the stack of generic layers.
+The convective model of heat transfer does not match the complex physiology and physics of the canopy layer; all heat fluxes are taken care of by eqs. $$\ref{eq_t_plant}$$ and $$\ref{eq_transpiration}$$. Therefore the canopy layer is given a $$U$$-value of zero to make it fit into the stack of generic layers.
 
 ## Heat pipe layer
 
-Heat pipes are installed to heat the greenhouse by convection and long-wave radiation. The transmissivity of the heat pipe layer is $\tau_{pipe}=\tau_{pipe}'=1$ for all wave lengths.
+Heat pipes are installed to heat the greenhouse by convection and long-wave radiation. The transmissivity of the heat pipe layer is $$\tau_{pipe}=\tau_{pipe}'=1$$ for all wave lengths.
 
-The drop in temperature ($\Delta T_{pipe}$; K) from the inlet to the outlet is modelled by the empirical equation
+The drop in temperature ($$\Delta T_{pipe}$$; K) from the inlet to the outlet is modelled by the empirical equation
 $$
 \begin{equation}
 \Delta T_{pipe} = \left( T_{pipe}^{inlet} - T_{in}\right) -
@@ -894,9 +883,9 @@ $$
 \label{eq_t_pipe}
 \end{equation}
 $$
-where $k$ and $b$ are parameters calibrated to the greenhouse, $\Delta t_{pipe}$ (s) is the transit time of pipe water, $T_{pipe}^{inlet}$ (&deg;C) is the water temperature at the pipe inlet, and $T_{in}$ (&deg;C) is the greenhouse air temperature. If the inlet temperature is not above the greenhouse temperature then $\Delta T_{pipe}=0$.
+where $$k$$ and $$b$$ are parameters calibrated to the greenhouse, $$\Delta t_{pipe}$$ (s) is the transit time of pipe water, $$T_{pipe}^{inlet}$$ (&deg;C) is the water temperature at the pipe inlet, and $$T_{in}$$ (&deg;C) is the greenhouse air temperature. If the inlet temperature is not above the greenhouse temperature then $$\Delta T_{pipe}=0$$.
 
-The transit time $\Delta t_{pipe}$ (min) is related to the flow rate $\dot{v}_{pipe}$ (m^3^/h) and pipe volume $V_{pipe}$ (m^3^) as
+The transit time $$\Delta t_{pipe}$$ (min) is related to the flow rate $$\dot{v}_{pipe}$$ (m^3^/h) and pipe volume $$V_{pipe}$$ (m^3^) as
 $$
 \Delta t_{pipe} = \frac{V_{pipe}}{\dot{v}_{pipe}}
 $$
@@ -908,12 +897,12 @@ V_{pipe} = \frac{\pi}{4}\cdot\left(30\text{ mm}\cdot\frac{1\text{ m}}{1\,000\tex
 \label{eq_Vpipe}
 \end{equation}
 $$
-which at a flow rate of $\dot{v}_{pipe}=20$ m^3^/h gives a transit time of
+which at a flow rate of $$\dot{v}_{pipe}=20$$ m^3^/h gives a transit time of
 $$
 \Delta t_{pipe} = \frac{14.14\text{ m}^3}{20\text{ m}^3\text{/h}} \cdot
 \frac{60\text{ min}}{\text{h}} = 42.4\text{ min}
 $$
-The energy lost from the heat pipe $E_{pipe}^{tot}$ (W/m^2^ ground) is related to the temperature drop through the pipe $\Delta T_{pipe}$ and the flow rate $\dot{v}_{pipe}$, 
+The energy lost from the heat pipe $$E_{pipe}^{tot}$$ (W/m^2^ ground) is related to the temperature drop through the pipe $$\Delta T_{pipe}$$ and the flow rate $$\dot{v}_{pipe}$$, 
 $$
 \begin{equation}
 E_{pipe}^{tot}  =
@@ -923,36 +912,36 @@ E_{pipe}^{tot}  =
 \label{eq_e_pipe}
 \end{equation}
 $$
-where $C_{water}=4\,184$ J/K/kg is the heat capacity of water and $A_{gh}$ (m^2^ ground) is the ground area of the greenhouse. Proper conversion of units must be observed.  With $\Delta T_{pipe}=30$ K, for example, we get
+where $$C_{water}=4\,184$$ J/K/kg is the heat capacity of water and $$A_{gh}$$ (m^2^ ground) is the ground area of the greenhouse. Proper conversion of units must be observed.  With $$\Delta T_{pipe}=30$$ K, for example, we get
 $$
 E_{pipe}^{tot} = \frac{4\,184\text{ J/K/kg} \cdot 30\text{ K} \cdot 20\text{ m}^3\text{/h}}
 {10\,000\text{ m}^2 } \cdot
 \frac{1000\text{ kg}}{\text{m}^3} \cdot
 \frac{1\text{ h}}{3\,600\text{ s}} = 69.7\text{ W/m}^2
 $$
-As an example, we set $k=0.0063$ and $b=1.25$ with an indoors temperature $T_{in}=20$&deg;C. We choose a range of inlet temperatures $T^{inlet}_{pipe}=20..80$&deg;C and two different flow rates $\dot{v} = (10,20)$ m^3^/h. Other parameters keep the values used in the examples above. We then get the following drop in water temperature $\Delta T_{pipe}$ (eq. $\ref{eq_t_pipe}$) reached at the pipe outlet and the associated energy $E_{pipe}^{tot}$ (eq. $\ref{eq_e_pipe}$) lost to the greenhouse (plots generated by the `heat-pipes.R` script):
+As an example, we set $$k=0.0063$$ and $$b=1.25$$ with an indoors temperature $$T_{in}=20$$&deg;C. We choose a range of inlet temperatures $$T^{inlet}_{pipe}=20..80$$&deg;C and two different flow rates $$\dot{v} = (10,20)$$ m^3^/h. Other parameters keep the values used in the examples above. We then get the following drop in water temperature $$\Delta T_{pipe}$$ (eq. $$\ref{eq_t_pipe}$$) reached at the pipe outlet and the associated energy $$E_{pipe}^{tot}$$ (eq. $$\ref{eq_e_pipe}$$) lost to the greenhouse (plots generated by the `heat-pipes.R` script):
 
-<img src="..\media\models\vg\heat-pipe.png" style="zoom:67%;" />
+<img src="../../media/models/vg/heat-pipe.png" style="zoom:67%;" />
 
-Heat pipe energy is emitted as a combination of radiant and convective heat.  We denote the proportion of long-wave radiation $p_{pipe}^{lw}\in[0;1]$ and, assuming that it is radiated equally down- and upwards, we get
+Heat pipe energy is emitted as a combination of radiant and convective heat.  We denote the proportion of long-wave radiation $$p_{pipe}^{lw}\in[0;1]$$ and, assuming that it is radiated equally down- and upwards, we get
 $$
 E^{lw}_{pipe} = {E^{lw}_{pipe}}' = p^{lw}_{pipe}E^{tot}_{pipe}/2
 $$
-The other part is conveyed to the greenhouse air. Since convective heat is defined relative to the layers (eq. $\ref{u_heat}$), the convective heat flow from the heat pipes is negative,
+The other part is conveyed to the greenhouse air. Since convective heat is defined relative to the layers (eq. $$\ref{u_heat}$$), the convective heat flow from the heat pipes is negative,
 $$
 A^{heat}_{pipe} = -\left(1-p^{lw}_{pipe} \right)E^{tot}_{pipe}
 $$
-Since the volume above and below the heat pipes is the same, i.e. the greenhouse air, we let $A^{heat}_{pipe}$ account for the whole heat exchange and set ${A^{heat}_{pipe}}'=0$ (see eq. $\ref{u_heat}$).
+Since the volume above and below the heat pipes is the same, i.e. the greenhouse air, we let $$A^{heat}_{pipe}$$ account for the whole heat exchange and set $${A^{heat}_{pipe}}'=0$$ (see eq. $$\ref{u_heat}$$).
 
 ## Floor layer
 
-A floor made of concrete has typical values $\alpha_{floor}=0.6$ and $\rho_{floor}=0.4$. It emits long-wave radiation upwards according to the Stefan-Boltzmann Law (eq. $\ref{stefan_boltzmann}$) and exchanges heat with the soil by conduction (eq. $\ref{u_heat}$). We assume a good insulation of the floor against the soil setting  $U_{floor}'=0.1$ W/K/m^2^.
+A floor made of concrete has typical values $$\alpha_{floor}=0.6$$ and $$\rho_{floor}=0.4$$. It emits long-wave radiation upwards according to the Stefan-Boltzmann Law (eq. $$\ref{stefan_boltzmann}$$) and exchanges heat with the soil by conduction (eq. $$\ref{u_heat}$$). We assume a good insulation of the floor against the soil setting  $$U_{floor}'=0.1$$ W/K/m^2^.
 
 ## Soil temperature
 
 Soil is not treated as a layer in the model but as a volume below the floor layer (see [Volumes](#volumes) and [Layers](#layers)). Anyway, the model of soil temperature is naturally presented here.
 
-Soil is defined only vaguely by the model. As a volume it is endless in reality, and it has got not a single temperature but a gradient of temperatures stretching downwards under the greenhouse and inwards from the base of the walls. Considering the complexity of vertical and horizontal gradients of soil temperature, a simple, generic model is called for. Consequently, we set soil temperature at time $t$ equal to the average outdoors temperature over the last 7 days.
+Soil is defined only vaguely by the model. As a volume it is endless in reality, and it has got not a single temperature but a gradient of temperatures stretching downwards under the greenhouse and inwards from the base of the walls. Considering the complexity of vertical and horizontal gradients of soil temperature, a simple, generic model is called for. Consequently, we set soil temperature at time $$t$$ equal to the average outdoors temperature over the last 7 days.
 # Setpoints
 
 All setpoints are defined to be in effect for a certain time interval, both in terms of calendar period and daily time interval. Thus setpoints may change during the year and during the day.
@@ -961,28 +950,28 @@ All setpoints are defined to be in effect for a certain time interval, both in t
 
 Some setpoints can take on a range of values depending on an input variable. Here are two examples:
 
-<img src="../media/models/vg/proportional-setpoint.png" style="zoom:67%;" />
+<img src="../../media/models/vg/proportional-setpoint.png" style="zoom:67%;" />
 
-Such proportional setpoints are defined by their range ($[100;300]$ on the y-axis above) in response to an input threshold ($15$ above) and a threshold band ($10$ above). The response can be increasing (left figure) or decreasing (right figure).
+Such proportional setpoints are defined by their range ($$[100;300]$$ on the y-axis above) in response to an input threshold ($$15$$ above) and a threshold band ($$10$$ above). The response can be increasing (left figure) or decreasing (right figure).
 
 Proportional setpoints are written in the notation:
 $$
-\sp{}{} = x \rightsquigarrow \left[ \sp{x}{};\dsp{x}{}  \right] \mapsto \left[\sp{begin}{}; \sp{end}{} \right]
+{\mathbb{S}_\text{{}}^\text{{}}} = x \rightsquigarrow \left[ {\mathbb{S}_\text{{x}}^\text{{}}};{\Delta\mathbb{S}_\text{{x}}^\text{{}}}  \right] \mapsto \left[{\mathbb{S}_\text{{begin}}^\text{{}}}; {\mathbb{S}_\text{{end}}^\text{{}}} \right]
 $$
-The two examples above are, respectively,  $x\rightsquigarrow\left[15; 10 \right] \mapsto \left[100; 300 \right]$ and  $x\rightsquigarrow\left[15; 10 \right] \mapsto \left[300; 100 \right]$. *This notation might become handy for scientific publication.*
+The two examples above are, respectively,  $$x\rightsquigarrow\left[15; 10 \right] \mapsto \left[100; 300 \right]$$ and  $$x\rightsquigarrow\left[15; 10 \right] \mapsto \left[300; 100 \right]$$. *This notation might become handy for scientific publication.*
 
 Hence, a proportional setpoint involves the definition of four setpoints:
 
-* the $x$ threshold $\sp{x}{}$
-* the $x$ band $\dsp{x}{}$
-* the setpoint value $\sp{begin}{}$ at the beginning of the interval where $x=\sp{x}{}$
-* the setpoint value $\sp{end}{}$ at the end of the interval where $x=\sp{x}{}+\dsp{x}{}$.
+* the $$x$$ threshold $${\mathbb{S}_\text{{x}}^\text{{}}}$$
+* the $$x$$ band $${\Delta\mathbb{S}_\text{{x}}^\text{{}}}$$
+* the setpoint value $${\mathbb{S}_\text{{begin}}^\text{{}}}$$ at the beginning of the interval where $$x={\mathbb{S}_\text{{x}}^\text{{}}}$$
+* the setpoint value $${\mathbb{S}_\text{{end}}^\text{{}}}$$ at the end of the interval where $$x={\mathbb{S}_\text{{x}}^\text{{}}}+{\Delta\mathbb{S}_\text{{x}}^\text{{}}}$$.
 
-If the band width is set to zero $\dsp{x}{}=0$ then the setpoint can only be in one of two states, either $\sp{}{}=\sp{begin}{}$ or $\sp{}{}=\sp{end}{}$.
+If the band width is set to zero $${\Delta\mathbb{S}_\text{{x}}^\text{{}}}=0$$ then the setpoint can only be in one of two states, either $${\mathbb{S}_\text{{}}^\text{{}}}={\mathbb{S}_\text{{begin}}^\text{{}}}$$ or $${\mathbb{S}_\text{{}}^\text{{}}}={\mathbb{S}_\text{{end}}^\text{{}}}$$.
 
 ## Humidity setpoint
 
-The humidity setpoint $\sp{H}{max}$ (%) and its proportional band $\dsp{H}{max}$ (%) set the upper limit on indoors relative humidity $H_{in}$ (%). It is used for proportional control of the [heating setpoint](#heating-setpoint) offset and the [ventilation crack setpoint](#ventilation-crack-setpoint).
+The humidity setpoint $${\mathbb{S}_\text{{H}}^\text{{max}}}$$ (%) and its proportional band $${\Delta\mathbb{S}_\text{{H}}^\text{{max}}}$$ (%) set the upper limit on indoors relative humidity $$H_{in}$$ (%). It is used for proportional control of the [heating setpoint](#heating-setpoint) offset and the [ventilation crack setpoint](#ventilation-crack-setpoint).
 
 This boxscript sets the humidity threshold `rhMax` to `80` from May to August and otherwise to `90`. The proportional band is always `5`:
 
@@ -1017,9 +1006,9 @@ The  `rhMac/threshold` box is a `PrioritySignal` box, which means that it will c
 
 ## Heating setpoint
 
-The heating setpoint $\sp{heat}{}$ (&deg;C) is derived from two other setpoints:
-* the base heating setpoint $\sp{heat}{base}$ (&deg;C)
-* the heating offset at high humidity $\sp{heat}{hum\,offset}$ (&deg;C)
+The heating setpoint $${\mathbb{S}_\text{{heat}}^\text{{}}}$$ (&deg;C) is derived from two other setpoints:
+* the base heating setpoint $${\mathbb{S}_\text{{heat}}^\text{{base}}}$$ (&deg;C)
+* the heating offset at high humidity $${\mathbb{S}_\text{{heat}}^\text{{hum,offset}}}$$ (&deg;C)
 
 A simple boxscript goes to specify this:
 
@@ -1050,31 +1039,31 @@ Box setpoints {
 }
 ```
 
-Here `setpoints/heating/base[value]` is `20` from April to September and otherwise `22`. The  `setpoints/heating/huimityOffset[value]` is `2` always. The heating setpoint $\sp{heat}{}$ (&deg;C) will eventually be computed by the [heating controller](#heating-controller) as
+Here `setpoints/heating/base[value]` is `20` from April to September and otherwise `22`. The  `setpoints/heating/huimityOffset[value]` is `2` always. The heating setpoint $${\mathbb{S}_\text{{heat}}^\text{{}}}$$ (&deg;C) will eventually be computed by the [heating controller](#heating-controller) as
 $$
-\sp{heat}{} = \sp{heat}{base} +\spr{heat}{hum\,offset}
+{\mathbb{S}_\text{{heat}}^\text{{}}} = {\mathbb{S}_\text{{heat}}^\text{{base}}} +{\mathbb{S}_\text{{heat}}^{\text{{hum,offset}*}}}
 $$
-where $\spr{heat}{hum\,offset} \in [0;\sp{heat}{hum\,offset}]$ is the realised humidity offset.
+where $${\mathbb{S}_\text{{heat}}^{\text{{hum,offset}*}}} \in [0;{\mathbb{S}_\text{{heat}}^\text{{hum,offset}}}]$$ is the realised humidity offset.
 
 ## Average heating setpoint
 
-In average climate control, the base heating setpoint $\sp{heat}{base}$ (&deg;C) is updated regularly (e.g., at midnight) to reflect the average greenhouse temperature $\overline{T_{in}}$  (&deg;C) (e.g., over the last 48 hours). The average heating setpoint $\sp{heat}{avg}$ (&deg;C) regulates $\sp{heat}{base}$ in steps of $\Delta\sp{heat}{base}$ (&deg;C) to keep  $\overline{T_{in}} \approx \sp{heat}{avg}$:  
+In average climate control, the base heating setpoint $${\mathbb{S}_\text{{heat}}^\text{{base}}}$$ (&deg;C) is updated regularly (e.g., at midnight) to reflect the average greenhouse temperature $$\overline{T_{in}}$$  (&deg;C) (e.g., over the last 48 hours). The average heating setpoint $${\mathbb{S}_\text{{heat}}^\text{{avg}}}$$ (&deg;C) regulates $${\mathbb{S}_\text{{heat}}^\text{{base}}}$$ in steps of $$\Delta{\mathbb{S}_\text{{heat}}^\text{{base}}}$$ (&deg;C) to keep  $$\overline{T_{in}} \approx {\mathbb{S}_\text{{heat}}^\text{{avg}}}$$:  
 $$
-\text{if}\quad \overline{T_{in}} > \sp{heat}{avg} \quad\text{then}\quad 
-\sp{heat}{base} \rightarrow \sp{heat}{base}-\Delta \sp{heat}{base}
+\text{if}\quad \overline{T_{in}} > {\mathbb{S}_\text{{heat}}^\text{{avg}}} \quad\text{then}\quad 
+{\mathbb{S}_\text{{heat}}^\text{{base}}} \rightarrow {\mathbb{S}_\text{{heat}}^\text{{base}}}-\Delta {\mathbb{S}_\text{{heat}}^\text{{base}}}
 \quad\text{else}\quad 
-\sp{heat}{base} \rightarrow \sp{heat}{base}+\Delta \sp{heat}{base}
+{\mathbb{S}_\text{{heat}}^\text{{base}}} \rightarrow {\mathbb{S}_\text{{heat}}^\text{{base}}}+\Delta {\mathbb{S}_\text{{heat}}^\text{{base}}}
 $$
 
 This functionality has not yet been implemented.
 
 ## Ventilation setpoint
 
-The ventilation setpoint  $\sp{vent}{}$ (&deg;C) is derived from three other setpoints:
+The ventilation setpoint  $${\mathbb{S}_\text{{vent}}^\text{{}}}$$ (&deg;C) is derived from three other setpoints:
 
-* the [heating setpoint](#heating-setpoint) $\sp{heat}{}$ (&deg;C) 
-* the base ventilation offset $\sp{vent}{base\,offset}$ (&deg;C) 
-* the ventilation offset at high humidity $\sp{vent}{hum\,offset}$ (&deg;C)
+* the [heating setpoint](#heating-setpoint) $${\mathbb{S}_\text{{heat}}^\text{{}}}$$ (&deg;C) 
+* the base ventilation offset $${\mathbb{S}_\text{{vent}}^\text{{base,offset}}}$$ (&deg;C) 
+* the ventilation offset at high humidity $${\mathbb{S}_\text{{vent}}^\text{{hum,offset}}}$$ (&deg;C)
 
 In the boxscript, the humidity offset is given a negative value (here `-1.5`) to ease the handling of setpoints by the [ventilation controller](#ventilation-controller):
 
@@ -1101,21 +1090,21 @@ Box setpoints {
 
 ```
 
-The ventilation setpoint $\sp{vent}{}$ (&deg;C) will eventually be computed by the [ventilation controller](#ventilation-controller) as
+The ventilation setpoint $${\mathbb{S}_\text{{vent}}^\text{{}}}$$ (&deg;C) will eventually be computed by the [ventilation controller](#ventilation-controller) as
 $$
 \begin{equation}
-\sp{vent}{} = \sp{heat}{} + \sp{vent}{base\,offset} - \spr{vent}{hum\,offset}
+{\mathbb{S}_\text{{vent}}^\text{{}}} = {\mathbb{S}_\text{{heat}}^\text{{}}} + {\mathbb{S}_\text{{vent}}^\text{{base,offset}}} - {\mathbb{S}_\text{{vent}}^{\text{{hum,offset}*}}}
 \label{eq_sp_vent}
 \end{equation}
 $$
 
-where $\spr{vent}{hum\,offset} \in [0;\sp{vent}{hum\,offset}]$ is the realised humidity offset.
+where $${\mathbb{S}_\text{{vent}}^{\text{{hum,offset}*}}} \in [0;{\mathbb{S}_\text{{vent}}^\text{{hum,offset}}}]$$ is the realised humidity offset.
 
 ## Ventilation crack setpoint
 
-At high indoors humidity $H_{in}$ (%),  ventilation must be kept above a certain minimum; this is the 'ventilation crack' setpoint $\sp{vent\,crack}{}$ (h$^{-1}$). As its unit implies, it a minimum ventilation rate. However, if the outdoors temperature $T_{out}$ (&deg;C) is too low then the ventilation crack is not applied. 
+At high indoors humidity $$H_{in}$$ (%),  ventilation must be kept above a certain minimum; this is the 'ventilation crack' setpoint $${\mathbb{S}_\text{{vent,crack}}^\text{{}}}$$ (h$$^{-1}$$). As its unit implies, it a minimum ventilation rate. However, if the outdoors temperature $$T_{out}$$ (&deg;C) is too low then the ventilation crack is not applied. 
 
-In this boxscript, the ventilation crack has been set to `0.5`. The realised ventilation crack is determined by the [ventilation crack controller,]("#ventilation-crack-controller") governed by the [humidity setpoint](#humidity-setpoint) but also taking into account the `ventilationCrack/temperature` setpoint. In this example, the ventilation crack will keep its full value ($0.5 \text{ h}^{-1}$) down to an outdoors temperature of $-5+3=-2\degree\text{C}$. Below $-5\degree\text{C}$ the ventilation crack will be zero.
+In this boxscript, the ventilation crack has been set to `0.5`. The realised ventilation crack is determined by the [ventilation crack controller,]("#ventilation-crack-controller") governed by the [humidity setpoint](#humidity-setpoint) but also taking into account the `ventilationCrack/temperature` setpoint. In this example, the ventilation crack will keep its full value ($$0.5 \text{ h}^{-1}$$) down to an outdoors temperature of $$-5+3=-2\degree\text{C}$$. Below $$-5\degree\text{C}$$ the ventilation crack will be zero.
 
 ```
 Box setpoints {
@@ -1395,7 +1384,7 @@ Box setpoints {
 }
 ```
 
-At high ventilation rates, CO~2~ enrichment is a waste. In the boxscript above, the limit has been set at `0.2` h$^{-1}$ with a [proportional band](#proportional-setpoints) of `0.1` h$^{-1}$. Hence between a ventilation rate of 0.2 h$^{-1}$ up to 0.3 h$^{-1}$, the CO~2~ dispensation rate will dwindle to zero.
+At high ventilation rates, CO~2~ enrichment is a waste. In the boxscript above, the limit has been set at `0.2` h$$^{-1}$$ with a [proportional band](#proportional-setpoints) of `0.1` h$$^{-1}$$. Hence between a ventilation rate of 0.2 h$$^{-1}$$ up to 0.3 h$$^{-1}$$, the CO~2~ dispensation rate will dwindle to zero.
 
 The CO~2~ setpoint is passed on to the [CO~2~ controller](#CO2-controller), while the ventilation-dependent limitation is applied directly by the [CO~2~ actuator](#CO2-actuator).
 
@@ -1429,7 +1418,7 @@ Box controllers {
 
 ## Ventilation controller
 
-The ventilation controller works very much like the [heating controller](#heating-controller), except it adds up three values (cf. $\ref{eq_sp_vent}$):
+The ventilation controller works very much like the [heating controller](#heating-controller), except it adds up three values (cf. $$\ref{eq_sp_vent}$$):
 
 ```
 Box controllers {
@@ -1594,13 +1583,13 @@ Each bank of growth lights is controlled by a [growth light controller](#growth-
 
  A growth light actuator is described by the parameters:
 
-* installed lamp power $P_{lamp}$ (W/m^2^)
-* optimal PAR efficiency $\epsilon_{lamp}^{opt}$ (μmol PAR/J)
-* efficiency correction $\epsilon_{lamp}^{age}\in[0;1]$
-* proportion of emitted radiation that is long-waved $p_{lamp}^{lw}\in[0;1]$
-* ballast $P_{ballast}$ (W/m^2^)
+* installed lamp power $$P_{lamp}$$ (W/m^2^)
+* optimal PAR efficiency $$\epsilon_{lamp}^{opt}$$ (μmol PAR/J)
+* efficiency correction $$\epsilon_{lamp}^{age}\in[0;1]$$
+* proportion of emitted radiation that is long-waved $$p_{lamp}^{lw}\in[0;1]$$
+* ballast $$P_{ballast}$$ (W/m^2^)
 
-The efficiency of lamps will degrade with their age. The product $\epsilon_{lamp}^{opt} \epsilon_{lamp}^{age}$ expresses the actual efficiency. 
+The efficiency of lamps will degrade with their age. The product $$\epsilon_{lamp}^{opt} \epsilon_{lamp}^{age}$$ expresses the actual efficiency. 
 
 See the [Growth light layer](#growth-light-layer) section for details on growth light function. Then outputs of all sets of growth lights are added and considered one [layer](#layers).
 
@@ -1664,24 +1653,24 @@ Box actuators {
 
 There can be several sets of of heat pipes installed. Each set of heat pipes is described by the parameters:
 
-* water volume in pipe $V_{pipe}$ (m^3^)
-* water flow rate $\dot{v}_{pipe}$ (m^3^/h)
-* calibration parameters $k$ and $b$
-* proportion of heat emitted is long-waved radiation $p_{pipe}^{lw}\in[0;1]$
+* water volume in pipe $$V_{pipe}$$ (m^3^)
+* water flow rate $$\dot{v}_{pipe}$$ (m^3^/h)
+* calibration parameters $$k$$ and $$b$$
+* proportion of heat emitted is long-waved radiation $$p_{pipe}^{lw}\in[0;1]$$
 
 See the [Heat pipe layer](#heat-pipe-layer) section for details on heat pipe function. Then outputs of all sets of heat pipes are added and considered one [layer](#layers).
 
-The actual pipe inlet temperature $T_{pipe}^{inlet}$ (&deg;C) is governed by the [energy budget](#energy-budget) model according to the relevant [controllers](#controllers).
+The actual pipe inlet temperature $$T_{pipe}^{inlet}$$ (&deg;C) is governed by the [energy budget](#energy-budget) model according to the relevant [controllers](#controllers).
 
 ## Ventilation actuator
 
-Vents are characterised by their width and length and the number of vents installed. If vents of different dimensions are installed, they are specified as different sets. The total area of vents $A_{vent}$ (m^2^) is used to calculate the maximum ventilation rate $v_{max}$ (h$^{-1}$) (eq. $\ref{eq_vent_max}$). Due to the simplicity of the ventilation model, no specification is needed for the position of the vents.
+Vents are characterised by their width and length and the number of vents installed. If vents of different dimensions are installed, they are specified as different sets. The total area of vents $$A_{vent}$$ (m^2^) is used to calculate the maximum ventilation rate $$v_{max}$$ (h$$^{-1}$$) (eq. $$\ref{eq_vent_max}$$). Due to the simplicity of the ventilation model, no specification is needed for the position of the vents.
 
-The actual ventilation rate $v$ (h$^{-1}$) (see [advection](#advection)) is governed by the [energy budget](#energy-budget) model according to the relevant [controllers](#controllers).
+The actual ventilation rate $$v$$ (h$$^{-1}$$) (see [advection](#advection)) is governed by the [energy budget](#energy-budget) model according to the relevant [controllers](#controllers).
 
 ## CO~2~ actuator
 
-The CO~2~ actuator injects CO~2~ at a rate of $c_{CO2}$ (g/m^2^/h). The actuator is limited by its maximum injection capacity $C_{CO2}$ (g/m^2^/h). In the boxscript below it has been set to `60`:
+The CO~2~ actuator injects CO~2~ at a rate of $$c_{CO2}$$ (g/m^2^/h). The actuator is limited by its maximum injection capacity $$C_{CO2}$$ (g/m^2^/h). In the boxscript below it has been set to `60`:
 
 ```
 Box actuators {
@@ -1708,9 +1697,9 @@ When deciphering this boxscript, remember that boxscripts are interpreted child-
 
 ## Chalk actuator
 
-The current strength of whitening ($\epsilon_{chalk} \in [0;1]$) is provided by the [chalk controller](#chalk-controller). In addition, the chalk actuator takes two parameters for the additional reflectivity provided by the whitening, $\rho_{chalk}^{sw} \in [0;1]$ and $\rho_{chalk}^{lw} \in [0;1]$ for short-wave and long-wave radiation, respectively. The corrections, $\epsilon_{chalk}^{sw}\,\rho_{chalk}$ and $\epsilon_{chalk}\,\rho_{chalk}^{lw}$,  are applied to the cover of all six greenhouse faces for both incoming and outgoing radiation.
+The current strength of whitening ($$\epsilon_{chalk} \in [0;1]$$) is provided by the [chalk controller](#chalk-controller). In addition, the chalk actuator takes two parameters for the additional reflectivity provided by the whitening, $$\rho_{chalk}^{sw} \in [0;1]$$ and $$\rho_{chalk}^{lw} \in [0;1]$$ for short-wave and long-wave radiation, respectively. The corrections, $$\epsilon_{chalk}^{sw}\,\rho_{chalk}$$ and $$\epsilon_{chalk}\,\rho_{chalk}^{lw}$$,  are applied to the cover of all six greenhouse faces for both incoming and outgoing radiation.
 
-As an example, if the [cover](#cover_layer) has the properties $\rho^{sw}=0.1$, $\tau^{sw}=0.8$ and $\alpha^{sw}=0.1$, and the chalk effect is $\epsilon_{chalk}\,\rho_{chalk}^{sw}=0.2$ then the corrected properties of the cover for incoming radiation will be $\rho^{sw}=0.1+0.2=0.3$, $\tau^{sw}=0.8-0.2=0.6$ and $\alpha^{sw}=0.1\text{.}$ Likewise, for the parameters for outgoing radiation. The actuator enforces limits to ensure that the corrected properties are all between 0 and 1, and that they sum up to 1.
+As an example, if the [cover](#cover_layer) has the properties $$\rho^{sw}=0.1$$, $$\tau^{sw}=0.8$$ and $$\alpha^{sw}=0.1$$, and the chalk effect is $$\epsilon_{chalk}\,\rho_{chalk}^{sw}=0.2$$ then the corrected properties of the cover for incoming radiation will be $$\rho^{sw}=0.1+0.2=0.3$$, $$\tau^{sw}=0.8-0.2=0.6$$ and $$\alpha^{sw}=0.1\text{.}$$ Likewise, for the parameters for outgoing radiation. The actuator enforces limits to ensure that the corrected properties are all between 0 and 1, and that they sum up to 1.
 
 Here is a boxscript example:
 
@@ -1733,43 +1722,43 @@ We build the energy budget by adding the [processes of heat exchange](#processes
 
 ### Sources of radiation
 
-Radiation enters the model as layers may emit radiation downwards from the bottom $(E_i^{sw}, E_i^{par}, E_i^{lw})$ and upwards from the top $({E_i^{sw}}', {E_i^{par}}', {E_i^{lw}}')$. While only some layers act as a primary source of short-wave radiation radiation (sky and growth lights), all layers may transmit and reflect short-wave radiation received from neighbouring layers. In contrast, all layers are primary sources of long-wave radiation. For most layers, the long-waved radiation is determined by the Stefan-Boltzmann Law (eq. $\ref{stefan_boltzmann}$) ('S-B Law' in the table below).$
+Radiation enters the model as layers may emit radiation downwards from the bottom $$(E_i^{sw}, E_i^{par}, E_i^{lw})$$ and upwards from the top $$({E_i^{sw}}', {E_i^{par}}', {E_i^{lw}}')$$. While only some layers act as a primary source of short-wave radiation radiation (sky and growth lights), all layers may transmit and reflect short-wave radiation received from neighbouring layers. In contrast, all layers are primary sources of long-wave radiation. For most layers, the long-waved radiation is determined by the Stefan-Boltzmann Law (eq. $$\ref{stefan_boltzmann}$$) ('S-B Law' in the table below).$$
 
-The primary emission plus the transmitted and reflected radiation defines the net flows of radiation downwards $(F_i^{sw}, F_i^{par}, F_i^{lw})$ and upwards $({F_i^{sw}}', {F_i^{par}}', {F_i^{lw}}')$ from each layer. For the sky, all upwards radiation is zero ${E_i^r=0}'$; likewise for the floor, all downwards radiation is zero $E_i^r=0$.
+The primary emission plus the transmitted and reflected radiation defines the net flows of radiation downwards $$(F_i^{sw}, F_i^{par}, F_i^{lw})$$ and upwards $$({F_i^{sw}}', {F_i^{par}}', {F_i^{lw}}')$$ from each layer. For the sky, all upwards radiation is zero $${E_i^r=0}'$$; likewise for the floor, all downwards radiation is zero $$E_i^r=0$$.
 
-| Layer        | Temperature<br />$(T_i)$         | Short-waved radiation<br />$(E_i^{sw}, {E_i^{sw}}', E_i^{par}, {E_i^{par}}')$ | Long-waved radiation<br />$(E_i^{lw}, {E_i^{lw}}')$ |
+| Layer        | Temperature<br />$$(T_i)$$         | Short-waved radiation<br />$$(E_i^{sw}, {E_i^{sw}}', E_i^{par}, {E_i^{par}}')$$ | Long-waved radiation<br />$$(E_i^{lw}, {E_i^{lw}}')$$ |
 | ------------ | -------------------------------- | ------------------------------------------------------------ | --------------------------------------------------- |
-| Sky          | *driving variable*               | *driving variable*                                           | $f(T_i)$ (S-B Law)                                  |
-| Cover        | *state variable*, $f(\dot{H}_i)$ | 0                                                            | $f(T_i)$ (S-B Law)                                  |
-| Screen       | *state variable*, $f(\dot{H}_i)$ | 0                                                            | $f(T_i)$ (S-B Law)                                  |
-| Growth light | *n.a.*                           | *state variable*, $f(\cdot)$                                 | *state variable*, $f(\cdot)$                        |
-| Plant canopy | *state variable*, $f(\cdot)$     | 0                                                            | $f(T_i)$ (S-B Law)                                  |
-| Heat pipe    | *state variable*, $f(\cdot)$     | 0                                                            | *state variable*, $f(\cdot)$                        |
-| Floor        | *state variable*, $f(\dot{H}_i)$ | 0                                                            | $f(T_i)$ (S-B Law)                                  |
+| Sky          | *driving variable*               | *driving variable*                                           | $$f(T_i)$$ (S-B Law)                                  |
+| Cover        | *state variable*, $$f(\dot{H}_i)$$ | 0                                                            | $$f(T_i)$$ (S-B Law)                                  |
+| Screen       | *state variable*, $$f(\dot{H}_i)$$ | 0                                                            | $$f(T_i)$$ (S-B Law)                                  |
+| Growth light | *n.a.*                           | *state variable*, $$f(\cdot)$$                                 | *state variable*, $$f(\cdot)$$                        |
+| Plant canopy | *state variable*, $$f(\cdot)$$     | 0                                                            | $$f(T_i)$$ (S-B Law)                                  |
+| Heat pipe    | *state variable*, $$f(\cdot)$$     | 0                                                            | *state variable*, $$f(\cdot)$$                        |
+| Floor        | *state variable*, $$f(\dot{H}_i)$$ | 0                                                            | $$f(T_i)$$ (S-B Law)                                  |
 
 For the sky both its temperature and short-wave emission are driving variables (usually read from a weather log file). Its downward long-wave emission is calculated from its temperature. 
 
-For cover, screen and floor layers, temperature is updated according to the heat balance $\dot{H}_i$ (W/m^2^) and the heat capacity $C_i$ (J/K/m^2^),
+For cover, screen and floor layers, temperature is updated according to the heat balance $$\dot{H}_i$$ (W/m^2^) and the heat capacity $$C_i$$ (J/K/m^2^),
 $$
 \Delta T_i = \frac{\dot{H}_i\Delta t}{C_i}
 $$
-where $\Delta t$ (s) is the simulation time step and $\Delta T_i$ (K) is the change in layer temperature.
+where $$\Delta t$$ (s) is the simulation time step and $$\Delta T_i$$ (K) is the change in layer temperature.
 
-For growth light, temperature is not tracked. A dedicated sub-model, denoted as a function with numerous inputs $f(\cdot)$, computes the emission of radiation (short-waved, PAR and long-waved). Dedicated sub-models also calculated the temperature of the canopy and heat pipe layers, as well as the long-waved radiation emitted from heat pipes.
+For growth light, temperature is not tracked. A dedicated sub-model, denoted as a function with numerous inputs $$f(\cdot)$$, computes the emission of radiation (short-waved, PAR and long-waved). Dedicated sub-models also calculated the temperature of the canopy and heat pipe layers, as well as the long-waved radiation emitted from heat pipes.
 
 ### Short-wave radiation
 
-As radiation is emitted, absorbed, reflected and transmitted by the layers, a net radiation flux will result downwards and upwards for each layer $i$. The following algorithm, here applied to short-wave radiation, will also be used for long-wave radiation and PAR.
+As radiation is emitted, absorbed, reflected and transmitted by the layers, a net radiation flux will result downwards and upwards for each layer $$i$$. The following algorithm, here applied to short-wave radiation, will also be used for long-wave radiation and PAR.
 
-The net radiation fluxes throughout the stack of layers are resolved by resolving them two layers at a time. Consider layer $i$ on top of the layer $i+1$ below:
+The net radiation fluxes throughout the stack of layers are resolved by resolving them two layers at a time. Consider layer $$i$$ on top of the layer $$i+1$$ below:
 
-<img src="..\media\models\vg\layers-radiation-algorithm.png" alt="energy-budget-layers" style="zoom:50%;" />
+<img src="../../media/models/vg/layers-radiation-algorithm.png" alt="energy-budget-layers" style="zoom:50%;" />
 
-Our first aim is to find out, how much of the downwards radiation from the upper layer $F_i$ (W/m^2^), e.g $F_i^{sw}$, is absorbed by the lower layer? If we denote the *net* absorption from above  $\hat{\alpha}_{i+1}$, we immediately have
+Our first aim is to find out, how much of the downwards radiation from the upper layer $$F_i$$ (W/m^2^), e.g $$F_i^{sw}$$, is absorbed by the lower layer? If we denote the *net* absorption from above  $$\hat{\alpha}_{i+1}$$, we immediately have
 $$
 \hat{\alpha}_{i+1} = \alpha_{i+1}
 $$
-However, a fraction of the light will be reflected by the upperside of the lower layer ($\rho_{i+1}$) and then re-reflected from the underside of the upper layer ($\rho_i'$). We must add that bit,
+However, a fraction of the light will be reflected by the upperside of the lower layer ($$\rho_{i+1}$$) and then re-reflected from the underside of the upper layer ($$\rho_i'$$). We must add that bit,
 $$
 \hat{\alpha}_{i+1} = \alpha_{i+1} + \alpha_{i+1}\rho_{i+1}\rho_i'
 $$
@@ -1782,26 +1771,26 @@ Since the reflectivies are less than one, the infinite series will converge as
 $$
 r_i = \sum_{j=0}^\infty \left(\rho_{i+1}\rho_i'\right)^j=\frac{1}{1-\rho_{i+1}\rho_i'}
 $$
-and we get the amount absorbed by the lower layer $A_{i+1}$ (W/m^2^),
+and we get the amount absorbed by the lower layer $$A_{i+1}$$ (W/m^2^),
 $$
 A_{i+1} = \hat{\alpha}_{i+1}F_i = r_i\alpha_{i+1}F_i
 $$
-The net transmission through the lower layer $\hat\tau_{i+1}$ follows the same logic and we arrive at
+The net transmission through the lower layer $$\hat\tau_{i+1}$$ follows the same logic and we arrive at
 $$
 \hat\tau_{i+1} = r_i\tau_{i+1}
 $$
-On every bounce of the radiation, fractions will be lost to absorption by and transmission through the upper layer. Thus the calculations for the underside of the upper layer are the same, except that the we start out with what's first reflected upwards from the lower layer ($\rho_{i+1}$). Hence, we get
+On every bounce of the radiation, fractions will be lost to absorption by and transmission through the upper layer. Thus the calculations for the underside of the upper layer are the same, except that the we start out with what's first reflected upwards from the lower layer ($$\rho_{i+1}$$). Hence, we get
 $$
 \begin{split}
 \hat\alpha_i' &= \rho_{i+1}r_i\alpha_i' \\[6pt]
 \hat\tau_i    &= \rho_{i+1}r_i\tau_i'
 \end{split}
 $$
-One consequence of these reflections is that part of the downwards radiation from the upper layer $F_i$ will be absorbed by the layer itself from below $A_i'$ (W/m^2^):
+One consequence of these reflections is that part of the downwards radiation from the upper layer $$F_i$$ will be absorbed by the layer itself from below $$A_i'$$ (W/m^2^):
 $$
 A_i' = \hat\alpha_i'F_i = \rho_{i+1} r_i\alpha_{i+1}F_i
 $$
-Let's check that we have now accounted for the fate all radiation downwards from layer $i$. We have split it into radiation absorbed by and transmitted through either of the to layers. In total we get
+Let's check that we have now accounted for the fate all radiation downwards from layer $$i$$. We have split it into radiation absorbed by and transmitted through either of the to layers. In total we get
 $$
 \begin{split}
 \hat\alpha_{i+1}+\hat\tau_{i+1}+\hat\alpha_i'+\hat\tau_i' &= \\[6pt]
@@ -1812,7 +1801,7 @@ $$
 $$
 Thus we have accounted for it all.
 
-Having accounted for the fate of the downwards radiation from layer $i$, we can now repeat the calculation for the next pair of layers, $i+1$ and $i+2$, and so forth until the bottom of the stack. The downwards flow from any layer $i$ is the inherent emission $E_i$ (i.e. for a layer of growth lights) plus the transmission from the layer above $\hat\tau_iF_{i-1}$,
+Having accounted for the fate of the downwards radiation from layer $$i$$, we can now repeat the calculation for the next pair of layers, $$i+1$$ and $$i+2$$, and so forth until the bottom of the stack. The downwards flow from any layer $$i$$ is the inherent emission $$E_i$$ (i.e. for a layer of growth lights) plus the transmission from the layer above $$\hat\tau_iF_{i-1}$$,
 $$
 F_i=E_i + \hat\tau_iF_{i-1}
 $$
@@ -1820,11 +1809,11 @@ After we have finished the distribution of downwards radiation, we repeat the pr
 $$
 F_i' = E_i' + \hat\tau_i'F_{i+1}'
 $$
-We repeat the calculations downwards-upwards, on each pass accumulating in each  layer the radiation absorbed from above $A_i$ and below $A_i'$. The calculation stops when nearly all radiation has been absorbed, e.g. until $\sum_i F_i+\sum_i F_i' < 10^{-6}$  W/m^2^. Note that the inherent emission downwards $E_i$ and upwards $E_i'$ is only added to the respective flows,  $F_i$ and  $F_i'$, on the first pass through the calculations.
+We repeat the calculations downwards-upwards, on each pass accumulating in each  layer the radiation absorbed from above $$A_i$$ and below $$A_i'$$. The calculation stops when nearly all radiation has been absorbed, e.g. until $$\sum_i F_i+\sum_i F_i' < 10^{-6}$$  W/m^2^. Note that the inherent emission downwards $$E_i$$ and upwards $$E_i'$$ is only added to the respective flows,  $$F_i$$ and  $$F_i'$$, on the first pass through the calculations.
 
 #### PAR
 
-The PAR budget is resolved just as the short-wave budget above. However, PAR is not part of the energy budget. Its only role is to provide energy for photosynthesis in the canopy layer. It needs a special treatment because the emission of PAR $(E_i^{par}, {E_i^{par}}')$ and short-wave radiation $(E_i^{sw}, {E_i^{sw}}')$ will  differ between layers, such us sky and growth lights.
+The PAR budget is resolved just as the short-wave budget above. However, PAR is not part of the energy budget. Its only role is to provide energy for photosynthesis in the canopy layer. It needs a special treatment because the emission of PAR $$(E_i^{par}, {E_i^{par}}')$$ and short-wave radiation $$(E_i^{sw}, {E_i^{sw}}')$$ will  differ between layers, such us sky and growth lights.
 
 #### Computation example
 
@@ -1841,7 +1830,7 @@ The `1-energy-budget-sw.R` script demonstrates the calculations. Here the light 
 7       Floor 0.60 0.40 0.00 1.00 0.00 0.00   0  0   0  0 0  0
 ```
 
-The radiative parameters for the plant layer was computed for $L_{ai}=1.9$ and $k=0.65$ giving $\alpha=0.71$, $\rho=0.05$ and $\tau=0.24$ (eqs. $\ref{eq_rho}$ to $\ref{eq_tau}$).
+The radiative parameters for the plant layer was computed for $$L_{ai}=1.9$$ and $$k=0.65$$ giving $$\alpha=0.71$$, $$\rho=0.05$$ and $$\tau=0.24$$ (eqs. $$\ref{eq_rho}$$ to $$\ref{eq_tau}$$).
 
 After the first distribution of radiation downwards, we have
 
@@ -1856,7 +1845,7 @@ After the first distribution of radiation downwards, we have
 7       Floor 0.60 0.40 0.00 1.00 0.00 0.00   0  0 0 0.0 14.4  0
 ```
 
-We can see that $71.0 + 14.4 = 85.4\%$ of the radiation has been absorbed by plants and floor together, while $5.0+9.6=14.6\%$ has been reflected upwards by the same layers. We carry on distributing these $14.6\%$ upwards and get
+We can see that $$71.0 + 14.4 = 85.4\%$$ of the radiation has been absorbed by plants and floor together, while $$5.0+9.6=14.6\%$$ has been reflected upwards by the same layers. We carry on distributing these $$14.6\%$$ upwards and get
 
 ```
         Layer    a    r    t   a_   r_   t_   E E_   F F_    A  A_
@@ -1869,9 +1858,9 @@ We can see that $71.0 + 14.4 = 85.4\%$ of the radiation has been absorbed by pla
 7       Floor 0.60 0.40 0.00 1.00 0.00 0.00   0  0 0.0  0 14.4 0.0
 ```
 
-This led to a total of $2.0+0.1+0.7+6.8=9.6\%$ (`A_` column) being absorbed on the underside of various layers (sky, glass, screen, plant). Meanwhile, reflection downwards led to the remaining radiation of $0.1+4.4+0.5=5.0\%$ (`F` column) hitting som layers (screen, light, heating) from above.
+This led to a total of $$2.0+0.1+0.7+6.8=9.6\%$$ (`A_` column) being absorbed on the underside of various layers (sky, glass, screen, plant). Meanwhile, reflection downwards led to the remaining radiation of $$0.1+4.4+0.5=5.0\%$$ (`F` column) hitting som layers (screen, light, heating) from above.
 
-If we set the precision, so that the calculations down and up will be repeated until $\sum F_i+\sum F_i'<10^{-6}$ W/m^2^, it turns out that seven iterations are needed, and we get the final distribution,
+If we set the precision, so that the calculations down and up will be repeated until $$\sum F_i+\sum F_i'<10^{-6}$$ W/m^2^, it turns out that seven iterations are needed, and we get the final distribution,
 
 ```
         Layer    a    r    t   a_   r_   t_   E E_ F F_    A  A_
@@ -1884,11 +1873,11 @@ If we set the precision, so that the calculations down and up will be repeated u
 7       Floor 0.60 0.40 0.00 1.00 0.00 0.00   0  0 0  0 15.4 0.0
 ```
 
-Thus $74.3+7.3=81.6\%$ of the radiation ended up in the plant canopy (which is the intended target of growth lights). Most of the remaining light was absorbed by the floor $(15.4\%)$, while only little ended up in glass and screen. Only $2.2\%$ escaped to the sky; this is the light that you can see passing a greenhouse at night. 
+Thus $$74.3+7.3=81.6\%$$ of the radiation ended up in the plant canopy (which is the intended target of growth lights). Most of the remaining light was absorbed by the floor $$(15.4\%)$$, while only little ended up in glass and screen. Only $$2.2\%$$ escaped to the sky; this is the light that you can see passing a greenhouse at night. 
 
 ### Long-wave radiation
 
-The same algorithm as for short-wave radiation above is used to resolve the fate of long-wave radiation, i.e. its distributed among the layers. However, the absorption of radiation (both short-wave and long-wave radiation) will cause a change in the temperature of the layer $T_i$ (&deg;C) according to its heat capacity $C_i$ (J/K/m^2^). This is taken into account by an additional step in the algoritm, which updates layer temperature as radiation is absorbed.
+The same algorithm as for short-wave radiation above is used to resolve the fate of long-wave radiation, i.e. its distributed among the layers. However, the absorption of radiation (both short-wave and long-wave radiation) will cause a change in the temperature of the layer $$T_i$$ (&deg;C) according to its heat capacity $$C_i$$ (J/K/m^2^). This is taken into account by an additional step in the algoritm, which updates layer temperature as radiation is absorbed.
 
 Note that the distribution of short-wave radiation remains constant because it is temperature-independent. Only the long-wave emission of the layers will change and converge, as a solution is found in which all temperatures are stable and by that, the heat exchange by radiation is in a steady state.
 
@@ -1898,7 +1887,7 @@ The `2-energy-budget-lw.R` script demonstrates the calculations, which follow th
 
 ##### Step 1. Initial set-up
 
-Here is the initial set-up. Columns `T` and `C` have been added to hold temperature and heat capacity. Incidentally, $C_{glass}$ was set to $8\,400$ J/m^2^/K by a mistake. The intention was to be consistent with the example in eq. $\ref{eq_c_glass}$, where it is found to be $10\,416$ J/m^2^/K.
+Here is the initial set-up. Columns `T` and `C` have been added to hold temperature and heat capacity. Incidentally, $$C_{glass}$$ was set to $$8\,400$$ J/m^2^/K by a mistake. The intention was to be consistent with the example in eq. $$\ref{eq_c_glass}$$, where it is found to be $$10\,416$$ J/m^2^/K.
 
 ```
         Layer    a    r   t   a_   r_  t_   T     C     E    E_    A  A_
@@ -1911,11 +1900,11 @@ Here is the initial set-up. Columns `T` and `C` have been added to hold temperat
 7       Floor 0.60 0.40 0.0 0.00 0.00 1.0  12 42000   0.0 224.9 15.4 0.0
 ```
 
-We have transferred the absorbed short-wave radiation from the example above (columns `A` and `A_`). The emissions (`E` and `E_`) have been set according to layer temperatures and emissivities, applying Stefan-Boltzmann's Law (eq. $\ref{stefan_boltzmann}$), except for light and heating layers. The long-wave emission from light (15 W/m^2^ both up and down) and heating (75 W/m^2^ both up and down) would in the full model be calculated by specific sub-models (see [growth light](#growth-light-layer) and [heating](#heat-pipe-layer)). Note that we use absorptivity as a stand-in for emissivity (see [layers](#layers)). 
+We have transferred the absorbed short-wave radiation from the example above (columns `A` and `A_`). The emissions (`E` and `E_`) have been set according to layer temperatures and emissivities, applying Stefan-Boltzmann's Law (eq. $$\ref{stefan_boltzmann}$$), except for light and heating layers. The long-wave emission from light (15 W/m^2^ both up and down) and heating (75 W/m^2^ both up and down) would in the full model be calculated by specific sub-models (see [growth light](#growth-light-layer) and [heating](#heat-pipe-layer)). Note that we use absorptivity as a stand-in for emissivity (see [layers](#layers)). 
 
-The radiative parameters for the plant layer was computed for $L_{ai}=1.9$ and $k=1.0$ (leaves are impenetrable ('black') to long-wave radiation) giving $\alpha=0.79$, $\rho=0.01$ and $\tau=0.20$ (eqs. $\ref{eq_rho}$ to $\ref{eq_tau}$). Glass, likewise transmit no long-wave radiation $\tau=0$.
+The radiative parameters for the plant layer was computed for $$L_{ai}=1.9$$ and $$k=1.0$$ (leaves are impenetrable ('black') to long-wave radiation) giving $$\alpha=0.79$$, $$\rho=0.01$$ and $$\tau=0.20$$ (eqs. $$\ref{eq_rho}$$ to $$\ref{eq_tau}$$). Glass, likewise transmit no long-wave radiation $$\tau=0$$.
 
-It worth noting that screens may have an asymmetric emissivity for long-wave radiation ($\epsilon_i^{lw} \neq {\epsilon_i^{lw}}'$). Here we used the radiative parameters exemplified earlier (see [screen layer](#screen-layer)); however, $C_{screen}=2\,280$ J/m^2^/K indicates a sturdier material than the  example shown in eq. $\ref{eq_c_screen}$.  A sky emissivity of 1 ($\alpha_{sky}'=1$) suggests a sky with no cloud cover.
+It worth noting that screens may have an asymmetric emissivity for long-wave radiation ($$\epsilon_i^{lw} \neq {\epsilon_i^{lw}}'$$). Here we used the radiative parameters exemplified earlier (see [screen layer](#screen-layer)); however, $$C_{screen}=2\,280$$ J/m^2^/K indicates a sturdier material than the  example shown in eq. $$\ref{eq_c_screen}$$.  A sky emissivity of 1 ($$\alpha_{sky}'=1$$) suggests a sky with no cloud cover.
 
 The temperature of layers that have been given an infinite heat capacity, does not change in temperature  by the absorbed radiation. However, the plant temperature is kept fixed in this budget for now, until we have included the full plant canopy sub-model (see [canopy temperature](#canopy-temperature)), which among other things calculates leaf temperature.
 
@@ -1934,26 +1923,26 @@ We use the same algorithm as for [short-wave radiation](#short-wave-radiation) t
 7       Floor 0.60 0.40 0.0 0.00 0.00 1.0  12 42000   0.0 224.9 326.9   0.0
 ```
 
-We left step 1 with $\sum A_i+\sum A_i'=100$ W/m^2^ (columns `A` and `A_`) and $\sum E_i+\sum E_i'=2\,324.2$ W/m^2^ (columns `E` and `E_`). After step 2 the long-wave emission has been added, and we have $\sum A_i+\sum A_i'=2\,424.2$ W/m^2^.
+We left step 1 with $$\sum A_i+\sum A_i'=100$$ W/m^2^ (columns `A` and `A_`) and $$\sum E_i+\sum E_i'=2\,324.2$$ W/m^2^ (columns `E` and `E_`). After step 2 the long-wave emission has been added, and we have $$\sum A_i+\sum A_i'=2\,424.2$$ W/m^2^.
 
 ##### Step 3. Update temperature
 
-The net absorbed radiation for any layer $A_i^{rad}$ is found by subtracting the emission from the absorption. For example, we have for the glass layer ($i=2$),
+The net absorbed radiation for any layer $$A_i^{rad}$$ is found by subtracting the emission from the absorption. For example, we have for the glass layer ($$i=2$$),
 $$
 A_2^{rad} = A_2+A_2'-E_2-E_2' = 239.3+345.2-344.0-344.0=-103.5\text{ W/m}^2
 $$
-How much of a change in glass temperature this will cause, depends on the time step. Let's say the simulation time step for the whole model is  $\Delta t=180 \text{ s}$ but that we sub-divide this into $n$ smaller time steps, when computing the energy budget to improve the numerical precision. With $n=6$ we achieve a change in glass temperature $\Delta T_2$ (K) of
+How much of a change in glass temperature this will cause, depends on the time step. Let's say the simulation time step for the whole model is  $$\Delta t=180 \text{ s}$$ but that we sub-divide this into $$n$$ smaller time steps, when computing the energy budget to improve the numerical precision. With $$n=6$$ we achieve a change in glass temperature $$\Delta T_2$$ (K) of
 $$
 \Delta T_2 = \frac{A_2^{rad}}{C_2} \frac{\Delta t}{n}=
 \frac{-103.5 \text{ W/m}^2}{8\,400\text{ J/K/m}^2}\cdot
 \frac{180\text{ s}}{6} =
 -0.37 \text{ K}
 $$
-In general, we should set $n$ small enough to achieve an acceptable, small $|\Delta T_i|$ for all $i$. To obtain a fast execution time, we can adjust $n$ in every simulation time step as needed. If we want a maximum temperature change of, say, $0.5$ K in all layers, we can find $n$ by 
+In general, we should set $$n$$ small enough to achieve an acceptable, small $$|\Delta T_i|$$ for all $$i$$. To obtain a fast execution time, we can adjust $$n$$ in every simulation time step as needed. If we want a maximum temperature change of, say, $$0.5$$ K in all layers, we can find $$n$$ by 
 $$
 n=\left\lceil \frac{max(|\Delta T_i|)}{0.5\text{ K}} \right\rceil
 $$
-where $\Delta T_i$ are the temperature changes calculated with $n=1$. The ceiling operators $\lceil ... \rceil$ round up to the nearest integer. This is how $n=6$ was determined for this example.
+where $$\Delta T_i$$ are the temperature changes calculated with $$n=1$$. The ceiling operators $$\lceil ... \rceil$$ round up to the nearest integer. This is how $$n=6$$ was determined for this example.
 
 We update the temperature of screen and floor in the same manner and get
 
@@ -2002,7 +1991,7 @@ The short-wave absorption is unaltered and is once again (as in step 1) entered 
 
 ##### Following steps
 
-After step 5 we return to step 2 and loop through the calculations, step 2 to 5, for a total of $n=6$ iterations to achieve the final result after $\Delta t=180$ s:
+After step 5 we return to step 2 and loop through the calculations, step 2 to 5, for a total of $$n=6$$ iterations to achieve the final result after $$\Delta t=180$$ s:
 
 ```
         Layer    a    r   t   a_   r_  t_     T     C     E    E_ A A_
@@ -2017,7 +2006,7 @@ After step 5 we return to step 2 and loop through the calculations, step 2 to 5,
 
 ##### Verification
 
-The total net absorption for any layer $i$ over the the $j=1..n$ minor time steps $\Delta A_i^{net}$ (J/m^2^) is
+The total net absorption for any layer $$i$$ over the the $$j=1..n$$ minor time steps $$\Delta A_i^{net}$$ (J/m^2^) is
 $$
 \begin{equation}
 \Delta A_i^{net} = \frac{\Delta t}{n}\sum_{j=1}^n A_{ij}^{sw}+{A_{ij}^{sw}}'+A_{ij}^{lw}+{A_{ij}^{lw}}' - 
@@ -2029,7 +2018,7 @@ where we for convenience have left out the emission of short-wave radiation, whi
 $$
 E_{ij}^{sw}+{E_{ij}^{sw}}'=-100 \text{ W/m}^2
 $$
-The energy accumulated by the sky and plant layers were $A_1^{net}=18\,471 \text{ J/m}^2$ and $A_5^{net}=25\,690 \text{ J/m}^2$ (not shown in the table above), respectively. To verify that the algorithm is correct, we can calculate the net absorption for the glass, screen and floor layers based on their temperature change $\Delta T_i$ during the whole simulation step. We get
+The energy accumulated by the sky and plant layers were $$A_1^{net}=18\,471 \text{ J/m}^2$$ and $$A_5^{net}=25\,690 \text{ J/m}^2$$ (not shown in the table above), respectively. To verify that the algorithm is correct, we can calculate the net absorption for the glass, screen and floor layers based on their temperature change $$\Delta T_i$$ during the whole simulation step. We get
 $$
 \begin{split}
 \Delta A_2^{net} &= \Delta T_2 C_2 = (12.9-15.0)\text{ K}\,\cdot\,8\,400\text{ J/K/m}^2 &&= -17\,726 \text{ J/m}^2\\[6pt]
@@ -2048,7 +2037,7 @@ We can now calculate the energy balance of the whole system,
 $$
 \sum_i \Delta A_i^{net}=18\,471-17\,726 + 5\,633 - 5\,400 + 25\,690 -27\,000 + 18\,332 = 18\,000\text{ J/m}^2
 $$
-This can be compared against the total energy put into the system, namely the $100 \text{ W/m}^2$ short-wave radiation. Over the the whole simulation time step this gives
+This can be compared against the total energy put into the system, namely the $$100 \text{ W/m}^2$$ short-wave radiation. Over the the whole simulation time step this gives
 $$
 -100\text{ W/m}^2\,\cdot\,180\text{ s}=-18\,000 \text{ J/m}^2
 $$
@@ -2058,16 +2047,16 @@ which balances the whole budget to zero and thereby verifies the precision of ou
 
 Unlike the exchange of radiation, which occurs between layers, convective heat transfer occurs between a layer and its surrounding volume of air. The cover exchanges heat with the outdoors air on the outer surface and the inside air on the inner surface. The floor exchanges convective heat with the indoors air. All other layers exchange convective heat with the indoors air on both upper and lower surfaces. The floor in addition exchanges conductive heat with the outdoors soil.
 
-All convective/conductive heat transfers are defined by the U-value of the layer (eq. $\ref{u_heat}$). For the outer surface the $U$-value depends on the wind (eq. $\ref{eq_u_cover}$), while for all the inner surfaces, $U$ is set to $1.2$ W/K/m^2^. We assume a good insulation of the floor against the soil setting $U_{floor}'=0.1$ W/K/m^2^.
+All convective/conductive heat transfers are defined by the U-value of the layer (eq. $$\ref{u_heat}$$). For the outer surface the $$U$$-value depends on the wind (eq. $$\ref{eq_u_cover}$$), while for all the inner surfaces, $$U$$ is set to $$1.2$$ W/K/m^2^. We assume a good insulation of the floor against the soil setting $$U_{floor}'=0.1$$ W/K/m^2^.
 
-We will keep track of the convective/conductive heat absorbed by each volume $\left(A_{out}^{conv}, A_{in}^{conv}, A_{soil}^{conv}\right)$ (W/m^2^) to check that the total energy budget is consistent, i.e. the energy of the whole system is conserved. To update the indoors temperature $T_{in}$ by the absorbed heat $A_{in}^{conv}$, we apply the area-specific heat capacity of the air,
+We will keep track of the convective/conductive heat absorbed by each volume $$\left(A_{out}^{conv}, A_{in}^{conv}, A_{soil}^{conv}\right)$$ (W/m^2^) to check that the total energy budget is consistent, i.e. the energy of the whole system is conserved. To update the indoors temperature $$T_{in}$$ by the absorbed heat $$A_{in}^{conv}$$, we apply the area-specific heat capacity of the air,
 $$
 C_{air} = 1\,020 \frac{\text{J}}{\text{K}\cdot\text{kg}} 
 \cdot 1.19\frac{\text{kg}}{\text{m}^3} 
 \cdot 3.94 \frac{\text{m}^3}{\text{m}^2} 
 = 4\,780 \frac{\text{J}}{\text{K}\cdot\text{m}^2}
 $$
-where $3.94$ m is the average indoors height  (eq. $\ref{average_height}$). The change in indoors temperature $\Delta T_{in}$ (K) over a time step $\Delta t$ (s) is 
+where $$3.94$$ m is the average indoors height  (eq. $$\ref{average_height}$$). The change in indoors temperature $$\Delta T_{in}$$ (K) over a time step $$\Delta t$$ (s) is 
 $$
 \Delta T_{in} =\frac{A_{in}^{conv}}{C_{air}} \Delta t
 $$
@@ -2078,7 +2067,7 @@ The convective/conductive heat transfer between layers and volumnes is added to 
 
 ##### Step 1. Initial set-up
 
-We have added $U_i$ and $U_i'$ (columns `U` and `U_`) and heat absorbed by convection/conduction $A_i^{conv}$ and  $v$ (columns `H` and `H_`) to the layer budget. In addition, we need a separate budget for the three volumes with columns `T`, `C` and `H` representing $T_{j}$, $C_{j}$ and $A_{j}^{conv}$, respectively, where $j$ subscript outdoors, indoors and soil:
+We have added $$U_i$$ and $$U_i'$$ (columns `U` and `U_`) and heat absorbed by convection/conduction $$A_i^{conv}$$ and  $$v$$ (columns `H` and `H_`) to the layer budget. In addition, we need a separate budget for the three volumes with columns `T`, `C` and `H` representing $$T_{j}$$, $$C_{j}$$ and $$A_{j}^{conv}$$, respectively, where $$j$$ subscript outdoors, indoors and soil:
 
 ```
         Layer   T     C     E    E_    A  A_   U  U_   H  H_
@@ -2098,7 +2087,7 @@ We have added $U_i$ and $U_i'$ (columns `U` and `U_`) and heat absorbed by conve
 
 All the functionality of the short-wave (`energy-budget-sw.R`) and long-wave budgets (`energy-budget-lw.R`) is kept. The heat convective/conductive heat exchange between layers and volumes can simply be been added.
 
-The initial set-up now includes the convective heat emitted by growth lights and heat pipes. This has been set to $H_{light}=H_{light}'=5$ W/m^2^ for growth lights and $H_{heat}=H_{heat}'=50$ W/m^2^ for heat pipes, both downwards and upwards. This leads to a total gain of the indoors air of $T_{in}=110$ W/m^2^. The plant layer is given a provisional $U$-value of 0.1 W/K/m^2^ (that is, until we have added the plant canopy sub-model to the energy budget).
+The initial set-up now includes the convective heat emitted by growth lights and heat pipes. This has been set to $$H_{light}=H_{light}'=5$$ W/m^2^ for growth lights and $$H_{heat}=H_{heat}'=50$$ W/m^2^ for heat pipes, both downwards and upwards. This leads to a total gain of the indoors air of $$T_{in}=110$$ W/m^2^. The plant layer is given a provisional $$U$$-value of 0.1 W/K/m^2^ (that is, until we have added the plant canopy sub-model to the energy budget).
 
 ##### Step 2. Absorb radiation
 
@@ -2122,7 +2111,7 @@ This step only involves the layers and gives the same result as step 2 in the [l
 
 ##### Step 3. Update heat fluxes
 
-The convective/conductive heat fluxes are governed by the layer $U$-values. This step affects both layers and volumes, except the light and heating layers, for which the heat fluxes are fixed:
+The convective/conductive heat fluxes are governed by the layer $$U$$-values. This step affects both layers and volumes, except the light and heating layers, for which the heat fluxes are fixed:
 
 ```
         Layer   T     C     E    E_     A    A_   U  U_     H    H_
@@ -2143,7 +2132,7 @@ The convective/conductive heat fluxes are governed by the layer $U$-values. This
 We can check that all heat fluxes (columns `H` and `H_`) add up to zero:
 $$
 \begin{split}
-\text{Layers:}\quad&&\sum_{i=1}^7 A_i^{conv} + {A_i^{conv}}' &= -79.8 \text{ W/m}^2 \\
+\text{Layers:}\quad&&\sum_{i=1}^7 A_i^{conv} + {A_i^{conv}}' &= -79.8 \text{ W/m}^2 \\\
 \text{Volumes:}\quad&&A_{out}^{conv} + A_{in}^{conv} + A_{soil}^{conv} & = 79.8 \text{ W/m}^2
 \end{split}
 $$
@@ -2235,7 +2224,7 @@ The short-wave absorption is unaltered and is entered into columns `A` and `A_`,
 
 ##### Following steps
 
-After step 7 we return to step 2 and loop through the calculations, step 2 to 7, for a total of $n=6$ iterations to achieve the final result after $\Delta t=180$ s:
+After step 7 we return to step 2 and loop through the calculations, step 2 to 7, for a total of $$n=6$$ iterations to achieve the final result after $$\Delta t=180$$ s:
 
 ```
         Layer     T     C     E    E_ A A_   U  U_ H H_ SumNetAH
@@ -2247,20 +2236,20 @@ After step 7 we return to step 2 and loop through the calculations, step 2 to 7,
 6     Heating    NA   Inf  75.0  75.0 0  0 0.0 0.0 0  0 -45000.0
 7       Floor  12.5 42000   0.0 226.3 0  0 1.2 0.1 0  0  21153.2
 
-$Volumes
+$$Volumes
     Volume    T    C H SumNetH
 1 Outdoors 10.0  Inf 0  4740.8
 2  Indoors 26.6 4780 0  7664.4
 3     Soil  6.0  Inf 0   111.8
 ```
 
-The columns `SumNetAH` and `sumNetH` corresponds to the net absorption $\Delta A_i^{net}$ defined for layers and volumes, respectively (eqs. $\ref{eq_net_abs_con_layers}$ and $\ref{eq_net_abs_con_volumes}$).
+The columns `SumNetAH` and `sumNetH` corresponds to the net absorption $$\Delta A_i^{net}$$ defined for layers and volumes, respectively (eqs. $$\ref{eq_net_abs_con_layers}$$ and $$\ref{eq_net_abs_con_volumes}$$).
 
-When considering the loss to the outdoors, it should be noted that $\Delta A_{sky}^{net}=18\,484$ J/m^2^ is the radiant heat loss, while $\Delta A_{out}^{net}=4\,741$ J/m^2^ is the heat lost by convection.
+When considering the loss to the outdoors, it should be noted that $$\Delta A_{sky}^{net}=18\,484$$ J/m^2^ is the radiant heat loss, while $$\Delta A_{out}^{net}=4\,741$$ J/m^2^ is the heat lost by convection.
 
 ##### Verification
 
-The total net absorption for any layer $i$ over the the $j=1..n$ minor time steps $\Delta A_i^{net}$ (J/m^2^) is an extended version of eq. $\ref{eq_net_abs_lw}$,
+The total net absorption for any layer $$i$$ over the the $$j=1..n$$ minor time steps $$\Delta A_i^{net}$$ (J/m^2^) is an extended version of eq. $$\ref{eq_net_abs_lw}$$,
 $$
 \begin{equation}
 \text{Layers:}\quad\Delta A_i^{net} = \frac{\Delta t}{n}\sum_{j=1}^n A_{ij}^{sw}+{A_{ij}^{sw}}'+A_{ij}^{lw}+{A_{ij}^{lw}}'
@@ -2269,9 +2258,9 @@ $$
 \label{eq_net_abs_con_layers}
 \end{equation}
 $$
-where again we for convenience have left out the emission of short-wave radiation, $E_{ij}^{sw}+{E_{ij}^{sw}}'=-100$ W/m^2^.
+where again we for convenience have left out the emission of short-wave radiation, $$E_{ij}^{sw}+{E_{ij}^{sw}}'=-100$$ W/m^2^.
 
-Similarly for the three volumes ($i=1..3$), which only exchanges heat through convection/conduction:
+Similarly for the three volumes ($$i=1..3$$), which only exchanges heat through convection/conduction:
 $$
 \begin{equation}
 \text{Volumes:}\quad\Delta A_i^{net} = \frac{\Delta t}{n}\sum_{j=1}^n A_{ij}^{con}
@@ -2282,7 +2271,7 @@ We get a total balance of
 $$
 A_i^{net}[\text{layers}] + A_i^{net}[\text{volumes}] = 5\,483+12\,517=18\,000 \text{ J/m}^2
 $$
-which again matches the emitted short-wave energy, $-100\text{ W/m}^2\cdot180\text{ s}= -18\,000 \text{ J/m}^2$.
+which again matches the emitted short-wave energy, $$-100\text{ W/m}^2\cdot180\text{ s}= -18\,000 \text{ J/m}^2$$.
 
 ### Advective heat transfer
 
@@ -2290,9 +2279,9 @@ Advective heat transfer is effectuated by ventilation. This causes a transfer of
 
 #### Computation example
 
-The `4-energy-budget-advection.R` script continues the example from above with a simulation time step $\Delta t=180$ s, broken into $n=6$ minor time steps and with temperature indoors at an initial $T_{in}=25$&deg;C and outdoors fixed at $T_{in}=10$&deg;C. We choose a ventilation rate of $3 \text{ h}^{-1}$. Over a minor time step of $30$ s, this leads to a cooling of the greenhouse air $\Delta T_{in}=-0.37$&deg;C (eq. $\ref{eq_advection_temp}$) corresponding to an advective heat flux of $A_{in}^{adv}=-59.0$ W/m^2^  (eq. $\ref{eq_advection_energy}$).  
+The `4-energy-budget-advection.R` script continues the example from above with a simulation time step $$\Delta t=180$$ s, broken into $$n=6$$ minor time steps and with temperature indoors at an initial $$T_{in}=25$$&deg;C and outdoors fixed at $$T_{in}=10$$&deg;C. We choose a ventilation rate of $$3 \text{ h}^{-1}$$. Over a minor time step of $$30$$ s, this leads to a cooling of the greenhouse air $$\Delta T_{in}=-0.37$$&deg;C (eq. $$\ref{eq_advection_temp}$$) corresponding to an advective heat flux of $$A_{in}^{adv}=-59.0$$ W/m^2^  (eq. $$\ref{eq_advection_energy}$$).  
 
-Our initial set-up for the budget has been extended with a `V` column for the volumes to hold $A_{i}^{adv}$:
+Our initial set-up for the budget has been extended with a `V` column for the volumes to hold $$A_{i}^{adv}$$:
 
 ```
         Layer   T     C     E    E_    A  A_   U  U_   H  H_
@@ -2328,9 +2317,9 @@ The steps to resolve the energy budget follows those above with the addition of 
 3     Soil  6.0  Inf 0 0    111.8
 ```
 
-Beforehand, the budget resulted in an increase in $T_{in}$ due to a net transfer of heat from the layers to the greenhouse air. Now, with ventilation included $T_{in}$ is lowered due to the increased heat loss to the outdoors air.
+Beforehand, the budget resulted in an increase in $$T_{in}$$ due to a net transfer of heat from the layers to the greenhouse air. Now, with ventilation included $$T_{in}$$ is lowered due to the increased heat loss to the outdoors air.
 
-The total net absorption of layers is still described by eq. $\ref{eq_net_abs_con_layers}$, while for volumes we must add (to eq. $\ref{eq_net_abs_con_volumes}$) the contribution of ventilation:
+The total net absorption of layers is still described by eq. $$\ref{eq_net_abs_con_layers}$$, while for volumes we must add (to eq. $$\ref{eq_net_abs_con_volumes}$$) the contribution of ventilation:
 $$
 \begin{equation}
 \text{Volumes:}\quad\Delta A_i^{net} = \frac{\Delta t}{n}\sum_{j=1}^n A_{ij}^{conv} + A_{ij}^{adv}
@@ -2344,7 +2333,7 @@ $$
 
 ### Canopy temperature
 
-So far, we have set the $U$-value of the canopy to $0.1$ W/J/m^2^ and fixed its temperature at $24$&deg;C. A more correct model of canopy sets its $U$-value to zero and updates its temperature by eq. $\ref{eq_t_plant}$, which we will do now. 
+So far, we have set the $$U$$-value of the canopy to $$0.1$$ W/J/m^2^ and fixed its temperature at $$24$$&deg;C. A more correct model of canopy sets its $$U$$-value to zero and updates its temperature by eq. $$\ref{eq_t_plant}$$, which we will do now. 
 
 #### Computation example
 
@@ -2366,7 +2355,7 @@ Volume    T    C    H     V SumNetHV
 3     Soil  6.0  Inf  0.6   0.0    111.9
 ```
 
-The relative humidity was fixed at 90% for these calculations. It can be seen that the plant temperature, previously fixed at $24$&deg;C, has risen to $25.4$&deg;C. This again has caused the screen temperature to rise from the previous $21.4$&deg; to now $21.6$&deg;. The temperature of other layers changed less. 
+The relative humidity was fixed at 90% for these calculations. It can be seen that the plant temperature, previously fixed at $$24$$&deg;C, has risen to $$25.4$$&deg;C. This again has caused the screen temperature to rise from the previous $$21.4$$&deg; to now $$21.6$$&deg;. The temperature of other layers changed less. 
 
 The total energy budget changed only little and is still in balance:
 $$
@@ -2385,17 +2374,17 @@ The figures in this sub-section were generated by the `5-water-budget.R` script.
 
 ### Transpiration
 
-Transpiration$H_{plant}^{trans}$ (kg/m^2^/s) is modelled by eq. $\ref{eq_transpiration}$. It is highly dependent on the radiation absorbed by the canopy, as seen in the figure,
+Transpiration$$H_{plant}^{trans}$$ (kg/m^2^/s) is modelled by eq. $$\ref{eq_transpiration}$$. It is highly dependent on the radiation absorbed by the canopy, as seen in the figure,
 
-![](../media/models/vg/leaf-transpiration.png)
+![](../../media/models/vg/leaf-transpiration.png)
 
 ### Condensation
 
-Condensation occurs when the glass temperature falls below the dew point of the indoors air. The saturated water vapour pressure at the temperature of the glass is $H_{sat}^{pres}(T_{glass})$ according to eq. $\ref{eq_svp}$, while the water vapour pressure of the indoors air is
+Condensation occurs when the glass temperature falls below the dew point of the indoors air. The saturated water vapour pressure at the temperature of the glass is $$H_{sat}^{pres}(T_{glass})$$ according to eq. $$\ref{eq_svp}$$, while the water vapour pressure of the indoors air is
 $$
 H_{in}^{pres}=\frac{H_{in}^{rel}}{100\%}H_{sat}(T_{in})
 $$
-The absolute humidity $H^{abs}$ (kg/m^3^) can be calculated from pressure and temperature using the [Ideal Gas Law](https://en.wikipedia.org/wiki/Ideal_gas_law):
+The absolute humidity $$H^{abs}$$ (kg/m^3^) can be calculated from pressure and temperature using the [Ideal Gas Law](https://en.wikipedia.org/wiki/Ideal_gas_law):
 $$
 \begin{equation}
 \frac{n}{V} = \frac{P}{RT}
@@ -2409,17 +2398,17 @@ H^{abs} = M_{w}\frac{H^{pres}}{R(T+T_0)}
 \label{eq_h_abs}
 \end{equation}
 $$
-where $M_w=18$ g/mol is the molar mass of water, $R=8.314$ m^3^ Pa/mol/K and $T_0=273.15$ K. The relation looks like this
+where $$M_w=18$$ g/mol is the molar mass of water, $$R=8.314$$ m^3^ Pa/mol/K and $$T_0=273.15$$ K. The relation looks like this
 
-<img src="../media/models/vg/absolute-humidity.png" style="zoom:67%;" />
+<img src="../../media/models/vg/absolute-humidity.png" style="zoom:67%;" />
 
 It is seen how warmer air can hold more water vapour.
 
-The saturated absolute humidity only depends on temperature (eqs. $\ref{eq_svp}$ and $\ref{eq_h_abs}$),
+The saturated absolute humidity only depends on temperature (eqs. $$\ref{eq_svp}$$ and $$\ref{eq_h_abs}$$),
 $$
 H_{sat}^{abs}\left(T \right) = M_{w}\frac{H_{sat}(T)}{R(T+T_0)}
 $$
-The condensation rate at the glass $C_{glass}^{cond}$ (kg/m^2^ ground/s) is proportional to the difference between the saturated absolute humidity at the glass and the absolute humidity of the air ([GCC, eqs. 3.4.18, 3.4.23](https://www.wageningenacademic.com/doi/book/10.3920/978-90-8686-501-7)),
+The condensation rate at the glass $$C_{glass}^{cond}$$ (kg/m^2^ ground/s) is proportional to the difference between the saturated absolute humidity at the glass and the absolute humidity of the air ([GCC, eqs. 3.4.18, 3.4.23](https://www.wageningenacademic.com/doi/book/10.3920/978-90-8686-501-7)),
 $$
 \begin{equation}
 C_{glass}^{cond} = C_{ai}c\left\lfloor H_{in}^{abs} - H_{sat}^{abs}(T_{glass})\right\rfloor_0
@@ -2433,32 +2422,32 @@ $$
 \left[\frac{\text{m}^3}{\text{m}^2\text{ cover}\cdot\text{s}} \right] \cdot
 \left[\frac{\text{kg}}{\text{m}^3}\right]
 $$
-where $C_{ai}$ is the cover/ground area index (eq. $\ref{eq_cai}$) and $c$ (m/s) is an empirical parameter. For condensation on screens, $C_{ai}$ must be replaced with the ratio of the screens-drawn area to ground area.
+where $$C_{ai}$$ is the cover/ground area index (eq. $$\ref{eq_cai}$$) and $$c$$ (m/s) is an empirical parameter. For condensation on screens, $$C_{ai}$$ must be replaced with the ratio of the screens-drawn area to ground area.
 
-Pieters et al. (1996) estimated $c$  from data collected in a controlled experiment with $T_{in}=20$&deg;C and $T_{out}=10$&deg;C at relative humidity $H_{in}^{rel}=(70\%, 80\%, 85\%,90\%)$. The temperature of the glass was not measured. We transformed the experimental $H_{in}^{rel}$ to $H_{in}^{abs}$ and tentatively assumed a glass temperature between the inner and outer temperature, $T_{glass}=(13,15,17)$&deg;C. We estimated $c=2\cdot10^{-3}$ m/s, as seen in the figure, where the points show the experimental data:
+Pieters et al. (1996) estimated $$c$$  from data collected in a controlled experiment with $$T_{in}=20$$&deg;C and $$T_{out}=10$$&deg;C at relative humidity $$H_{in}^{rel}=(70\%, 80\%, 85\%,90\%)$$. The temperature of the glass was not measured. We transformed the experimental $$H_{in}^{rel}$$ to $$H_{in}^{abs}$$ and tentatively assumed a glass temperature between the inner and outer temperature, $$T_{glass}=(13,15,17)$$&deg;C. We estimated $$c=2\cdot10^{-3}$$ m/s, as seen in the figure, where the points show the experimental data:
 
-<img src="../media/models/vg/condensation-estimation.png" style="zoom:67%;" />
+<img src="../../media/models/vg/condensation-estimation.png" style="zoom:67%;" />
 
-This estimate of $c$ is in accord with that in  [GCC](https://www.wageningenacademic.com/doi/book/10.3920/978-90-8686-501-7) (eq 3.4.23), which has $C_{ai}c=3\cdot10^{-3}$ m/s. With a typical value of $C_{ai}=1.5$ m^2^/m^2^, the  two estimates are equivalent.
+This estimate of $$c$$ is in accord with that in  [GCC](https://www.wageningenacademic.com/doi/book/10.3920/978-90-8686-501-7) (eq 3.4.23), which has $$C_{ai}c=3\cdot10^{-3}$$ m/s. With a typical value of $$C_{ai}=1.5$$ m^2^/m^2^, the  two estimates are equivalent.
 
-This figure shows the condensation rate, depending on glass temperature, at indoors temperature $T_{in}=24$&deg;C and two different indoors humidities $H_{in}^{rel}=(60\%,90\%)$,
+This figure shows the condensation rate, depending on glass temperature, at indoors temperature $$T_{in}=24$$&deg;C and two different indoors humidities $$H_{in}^{rel}=(60\%,90\%)$$,
 
-<img src="../media/models/vg/condensation.png" style="zoom:67%;" />
+<img src="../../media/models/vg/condensation.png" style="zoom:67%;" />
 
-The vertical line at $24$&deg;C highlights that at high indoors humidity (90%), just a slightly cooler glass will accumulate condensation. The condensation rate is in the same range as transpiration, e.g., at 90% humidity and a glass temperature of 10&deg;C, the condendation rate is $0.02$ g/m^2^/s (read off the figure) giving $1.2$ g/m^2^/min.
+The vertical line at $$24$$&deg;C highlights that at high indoors humidity (90%), just a slightly cooler glass will accumulate condensation. The condensation rate is in the same range as transpiration, e.g., at 90% humidity and a glass temperature of 10&deg;C, the condendation rate is $$0.02$$ g/m^2^/s (read off the figure) giving $$1.2$$ g/m^2^/min.
 
 
 
 ###  Ventilation
 
-Ventilation causes mass movement of water vapour between outdoors and indoors air. To calculate the resultant change in indoors absolute humidity $\Delta H_{in}^{abs}$ (kg/m^3^) during one time step $\Delta t$ (s), eq. $\ref{eq_advection_temp}$ can be rewritten as
+Ventilation causes mass movement of water vapour between outdoors and indoors air. To calculate the resultant change in indoors absolute humidity $$\Delta H_{in}^{abs}$$ (kg/m^3^) during one time step $$\Delta t$$ (s), eq. $$\ref{eq_advection_temp}$$ can be rewritten as
 $$
 \begin{equation}
 \Delta H_{in}^{abs} = [H_{out}^{abs} - H_{in}^{abs}(0)] \left[1-exp\left(-\frac{v}{3600 \text{ s/h}}\Delta t \right)\right]
 \label{eq_advection_hum}
 \end{equation}
 $$
-where $H_{in}^{abs}(0)$ (kg/m^3^) is the indoors absolute humidity at the beginning of the time step.
+where $$H_{in}^{abs}(0)$$ (kg/m^3^) is the indoors absolute humidity at the beginning of the time step.
 
 The average rate of water lost by mass movement during the time step is
 $$
@@ -2470,21 +2459,21 @@ $$
 \label{eq_advection_hum_flux}
 \end{equation}
 $$
-where $V_{ai}$ is the volumetric area index (eq. $\ref{average_height}$).
+where $$V_{ai}$$ is the volumetric area index (eq. $$\ref{average_height}$$).
 
-This is depicted in the following figure at a ventilation rate of $v=3\text{ h}^{-1}$ and with temperatures inside $T_{in}=24$&deg;C and outside $T_{out}=10$&deg;C. The relation is shown at two different indoors humidities and varing outdoors humidity,
+This is depicted in the following figure at a ventilation rate of $$v=3\text{ h}^{-1}$$ and with temperatures inside $$T_{in}=24$$&deg;C and outside $$T_{out}=10$$&deg;C. The relation is shown at two different indoors humidities and varing outdoors humidity,
 
-<img src="../media/models/vg/water-ventilation.png" style="zoom:67%;" />
+<img src="../../media/models/vg/water-ventilation.png" style="zoom:67%;" />
 
 The cooler outdoors air can hold only little water. Hence, ventilation is an effective means of lowering indoors humidity. The effect is larger with more humid indoors. The flux of water vapour is negative because water is lost from the greenhouse. Since the humid indoors air holds latent heat originally captured by transpiration, ventilation also functions as an indirect route of venting excess heat.
 
 ## Latent heat
 
-The latent heat carried by water vapour is released during condensation. Knowing the condensation rate at the glass $C_{glass}^{cond}$ (kg/m^2^ ground/s) (eq. $\ref{eq_condensation}$), it is straightforward to calculate the heat, which is assumed to be absorbed by the glass immediately at a rate of $A_{glass}^{cond}$ (W/m^2^ ground),
+The latent heat carried by water vapour is released during condensation. Knowing the condensation rate at the glass $$C_{glass}^{cond}$$ (kg/m^2^ ground/s) (eq. $$\ref{eq_condensation}$$), it is straightforward to calculate the heat, which is assumed to be absorbed by the glass immediately at a rate of $$A_{glass}^{cond}$$ (W/m^2^ ground),
 $$
 A_{glass}^{cond} = \lambda C_{glass}^{cond}
 $$
-The heat of vapourisation $\lambda=2\,454$ kJ/kg determines the energy released by the phase shift.
+The heat of vapourisation $$\lambda=2\,454$$ kJ/kg determines the energy released by the phase shift.
 
 #### Computation example
 
@@ -2532,13 +2521,13 @@ The  model was extended with a water budget shown as three columns (in g/m^2^) i
 2  Indoors 8.060 -0.004 -2.532
 ```
 
-The output shows the outcome after one time step $\Delta t=180$ s, still divided into $n=6$  minor time steps for the calculations. Thus, $8.0$ g/m^2^ (`Tr` column) was transpired by the crop. Meanwhile ventilation got rid of $2.5$ g/m^2^ (`Mv` column) of the the transpired water. 
+The output shows the outcome after one time step $$\Delta t=180$$ s, still divided into $$n=6$$  minor time steps for the calculations. Thus, $$8.0$$ g/m^2^ (`Tr` column) was transpired by the crop. Meanwhile ventilation got rid of $$2.5$$ g/m^2^ (`Mv` column) of the the transpired water. 
 
-The condensed water amounted to $0.00440$ g/m^2^ (`Cn` column). Multiplication by the latent heat of evaporation $\lambda=2\,454$ J/g leads to the amount of released energy,
+The condensed water amounted to $$0.00440$$ g/m^2^ (`Cn` column). Multiplication by the latent heat of evaporation $$\lambda=2\,454$$ J/g leads to the amount of released energy,
 $$
 0.00440\text{ g/m}^2\cdot2\,454\text{ J/g} = 10.8\text{ J/m}^2
 $$
-which appears in the `SumCn` column for the glass layer. The increase in glass temperature caused by condensation alone, taking the heat capacity of the glass layers $C_{glass}=8\,400$ J/K/m^2^ into consideration, amounted to very little,
+which appears in the `SumCn` column for the glass layer. The increase in glass temperature caused by condensation alone, taking the heat capacity of the glass layers $$C_{glass}=8\,400$$ J/K/m^2^ into consideration, amounted to very little,
 $$
 \Delta T_{glass}[\text{condensation}] = \frac{10.8 \text{ J/m}^2}{8\,400 \text{ J/K/m}^2} = 0.0013\text{ K}
 $$
@@ -2552,11 +2541,11 @@ It is worth noting that the latent heat, which escaped by ventilation, is not pa
 $$
 2.532\text{ g/m}^2\cdot2\,454\text{ J/g} = 6\,214\text{ J/m}^2
 $$
-These $6\,214$ J/m^2^ were originally captured as radiative heat by the canopy and turned into latent heat. They do not constitute an extra loss of energy from the greenhouse, i.e.they do not act as an extra cooling mechanism, as humid air leaves through the vents. 
+These $$6\,214$$ J/m^2^ were originally captured as radiative heat by the canopy and turned into latent heat. They do not constitute an extra loss of energy from the greenhouse, i.e.they do not act as an extra cooling mechanism, as humid air leaves through the vents. 
 
 ## CO~2~ budget
 
-We use the Ideal Gas Law earlier on (eq. $\ref{eq_ideal_gas_law}$) to calculate condensation. Here we apply it to convert CO~2~ concentration from $[CO_2]^{ppm}$ (ppm) to absolute concentration $[CO_2]^{abs}$ (g/m^3^):
+We use the Ideal Gas Law earlier on (eq. $$\ref{eq_ideal_gas_law}$$) to calculate condensation. Here we apply it to convert CO~2~ concentration from $$[CO_2]^{ppm}$$ (ppm) to absolute concentration $$[CO_2]^{abs}$$ (g/m^3^):
 $$
 \begin{split}
 [CO_2]^{abs} &= \frac{[CO_2]^{ppm}}{10^6} \cdot \frac{P}{RT} \cdot M_{CO_2} \\[6pt]
@@ -2565,7 +2554,7 @@ $$
 1.829\frac{\text{mg/m}^3}{\text{ppm CO}_2} \cdot [CO_2]^{ppm}
 \end{split}
 $$
-As an example, with [greenhouse dimensions](#greenhouse-dimensions) of $10\,000$ m^2^ area and a volume of $39\,384$ m^3^, how much CO~2~ would we need to increase indoors CO~2~ from 400 ppm to 900 ppm? This would amount to
+As an example, with [greenhouse dimensions](#greenhouse-dimensions) of $$10\,000$$ m^2^ area and a volume of $$39\,384$$ m^3^, how much CO~2~ would we need to increase indoors CO~2~ from 400 ppm to 900 ppm? This would amount to
 $$
 1.829\frac{\text{mg/m}^3}{\text{ppm CO}_2} \cdot 39\,384 \text{ m}^3 \cdot 500 \text{ ppm CO}_2 = 36.0\text{ kg CO}_2
 $$
@@ -2577,7 +2566,7 @@ or
 $$
 \frac{36.0\text{ kg CO}_2}{39\,384 \text{ m}^3} = 0.915\text{ g CO}_2/\text{m}^3
 $$
-However, the plants will take up CO~2~ which must be compensated for to keep up the CO~2~ concentration. For example, a tomato crop grown at a leaf area index of $3.0$ with a CO~2~ uptake rate of $1.29$ mg CO~2~/m^2^ leaf/s [(Heuvelink, 1995)](https://doi.org/10.1006/anbo.1995.1035) will need
+However, the plants will take up CO~2~ which must be compensated for to keep up the CO~2~ concentration. For example, a tomato crop grown at a leaf area index of $$3.0$$ with a CO~2~ uptake rate of $$1.29$$ mg CO~2~/m^2^ leaf/s [(Heuvelink, 1995)](https://doi.org/10.1006/anbo.1995.1035) will need
 $$
 1.29\frac{\text{ mg CO}_2}{\text{m}^2\text{ leaf}\cdot\text{s}} \cdot 
 3\frac{\text{m}^2\text{ leaf}}{\text{m}^2\text{ floor}} \cdot
@@ -2590,7 +2579,7 @@ $$
 13.9 \text{ g CO}_2/\text{m}^2/\text{h} \cdot \frac{10\,000\text{ m}^2}{39\,384\text{ m}^3} = 
 3.54 \text{ g CO}_2/\text{m}^3/\text{h}
 $$
-Meanwhile, CO~2~ is lost to the outdoors even with all windows closed due to leakage, maybe at a rate of some $0.5$ to $1.0$ per hour, depending on wind conditions.
+Meanwhile, CO~2~ is lost to the outdoors even with all windows closed due to leakage, maybe at a rate of some $$0.5$$ to $$1.0$$ per hour, depending on wind conditions.
 
 The whole CO~2~ budget can be expressed in the differential equation,
 $$
@@ -2598,11 +2587,11 @@ $$
 $$
 with
 
-* $c$ (g  CO~2~/m^3^/h) the balance of CO~2~ injection minus  CO~2~ fixation
-* $v$ (h$^{-1}$) the ventilation rate (controlled + leakage)
-* $[CO_2]_{in}^{abs}$ and $[CO_2]_{out}^{abs}$ (g CO~2~/m^3^) the CO~2~ concentration indoors and outdoors, respectively
+* $$c$$ (g  CO~2~/m^3^/h) the balance of CO~2~ injection minus  CO~2~ fixation
+* $$v$$ (h$$^{-1}$$) the ventilation rate (controlled + leakage)
+* $$[CO_2]_{in}^{abs}$$ and $$[CO_2]_{out}^{abs}$$ (g CO~2~/m^3^) the CO~2~ concentration indoors and outdoors, respectively
 
-Integration gives us the following solution of the $[CO_2]_{in}^{abs}$ time trend with fixed rates $c$ and $v$,
+Integration gives us the following solution of the $$[CO_2]_{in}^{abs}$$ time trend with fixed rates $$c$$ and $$v$$,
 $$
 \begin{equation}
 [CO_2]_{in}^{abs}(t) = exp(-vt)\left\{ 
@@ -2612,20 +2601,20 @@ $$
 \label{eq_c00_integration}
 \end{equation}
 $$
-The figure below illustrates eq. $\ref{eq_c00_integration}$ with the following parameter settings:
+The figure below illustrates eq. $$\ref{eq_c00_integration}$$ with the following parameter settings:
 
-* $[CO_2]_{in}^{abs}(0) = 500\text{ ppm}\cdot 1.829\text{ mg CO}_2\text{/m}^3\text{/ppm} = 0.915\text{ g CO}_2\text{/m}^3$
-* $[CO_2]_{out}^{abs} = 400\text{ ppm}\cdot 1.829\text{ mg CO}_2\text{/m}^3\text{/ppm} = 0.732\text{ g CO}_2\text{/m}^3$
-* $v\in\{0.5,1.0\}\text{ h}^{-1}$
-* $c\in\{0.0,0.5\}\text{ g CO}_2\text{/m}^3\text{/h}$
+* $$[CO_2]_{in}^{abs}(0) = 500\text{ ppm}\cdot 1.829\text{ mg CO}_2\text{/m}^3\text{/ppm} = 0.915\text{ g CO}_2\text{/m}^3$$
+* $$[CO_2]_{out}^{abs} = 400\text{ ppm}\cdot 1.829\text{ mg CO}_2\text{/m}^3\text{/ppm} = 0.732\text{ g CO}_2\text{/m}^3$$
+* $$v\in\{0.5,1.0\}\text{ h}^{-1}$$
+* $$c\in\{0.0,0.5\}\text{ g CO}_2\text{/m}^3\text{/h}$$
 
-The time course of the indoors CO~2~ is shown on the y-axis as $[CO_2]_{in}^{ppm}$, i.e. converted to ppm:
+The time course of the indoors CO~2~ is shown on the y-axis as $$[CO_2]_{in}^{ppm}$$, i.e. converted to ppm:
 
-![](../media/models/vg/co2-budget.png)
+![](../../media/models/vg/co2-budget.png)
 
-Note that $c=0$ implies that CO~2~ injection and fixation cancel out. In other words, the injection rate equals the fixation rate ($3.54 \text{ g CO}_2/\text{m}^3/\text{h}$ in the example above). Hence $c=0.5$ implies an injection rate of $4.04 \text{ g CO}_2/\text{m}^3/\text{h}$. With no net gain in CO~2~ (red curves) the indoors concentration falls from the initial 500 ppm to the outdoors 400 ppm, whereas with a net gain (blue curves) the indoors concentration approaches an asymptote. With increased ventilation (dashed curves) the blue asymptote is lowered, whereas the red asymptote is approached more quickly.
+Note that $$c=0$$ implies that CO~2~ injection and fixation cancel out. In other words, the injection rate equals the fixation rate ($$3.54 \text{ g CO}_2/\text{m}^3/\text{h}$$ in the example above). Hence $$c=0.5$$ implies an injection rate of $$4.04 \text{ g CO}_2/\text{m}^3/\text{h}$$. With no net gain in CO~2~ (red curves) the indoors concentration falls from the initial 500 ppm to the outdoors 400 ppm, whereas with a net gain (blue curves) the indoors concentration approaches an asymptote. With increased ventilation (dashed curves) the blue asymptote is lowered, whereas the red asymptote is approached more quickly.
 
-In the full model the CO~2~ [setpoint](#co2-setpoint), [controller](#co2-controller) and [actuator](#co2-actuator) will collaborate to adjust the injection rate, so that the indoors CO~2~ concentration is maintained at the setpoint. The injection rate $c_{inj}$ (g/m^2^/h) (see [CO~2~ actuator](#co-2-actuator)) and the fixation rate $P_n^{canopy}$ (&mu;mol /m^2^ ground/s) (see [Canopy photosynthesis](#canopy-photosynthesis)). The exchange rates between units are
+In the full model the CO~2~ [setpoint](#co2-setpoint), [controller](#co2-controller) and [actuator](#co2-actuator) will collaborate to adjust the injection rate, so that the indoors CO~2~ concentration is maintained at the setpoint. The injection rate $$c_{inj}$$ (g/m^2^/h) (see [CO~2~ actuator](#co-2-actuator)) and the fixation rate $$P_n^{canopy}$$ (&mu;mol /m^2^ ground/s) (see [Canopy photosynthesis](#canopy-photosynthesis)). The exchange rates between units are
 $$
 \begin{split}
 1\left[\frac{\text{g}}{\text{m}^2\cdot\text{h}}\right] &= 
@@ -2647,174 +2636,174 @@ $$
 &= 0.1584\frac{A_{gh}}{V_{gh}} \left[\frac{\text{g}}{\text{m}^3\cdot\text{h}}\right]
 \end{split}
 $$
-with greenhouse area $A_{gh}$ and volume $V_{gh}$.
+with greenhouse area $$A_{gh}$$ and volume $$V_{gh}$$.
 
 ## Implementation notes
 
 ### Optimisation
 
-The combined energy and water budget is a central part of the model. It is where most computation takes place and where most execution time is spent. Therefore it is worth optimising its performance. This can be achieved by varying the number of minor time steps $n$, which determines the effective time step $\Delta t/n$ of the budget computation. One possible algorithm for determining $n$ is
+The combined energy and water budget is a central part of the model. It is where most computation takes place and where most execution time is spent. Therefore it is worth optimising its performance. This can be achieved by varying the number of minor time steps $$n$$, which determines the effective time step $$\Delta t/n$$ of the budget computation. One possible algorithm for determining $$n$$ is
 
-1. Set $n=1$.
+1. Set $$n=1$$.
 
-2. Compute the budget for one minor time step of length $\Delta t/n$ and determine the maximum change in temperature of any layer or volume $\Delta T_{max}$.
+2. Compute the budget for one minor time step of length $$\Delta t/n$$ and determine the maximum change in temperature of any layer or volume $$\Delta T_{max}$$.
 
-3. If the max. temperature change exceeds a critical limit $\Delta T_{max}>\Delta T_{crit}$ then re-calculate $n$ by
+3. If the max. temperature change exceeds a critical limit $$\Delta T_{max}>\Delta T_{crit}$$ then re-calculate $$n$$ by
    $$
    n=\left\lceil \frac{\Delta T_{max}}{\Delta T_{accept}} \right\rceil
    $$
-   where $\Delta T_{accept}$ is the acceptable change and $\lceil .. \rceil$ rounds up, Then go back to step 2.
+   where $$\Delta T_{accept}$$ is the acceptable change and $$\lceil .. \rceil$$ rounds up, Then go back to step 2.
 
-4. Complete the budget computation for the remaining $2..n$ minor time steps and determine $\Delta T_{max}$ for the whole procedure.
+4. Complete the budget computation for the remaining $$2..n$$ minor time steps and determine $$\Delta T_{max}$$ for the whole procedure.
 
-5. Re-calculate $n$ by the same equation as in step 3 and go back to step 2. This completes one simulation time step of length $\Delta t$ for the budget.
+5. Re-calculate $$n$$ by the same equation as in step 3 and go back to step 2. This completes one simulation time step of length $$\Delta t$$ for the budget.
 
-This algorith will adjust $n$ both upwards and downwards as deemed sufficient by the limits, which could be for example $\Delta T_{accept}=0.5$ K and $\Delta T_{crit}=1.5$ K. The backtracking that could happen in step 3 should be avoided as much as possible to save time. The expectation is that during the night $n$ would be 1. In the daytime it would be higher and when abrupt changes occur in the driving variables (e.g., when growth lights are switched on), it would be even larger for a short while. The simulation time step $\Delta t$ could be rather large, maybe 5 or even 10 minutes. The proper tradeoff between precision and execution time must be found by simulation.
+This algorith will adjust $$n$$ both upwards and downwards as deemed sufficient by the limits, which could be for example $$\Delta T_{accept}=0.5$$ K and $$\Delta T_{crit}=1.5$$ K. The backtracking that could happen in step 3 should be avoided as much as possible to save time. The expectation is that during the night $$n$$ would be 1. In the daytime it would be higher and when abrupt changes occur in the driving variables (e.g., when growth lights are switched on), it would be even larger for a short while. The simulation time step $$\Delta t$$ could be rather large, maybe 5 or even 10 minutes. The proper tradeoff between precision and execution time must be found by simulation.
 
 # Photosynthesis
 
 ## Leaf photosynthesis
 
-The photosynthesis model is identical to the implementation in the `Photosyn` function found in the `plantecophys` R package [(Duursma, 2015)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143346). The `Photosyn` function was re-coded in C++ keeping only the functionality needed for our purpose. However, boundary layer conductivity $g_b$ (mol/m^2^/s) was added to the function, which originally accounted only for stomatal conduction $g_s$ (mol/m^2^/s). Assuming that boundary layer and stomata work like resistors in a series, they are additive,
+The photosynthesis model is identical to the implementation in the `Photosyn` function found in the `plantecophys` R package [(Duursma, 2015)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143346). The `Photosyn` function was re-coded in C++ keeping only the functionality needed for our purpose. However, boundary layer conductivity $$g_b$$ (mol/m^2^/s) was added to the function, which originally accounted only for stomatal conduction $$g_s$$ (mol/m^2^/s). Assuming that boundary layer and stomata work like resistors in a series, they are additive,
 $$
 \frac{1}{g_t} = \frac{1}{g_b}+\frac{1}{g_s} \quad\Leftrightarrow\quad 
 g_t=\frac{g_b g_i}{g_b+g_i}
 $$
-where $g_t$ (mol/m^2^/s) is the total conductance. All conductances are for water vapour; they are translated into CO~2~ conductances where needed in the model.
+where $$g_t$$ (mol/m^2^/s) is the total conductance. All conductances are for water vapour; they are translated into CO~2~ conductances where needed in the model.
 
-In the overview of variables and parameters below, the mathematical symbols used in this treatise (e.g., $I_{abs}$) are listed together with their name in the code (e.g., `PPFD`). The re-coded versions of the original `Photosyn` functions can be found in the `photosynthesis.R` script and, equivalently, in the `photosynthesis.cpp` source code. All m^2^ units are per m^2^ leaf. This is stated explicitly only where there is room for confusion.
+In the overview of variables and parameters below, the mathematical symbols used in this treatise (e.g., $$I_{abs}$$) are listed together with their name in the code (e.g., `PPFD`). The re-coded versions of the original `Photosyn` functions can be found in the `photosynthesis.R` script and, equivalently, in the `photosynthesis.cpp` source code. All m^2^ units are per m^2^ leaf. This is stated explicitly only where there is room for confusion.
 
 * Environmental and plant variables:
 
-  * $c_{in}^{CO2}$: Indoors CO~2~ concentration (ppm)  (`Ca`)
+  * $$c_{in}^{CO2}$$: Indoors CO~2~ concentration (ppm)  (`Ca`)
 
-  * $F^{leaf}$: Incident PAR (&mu;mol/m^2^ leaf /s) (`PPFD`)
+  * $$F^{leaf}$$: Incident PAR (&mu;mol/m^2^ leaf /s) (`PPFD`)
 
-  * $H_{in}^{rel}$: Indoors relative humidity of the air (%) (`RH`)
+  * $$H_{in}^{rel}$$: Indoors relative humidity of the air (%) (`RH`)
 
-  * $T_{plant}$: Leaf temperature (&deg;C) (`Tleaf`)
+  * $$T_{plant}$$: Leaf temperature (&deg;C) (`Tleaf`)
 
-  * $g_s$: Stomatal conductance for water vapour (mol/m^2^/s)  (`GS`)
+  * $$g_s$$: Stomatal conductance for water vapour (mol/m^2^/s)  (`GS`)
 
-  * $g_b$: Boundary layer conductance for water vapour (mol/m^2^/s) (`GB`)
+  * $$g_b$$: Boundary layer conductance for water vapour (mol/m^2^/s) (`GB`)
 
 
 * Obligatory species-specific parameters:
 
-  * $J_{max}^{25}$: Maximum rate of electron transport at 25&deg;C (&mu;mol/m^2^/s) (`Jmax`)
+  * $$J_{max}^{25}$$: Maximum rate of electron transport at 25&deg;C (&mu;mol/m^2^/s) (`Jmax`)
 
-  * $V_{cmax}^{25}$: Maximum carboxylation rate  at 25&deg;C (&mu;mol/m^2^/s) (`Vcmax`)
+  * $$V_{cmax}^{25}$$: Maximum carboxylation rate  at 25&deg;C (&mu;mol/m^2^/s) (`Vcmax`)
 
-  * $\Gamma^*$: CO~2~ compensation point (ppm) (`GammaStar`)
+  * $$\Gamma^*$$: CO~2~ compensation point (ppm) (`GammaStar`)
 
-  * $K_m$: Michaelis-Menten coefficient for Farquhar model (Pa) (`Km`)
+  * $$K_m$$: Michaelis-Menten coefficient for Farquhar model (Pa) (`Km`)
 
-  * $R^{25}$: Respiration rate at 25&deg;C (&mu;mol/m^2^/s) (`Rd0`)
+  * $$R^{25}$$: Respiration rate at 25&deg;C (&mu;mol/m^2^/s) (`Rd0`)
 
 
 * Optional species-specific parameters (with default values):
 
-  * $a$: Quantum yield of electron transport (0.24 mol/mol) (`alpha`)
+  * $$a$$: Quantum yield of electron transport (0.24 mol/mol) (`alpha`)
 
-  * $\theta$ : Shape of light response curve (0.85) (`theta`)
+  * $$\theta$$ : Shape of light response curve (0.85) (`theta`)
 
-  * Temperature response of $J_{max}$:
-    * $J_{Ea} = 29\,680$ (`EaJ`)
-    * $J_{EdV}= 2\cdot 10^5$ (`EdVJ`)
-    * $J_{dels}= 631.88$ (`delsJ`)
+  * Temperature response of $$J_{max}$$:
+    * $$J_{Ea} = 29\,680$$ (`EaJ`)
+    * $$J_{EdV}= 2\cdot 10^5$$ (`EdVJ`)
+    * $$J_{dels}= 631.88$$ (`delsJ`)
 
-  * Temperature response of $V_{cmax}$:
-    * $V_{Ea}=58\,550$ (`EaV`)
-    * $V_{EdVC}= 2\cdot 10^5$ (`EdVC`)
-    * $V_{delsC}=629.26$ (`delsJ`)
+  * Temperature response of $$V_{cmax}$$:
+    * $$V_{Ea}=58\,550$$ (`EaV`)
+    * $$V_{EdVC}= 2\cdot 10^5$$ (`EdVC`)
+    * $$V_{delsC}=629.26$$ (`delsJ`)
 
   * Respiration rate:
-    * $Q_{10}$: Temperature correction of $R^{25}$ ($1.92$) (`Q10`)
+    * $$Q_{10}$$: Temperature correction of $$R^{25}$$ ($$1.92$$) (`Q10`)
 
 
 * Function outputs:
 
-  * $c_i^{CO2}$: Intercellular CO~2~ concentration (ppm) `Ci`
+  * $$c_i^{CO2}$$: Intercellular CO~2~ concentration (ppm) `Ci`
 
-  * $P_n$: Net  photosynthesis rate (&mu;mol/m^2^ leaf/s) `ALEAF`
+  * $$P_n$$: Net  photosynthesis rate (&mu;mol/m^2^ leaf/s) `ALEAF`
 
-  * $P_j$: Gross photosynthesis rate limited by electron transport rate (&mu;mol/m^2^ leaf/s) (`Aj`)
+  * $$P_j$$: Gross photosynthesis rate limited by electron transport rate (&mu;mol/m^2^ leaf/s) (`Aj`)
 
-  * $P_c$: Gross photosynthesis rate limited by carboxylation rate (&mu;mol/m^2^ leaf/s) (`Ac`)
+  * $$P_c$$: Gross photosynthesis rate limited by carboxylation rate (&mu;mol/m^2^ leaf/s) (`Ac`)
 
-  * $R$: Respiration rate  (&mu;mol/m^2^ leaf/s) (`Rd`)
+  * $$R$$: Respiration rate  (&mu;mol/m^2^ leaf/s) (`Rd`)
 
 
 The `photosynthesis.R` script produces this figure to illustrate the output of the `photosynthesis` function (parameter values can be found in the code):
 
-<img src="../media/models/vg/leaf-photosynthesis.png" />
+<img src="../../media/models/vg/leaf-photosynthesis.png" />
 
-We see the expected form of the light response curve with positive effects of light, temperature and CO~2~. Internally, the model lets the more limiting process, electron transport or carboxylation rate (as judged from $P_j$ and $P_c$), decide the net outcome $P_n$.
+We see the expected form of the light response curve with positive effects of light, temperature and CO~2~. Internally, the model lets the more limiting process, electron transport or carboxylation rate (as judged from $$P_j$$ and $$P_c$$), decide the net outcome $$P_n$$.
 
 ## Canopy photosynthesis
 
-The [energy budget](#energy-budget) model computes the total PAR absorbed by the plant canopy per m^2^ *ground* over one simulation time step, most of it coming from above $A_{plant}^{par}$ with a little coming from below ${A_{plant}^{par}}'$ due to reflection. Here, we define for convenience a new variable for the total canopy PAR absorption per ground area:
+The [energy budget](#energy-budget) model computes the total PAR absorbed by the plant canopy per m^2^ *ground* over one simulation time step, most of it coming from above $$A_{plant}^{par}$$ with a little coming from below $${A_{plant}^{par}}'$$ due to reflection. Here, we define for convenience a new variable for the total canopy PAR absorption per ground area:
 $$
 A_{ground} = A_{plant}^{par} + {A_{plant}^{par}}' \quad\quad \mu\text{mol/m}^2 \text{ ground}
 $$
-By correcting for the leaf area index $L_{ai}$ (m^2^ leaf/m^2^ ground), we get the absorption per leaf area:
+By correcting for the leaf area index $$L_{ai}$$ (m^2^ leaf/m^2^ ground), we get the absorption per leaf area:
 $$
 A_{leaf} = \frac{A_{ground}}{L_{ai}}  \quad\quad \mu\text{mol/m}^2 \text{ leaf}
 $$
-However, the [leaf photosynthesis](#leaf-photosynthesis) model takes *incident* PAR $F_{leaf}$ (&mu;mol/m^2^ leaf/s) as a parameter, not the absorbed PAR. $F_{leaf}$ is used in the leaf synthesis model to calculate the electron transport rate $J$ (&mu;mol/m^2^ leaf/s),
+However, the [leaf photosynthesis](#leaf-photosynthesis) model takes *incident* PAR $$F_{leaf}$$ (&mu;mol/m^2^ leaf/s) as a parameter, not the absorbed PAR. $$F_{leaf}$$ is used in the leaf synthesis model to calculate the electron transport rate $$J$$ (&mu;mol/m^2^ leaf/s),
 $$
 J = \frac{a F_{leaf} + J_{max} - 
 \sqrt{(a F_{leaf}+J_{max})^2 - 4a F_{leaf}\theta J_{max}}} 
 {2\theta}
 $$
-where $J_{max}$ (&mu;mol/m^2^ leaf/s) is the the maximum rate corrected for leaf temperature, and other parameters are as specified for the leaf photosynthesis model. We can derive $F_{leaf}$ from $A_{leaf}$ by correcting for leaf PAR absorptivity $\alpha_{leaf}^{par}\in[0;1]$ and the simulation time step $\Delta t$ (s),
+where $$J_{max}$$ (&mu;mol/m^2^ leaf/s) is the the maximum rate corrected for leaf temperature, and other parameters are as specified for the leaf photosynthesis model. We can derive $$F_{leaf}$$ from $$A_{leaf}$$ by correcting for leaf PAR absorptivity $$\alpha_{leaf}^{par}\in[0;1]$$ and the simulation time step $$\Delta t$$ (s),
 $$
 F_{leaf} = \frac{A_{leaf}}{\alpha_{leaf}^{par}\,\Delta t}
 $$
-The immediate outputs from the leaf photosynthesis model are all per leaf area, e.g., the net photosynthetic rate $P_n$ (&mu;mol/m^2^ leaf/s). These rates can be turned into per ground area units by multiplication with the leaf area index to express the rates at canopy level, e.g., $P_n^{canopy}=L_{ai}P_n$ (&mu;mol/m^2^ ground/s).
+The immediate outputs from the leaf photosynthesis model are all per leaf area, e.g., the net photosynthetic rate $$P_n$$ (&mu;mol/m^2^ leaf/s). These rates can be turned into per ground area units by multiplication with the leaf area index to express the rates at canopy level, e.g., $$P_n^{canopy}=L_{ai}P_n$$ (&mu;mol/m^2^ ground/s).
 
-With a basic parameter setting for the canopy model, $L_{ai}=1$ and $\alpha_{leaf}^{par}=1$, the leaf and canopy photosynthesis models give the exact same numerical result, even though one is per leaf area and the other is per ground area. Below (produced by the `photosynthesis.R` script) the canopy photosynthesis $P_n^{canopy}$ is shown with the same parameter setting for the leaf area model as in the previous figure and with $L_{ai}=3$ and $\alpha_{leaf}^{par}=0.9$ in the canopy model:
+With a basic parameter setting for the canopy model, $$L_{ai}=1$$ and $$\alpha_{leaf}^{par}=1$$, the leaf and canopy photosynthesis models give the exact same numerical result, even though one is per leaf area and the other is per ground area. Below (produced by the `photosynthesis.R` script) the canopy photosynthesis $$P_n^{canopy}$$ is shown with the same parameter setting for the leaf area model as in the previous figure and with $$L_{ai}=3$$ and $$\alpha_{leaf}^{par}=0.9$$ in the canopy model:
 
-![](../media/models/vg/canopy-photosynthesis.png)
+![](../../media/models/vg/canopy-photosynthesis.png)
 
-The self-shading of the canopy brings light intensity down by a factor of $L_{ai}$ which shifts the light response away from asymptotic saturation towards the linear part of the response. This is a simplification, which by itself leads to an overestimate of photosynthesis, since in reality the top leaves might approach light saturation. On the other hand, the plant can compensate for the dwindling light level down through the canopy by producing shade-adapted leaves, i.e. leaves with a light response curve that rises more steeply at low light levels. 
+The self-shading of the canopy brings light intensity down by a factor of $$L_{ai}$$ which shifts the light response away from asymptotic saturation towards the linear part of the response. This is a simplification, which by itself leads to an overestimate of photosynthesis, since in reality the top leaves might approach light saturation. On the other hand, the plant can compensate for the dwindling light level down through the canopy by producing shade-adapted leaves, i.e. leaves with a light response curve that rises more steeply at low light levels. 
 
-Another factor that creates uncertainty in the photosynthesis model is the uncertainty of the boundary layer resistance ($r_b=g_b^{-1}$). It is difficult to estimate empirically under greenhouse conditions, where it depends on plant architecture as well as air movement caused by ventilation and fans. Thus top leaves are likely to experience a smaller $r_b$ than leaves further down in the canopy. 
+Another factor that creates uncertainty in the photosynthesis model is the uncertainty of the boundary layer resistance ($$r_b=g_b^{-1}$$). It is difficult to estimate empirically under greenhouse conditions, where it depends on plant architecture as well as air movement caused by ventilation and fans. Thus top leaves are likely to experience a smaller $$r_b$$ than leaves further down in the canopy. 
 
-The gradients of light and $r_b$ in the plant canopy affects the photosynthesis model in opposite directions. The light gradient can be taken into account by Gaussian integration [(Goudriaan, 1986)](https://doi.org/10.1016/0168-1923(86)90063-8), while the $r_b$ gradient must be estimated from published studies. In any case, if the estimation of primary production (e.g. as biomass produced per day) is important, the model will need to be calibrated to the specific greenhouse setting. This includes $r_b$, as well as the species-specific parameters of the leaf photosynthesis model. 
+The gradients of light and $$r_b$$ in the plant canopy affects the photosynthesis model in opposite directions. The light gradient can be taken into account by Gaussian integration [(Goudriaan, 1986)](https://doi.org/10.1016/0168-1923(86)90063-8), while the $$r_b$$ gradient must be estimated from published studies. In any case, if the estimation of primary production (e.g. as biomass produced per day) is important, the model will need to be calibrated to the specific greenhouse setting. This includes $$r_b$$, as well as the species-specific parameters of the leaf photosynthesis model. 
 
-If the model is used to explore photosynthesis under different scenarios (e.g., different climate control strategies), the estimated photosynthesis can be used to compare their relative performance. However, the uncertainties and unknowns should be taken into account. The installation of fans will reduce $r_b$, but by how much? Greenhouse temperature influences photosynthesis but have we got accurate estimates of the temperature response of $J_{max}$ and $V_{cmax}$ in the leaf photosynthesis models? One should interpret model predictions of photosynthesis with care. 
+If the model is used to explore photosynthesis under different scenarios (e.g., different climate control strategies), the estimated photosynthesis can be used to compare their relative performance. However, the uncertainties and unknowns should be taken into account. The installation of fans will reduce $$r_b$$, but by how much? Greenhouse temperature influences photosynthesis but have we got accurate estimates of the temperature response of $$J_{max}$$ and $$V_{cmax}$$ in the leaf photosynthesis models? One should interpret model predictions of photosynthesis with care. 
 
 # Climate control
 
-Traditionally, greenhouse climate is controlled by two temperature [setpoints](#setpoints): one for ventilation $\sp{vent}{}$ (&deg;C) and one for heating $\sp{heat}{}$ (&deg;C):
+Traditionally, greenhouse climate is controlled by two temperature [setpoints](#setpoints): one for ventilation $${\mathbb{S}_\text{{vent}}^\text{{}}}$$ (&deg;C) and one for heating $${\mathbb{S}_\text{{heat}}^\text{{}}}$$ (&deg;C):
 
-<img src="../media/models/vg/climate-control.png" style="zoom:50%;" />
+<img src="../../media/models/vg/climate-control.png" style="zoom:50%;" />
 
 The humidity is controlled indirectly through manipulation of the temperature setpoints, e.g., if it is too humid then the ventilation setpoint is lowered.
 
-In the model, greenhouse air temperature $T_{in}$ (&deg;C) is considered to be within bounds if it is between the two setpoints $\pm$ a tolerance $\epsilon_{tol}$ (&deg;C). Otherwise, it is either too hot or too cold. The model emulates the climate control computer in a real greenhouse through the logic below, which has  five possible outcomes: Turn heating up or down, turn ventilation up or down, or keep current heating and ventilation.
+In the model, greenhouse air temperature $$T_{in}$$ (&deg;C) is considered to be within bounds if it is between the two setpoints $$\pm$$ a tolerance $$\epsilon_{tol}$$ (&deg;C). Otherwise, it is either too hot or too cold. The model emulates the climate control computer in a real greenhouse through the logic below, which has  five possible outcomes: Turn heating up or down, turn ventilation up or down, or keep current heating and ventilation.
 
-* If it is **too hot** $\left(T_{in}>\sp{vent}{}+\epsilon_{tol}\right)$: 
+* If it is **too hot** $$\left(T_{in}>{\mathbb{S}_\text{{vent}}^\text{{}}}+\epsilon_{tol}\right)$$: 
   * If **heating is on**, we are heating needlessly and must **turn down the heating**:
-    * Decrease the pipe temperature $T_{pipe}$ (eq. $\ref{eq_t_pipe}$) by a default $\Delta T_{pipe}$ (&deg;C) and recalculate the energy budget to update $T_{in}$. If by this update it got too cold $\left(T_{in}<\sp{heat}{}-\epsilon_{tol}\right)$ then correct $\Delta T_{pipe}$ by linear interpolation aiming for $T_{in}\approx \sp{heat}{}$; otherwise, keep $\Delta T_{pipe}$.
+    * Decrease the pipe temperature $$T_{pipe}$$ (eq. $$\ref{eq_t_pipe}$$) by a default $$\Delta T_{pipe}$$ (&deg;C) and recalculate the energy budget to update $$T_{in}$$. If by this update it got too cold $$\left(T_{in}<{\mathbb{S}_\text{{heat}}^\text{{}}}-\epsilon_{tol}\right)$$ then correct $$\Delta T_{pipe}$$ by linear interpolation aiming for $$T_{in}\approx {\mathbb{S}_\text{{heat}}^\text{{}}}$$; otherwise, keep $$\Delta T_{pipe}$$.
   * If **heating is off**, we must **turn up ventilation**:
-    * Increase the ventilation rate $v$ (eq. $\ref{eq_advection_temp}$) by a default $\Delta v$ (h$^{-1}$) and recalculate the energy budget to update $T_{in}$. If by this update it got too cold $\left(T_{in}<\sp{heat}{}-\epsilon_{tol}\right)$ then correct $\Delta v$ by linear interpolation aiming for $T_{in}\approx (\sp{vent}{}+\sp{heat}{})/2$; otherwise, keep $\Delta v$.
-* If it is **too cold** $\left(T_{in} < \sp{heat}{}-\epsilon_{tol}\right)$: 
+    * Increase the ventilation rate $$v$$ (eq. $$\ref{eq_advection_temp}$$) by a default $$\Delta v$$ (h$$^{-1}$$) and recalculate the energy budget to update $$T_{in}$$. If by this update it got too cold $$\left(T_{in}<{\mathbb{S}_\text{{heat}}^\text{{}}}-\epsilon_{tol}\right)$$ then correct $$\Delta v$$ by linear interpolation aiming for $$T_{in}\approx ({\mathbb{S}_\text{{vent}}^\text{{}}}+{\mathbb{S}_\text{{heat}}^\text{{}}})/2$$; otherwise, keep $$\Delta v$$.
+* If it is **too cold** $$\left(T_{in} < {\mathbb{S}_\text{{heat}}^\text{{}}}-\epsilon_{tol}\right)$$: 
   * If **ventilation is on**, we are cooling needlessly and must **turn down ventilation**:
-    * Decrease the ventilation rate $v$ (eq. $\ref{eq_advection_temp}$) by a default $\Delta v$ (h$^{-1}$) and recalculate the energy budget to update $T_{in}$. If by this update it got too hot $\left(T_{in}>\sp{vent}{}+\epsilon_{tol}\right)$ then correct $\Delta v$ by linear interpolation aiming for $T_{in}\approx (\sp{vent}{}+\sp{heat}{})/2$; otherwise, keep $\Delta v$.
+    * Decrease the ventilation rate $$v$$ (eq. $$\ref{eq_advection_temp}$$) by a default $$\Delta v$$ (h$$^{-1}$$) and recalculate the energy budget to update $$T_{in}$$. If by this update it got too hot $$\left(T_{in}>{\mathbb{S}_\text{{vent}}^\text{{}}}+\epsilon_{tol}\right)$$ then correct $$\Delta v$$ by linear interpolation aiming for $$T_{in}\approx ({\mathbb{S}_\text{{vent}}^\text{{}}}+{\mathbb{S}_\text{{heat}}^\text{{}}})/2$$; otherwise, keep $$\Delta v$$.
   * If **ventilation is off**, we must **turn up heating**:
-    * Increase the pipe temperature $T_{pipe}$ (eq. $\ref{eq_t_pipe}$) by a default $\Delta T_{pipe}$ (&deg;C) and recalculate the energy budget to update $T_{in}$. If by this update it got too hot $\left(T_{in}>\sp{vent}{}+\epsilon_{tol}\right)$ then correct $\Delta T_{pipe}$ by linear interpolation aiming for $T_{in}\approx \sp{heat}{}$; otherwise, keep $\Delta T_{pipe}$.
+    * Increase the pipe temperature $$T_{pipe}$$ (eq. $$\ref{eq_t_pipe}$$) by a default $$\Delta T_{pipe}$$ (&deg;C) and recalculate the energy budget to update $$T_{in}$$. If by this update it got too hot $$\left(T_{in}>{\mathbb{S}_\text{{vent}}^\text{{}}}+\epsilon_{tol}\right)$$ then correct $$\Delta T_{pipe}$$ by linear interpolation aiming for $$T_{in}\approx {\mathbb{S}_\text{{heat}}^\text{{}}}$$; otherwise, keep $$\Delta T_{pipe}$$.
 * If greenhouse temperature is **within bounds**:
-  * **Keep current** pipe temperature $T_{pipe}$ and ventilation rate $v$.
+  * **Keep current** pipe temperature $$T_{pipe}$$ and ventilation rate $$v$$.
 
 
-The default corrections of pipe temperature $\Delta T_{pipe}$ and ventilation rate $\Delta v$ should accomodate to the simulation time step $\Delta t$ (s) :
+The default corrections of pipe temperature $$\Delta T_{pipe}$$ and ventilation rate $$\Delta v$$ should accomodate to the simulation time step $$\Delta t$$ (s) :
 $$
 \begin{split}
 \Delta T_{pipe} &= \dot{T}_{pipe}\Delta t \\[4pt]
 \Delta v &= \dot{v}\Delta t
 \end{split}
 $$
-where the default rates of change are $\dot{T}_{pipe}$ (&deg;C/s) and $\dot{v}$ (h$^{-1}$s$^{-1}$). 
+where the default rates of change are $$\dot{T}_{pipe}$$ (&deg;C/s) and $$\dot{v}$$ (h$$^{-1}$$s$$^{-1}$$). 
 

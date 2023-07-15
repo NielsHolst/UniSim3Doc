@@ -199,7 +199,7 @@ $$
 $$
 where $${\Delta\mathcal{U}}$$ is the realised daily supply with respect to the demand $${\left<\Delta\mathcal{U}\right>}$$. The acquisition efficiency $$a$$ is  applied to the product of resource density $$X$$ and plant density $$Y$$. The units of the parameters and variables differ whether eq. $$\ref{eq_b_g_response}$$ is applied to the uptake of carbon, nitrogen or phosphorus. The relation has the shape of a saturation curve, which is linear under meagre conditions (small $$XY$$) with a slope of $$aY\Delta t$$; it approaches the demand $${\left<\Delta\mathcal{U}\right>}$$ when conditions are rich (large $$XY$$):
 
-<img src="..\media\models\saccharina\b-g-resp.png" style="zoom:50%;" />
+<img src="../../media/models/saccharina/b-g-resp.png" style="zoom:50%;" />
 
 The resource variable $$X$$ is sunlight intensity for carbon acquisition and water concentrations of dissolved nitrogen and phosphorus for the other two elements. The uptake efficiency $$a$$ takes care of converting the units of $$X$$ into $${\Delta\mathcal{U}}$$. 
 
@@ -228,11 +228,11 @@ $$
 
 The temperature response ($$\varphi_T$$) is piece-wise linear with two breakpoints:
 
-<img src="..\media\models\saccharina\T-response.png" style="zoom:8%;" />
+<img src="../../media/models/saccharina/T-response.png" style="zoom:8%;" />
 
 The salinity response ($$\varphi_{sal}$$) is likewise piece-wise linear with two breakpoints, the first one at 50% response:
 
-<img src="..\media\models\saccharina\sal-response.png" style="zoom:8%;" />
+<img src="../../media/models/saccharina/sal-response.png" style="zoom:8%;" />
 
 ### Stores
 
@@ -433,7 +433,7 @@ $$
 $$
 The response ($$\psi^N$$) to plant nitrogen forms a piece-wise linear response with two breakpoints, 
 
-<img src="..\media\models\saccharina\N-response.png" style="zoom:8%;" />
+<img src="../../media/models/saccharina/N-response.png" style="zoom:8%;" />
 
 ### Nitrogen and phosphorus supply
 
