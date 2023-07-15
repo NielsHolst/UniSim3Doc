@@ -1,3 +1,7 @@
+---
+title: The saccharina model
+layout: default
+---
 
 # The saccharina model
 

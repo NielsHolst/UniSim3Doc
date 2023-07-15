@@ -1,3 +1,7 @@
+---
+title: Virtual greenhouse model
+layout: default
+---
 # Virtual greenhouse model
 
 *Niels Holst, Aarhus University, Denmark, 25 May 2023.*
