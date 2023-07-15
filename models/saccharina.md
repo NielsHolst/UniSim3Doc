@@ -102,9 +102,9 @@ Note: For consistency we should define $${[\mathcal{S}^{P}]}>0$$. This will not 
 Under non-limiting growing conditions, the plant will attain its maximum concentration of all three elements. We can infer the distribution of biomass among the three compartments that will then be attained. From the above we have
 $$
 \begin{equation}\begin{split}
-{[\mathcal{W}^{C}]_{max}} &= \frac{{\mathcal{S}^{dw}}
-{[\mathcal{W}^{N}]_{max}} &= \frac{{\mathcal{S}^{dw}}
-{[\mathcal{W}^{P}]_{max}} &= \frac{{\mathcal{P}^{dw}}
+{[\mathcal{W}^{C}]_{max}} &= \frac{\mathcal{S}^{dw}}{X} \\[6pt]
+{[\mathcal{W}^{N}]_{max}} &= \frac{\mathcal{S}^{dw}}{X} \\[6pt]
+{[\mathcal{W}^{P}]_{max}} &= \frac{\mathcal{P}^{dw}}{X} \\[6pt]
 1 &= {\mathcal{S}^{dw}}+{\mathcal{C}^{dw}}+{\mathcal{N}^{dw}}+{\mathcal{P}^{dw}}
 \end{split}\end{equation}
 $$

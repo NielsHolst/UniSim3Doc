@@ -21,30 +21,39 @@
         <a href="about.html" id="about">About</a>
       </nav>
     </header>
-    <div id="three-parts">
-      <div id="green-box">
-        <h2>BoxScript</h2>
-        <p>BoxScript is a domain-specific language designed to make it easy to compose models using the toolbox provided by the Universal Simulator. In a boxscript, you declare the objects (boxes) that make up your model. You organise them in a hierarchy and define the flows of information between the output and input ports supplied by each box.</p>
+    <main>
+      <section class="three-parts">
+        <div class="green-box">
+          <h2>BoxScript</h2>
+          <p>BoxScript is a domain-specific language designed to make it easy to compose models using the toolbox provided by the Universal Simulator. In a boxscript, you declare the objects (boxes) that make up your model. You organise them in a hierarchy and define the flows of information between the output and input ports supplied by each box.</p>
+        </div>
+        <div class="orange-box">
+          <h2>Universal Simulator</h2>
+          <p>Universal Simulator is an open-source software developed in the lab. It is programmed in C++ using Qt Creator, which ensures fast execution on several platforms. You use it to run simulations of models written in the BoxScript language. Model outputs are written to a text file, which is grabbed by R to produce plots.</p>
+        </div>
+        <div class="violet-box">
+          <h2>Framework</h2>
+          <p>Universal Simulator comes with a framework based on one base class (Box). It holds a toolbox of classes derived from Box, which you can use as model building blocks. You compose a model from these building blocks with a boxscript written in BoxScript code. You can extend the toolbox by coding your own Box-derived classes.</p>
+        </div>
+      </section>
+      <div class="three-columns">
+        <article class="center-column">
+          <h2>Introduction</h2>
+          <p>You want to create a mathematical model of sorts. Well, not that mathematical maybe. More, like computational. You have this image in your mind, which you just put down on paper. Maybe it looks like this:</p>
+          <p>The math is not that complicated. The arrows represent equations specifying that both owls and cats eat mice, which again eat your morning cereals (important model restriction: exclude yourself as a cereal forager and leave out the cereal production system). If we looked inside the boxes and elaborated further, we could add how cereals is a resource for mice offspring. Throw in kittens and owlets, and we’ve got a whole ecosystem going. We’ll look into textbooks of population dynamics and quickly find a few, simple equations describing each sub-process. Having the system diagram (which have grown since our first sketch above) drawn on one paper and an assortment of equations listed on another paper, how do we proceed? Every bit is simple enough but to assemble this as a whole in a neat model running on your computer seems beyond your reach.</p>
+          <p>If you are an engineer, I am sorry for having bothered you with this bottomless pit of biological processes and ever-enfolded sub-processes and sub-sub-process. Maybe you are more into a physical systems, like a greenhouse (from j.compag.2017.08.020):</p>
+        </article>
+        <aside class="right-column">
+          <div class="red-box">
+            <h3>Version 3.0.11</h3>
+            <p>Download the Windows installer for the latest version, Now with fully funtional Virtual Greenhouse.</p>
+          </div>
+        </aside>
       </div>
-      <div id="orange-box">
-        <h2>Universal Simulator</h2>
-        <p>Universal Simulator is an open-source software developed in the lab. It is programmed in C++ using Qt Creator, which ensures fast execution on several platforms. You use it to run simulations of models written in the BoxScript language. Model outputs are written to a text file, which is grabbed by R to produce plots.</p>
-      </div>
-      <div id="violet-box">
-        <h2>Framework</h2>
-        <p>Universal Simulator comes with a framework based on one base class (Box). It holds a toolbox of classes derived from Box, which you can use as model building blocks. You compose a model from these building blocks with a boxscript written in BoxScript code. You can extend the toolbox by coding your own Box-derived classes.</p>
-      </div>
-    </div>
-    <div id="grey-box">
-      <h2>Introduction</h2>
-      <p>You want to create a mathematical model of sorts. Well, not that mathematical maybe. More, like computational. You have this image in your mind, which you just put down on paper. Maybe it looks like this:</p>
-      <p>The math is not that complicated. The arrows represent equations specifying that both owls and cats eat mice, which again eat your morning cereals (important model restriction: exclude yourself as a cereal forager and leave out the cereal production system). If we looked inside the boxes and elaborated further, we could add how cereals is a resource for mice offspring. Throw in kittens and owlets, and we’ve got a whole ecosystem going. We’ll look into textbooks of population dynamics and quickly find a few, simple equations describing each sub-process. Having the system diagram (which have grown since our first sketch above) drawn on one paper and an assortment of equations listed on another paper, how do we proceed? Every bit is simple enough but to assemble this as a whole in a neat model running on your computer seems beyond your reach.</p>
-      <p>If you are an engineer, I am sorry for having bothered you with this bottomless pit of biological processes and ever-enfolded sub-processes and sub-sub-process. Maybe you are more into a physical systems, like a greenhouse (from j.compag.2017.08.020):</p>
-    </div>
-    
-    <div id="brown-box">
+    </main>
+    <address id="footer-column">
       <p>The Ecological Modelling Laboratory is the lab of</p>
       <p>Senior Scientist Niels Holst, Dept. of Agroecology, Aarhus University, Denmark</p>
-    </div>
+    </address>
   </body>
 </html>
