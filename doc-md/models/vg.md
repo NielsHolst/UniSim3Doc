@@ -13,6 +13,8 @@ $$
 
 *Niels Holst, Aarhus University, Denmark, 25 May 2023.*
 
+[toc]
+
 ## R scripts
 
 The documentation comes with R script that demonstrate the equations and logic of the model. Before you run any of the scripts, you need to change the R work folder. This is defined in the `setup.R` script, which begins like this:
@@ -33,7 +35,7 @@ library(reshape2)
 
 ## Model structure
 
-The model is updated iteratively in a loop at a time step of $\Delta t$ (s), typically in a range of 2 to 5 minutes; however, the energy and water [budgets](#budgets) may be resolved at a finer time step as needed (dividing $\Delta t$ into $n$ sub-steps). The model runs from the chosen start date until the end date; however, beneath the surface it will always start 24 hours before the start date to allow model state variables to evolve from their initial values and reach realistic values.
+<div class="min">The model is updated iteratively in a loop at a time step of $\Delta t$ (s), typically in a range of 2 to 5 minutes; however, the energy and water [budgets](#budgets) may be resolved at a finer time step as needed (dividing $\Delta t$ into $n$ sub-steps). The model runs from the chosen start date until the end date; however, beneath the surface it will always start 24 hours before the start date to allow model state variables to evolve from their initial values and reach realistic values.</div>
 
 Model components are updated in the following order:
 
