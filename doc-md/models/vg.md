@@ -7,7 +7,6 @@ $$
 \newcommand{\dsp}[2]{\Delta\mathbb{S}_\text{#1}^\text{#2}}
 \newcommand{\spr}[2]{\mathbb{S}_\text{#1}^{\text{#2*}}}
 \newcommand{\dspr}[2]{\Delta\mathbb{S}_\text{#1}^{\text{#2*}}}
-\newcommand{\coo}{CO~2~}
 $$
 # Virtual greenhouse model
 

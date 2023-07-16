@@ -13,6 +13,7 @@ exclude:
   - lab/
   - lab-md/
   - media-ppt/
+  - models-src/
   - old/
   - process/
   - LICENSE

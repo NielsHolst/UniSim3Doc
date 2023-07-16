@@ -252,30 +252,17 @@ process_line = function(s) {
   paste0(result, collapse="")
 }
 
-add_header = function() {
-  ix = which(str_detect(lines, "^# "))[1]
-  headline = substring(lines[ix], 3)
-  lines <<- (c("---", 
-           paste("title:", headline),
-           "layout: default", 
-           "---",
-           lines)
-  )
-}
-
 #
 # Main
 #
 
+setwd("~/sites/UniSim3Doc/models-src")
+
 # Find source file names 
 source_names = list.files(full.names=TRUE, recursive=TRUE,pattern="\\.md$")
-is_md_source = str_detect(source_names, "-md")
-is_readme = str_detect(source_names, "README")
-source_names = subset(source_names, is_md_source & !is_readme)
-
 
 # Set destination file names
-dest_names = str_replace(source_names, "-md", "")
+dest_names = str_replace(source_names, "^\\.", "../models")
 source_names
 dest_names
 
@@ -283,7 +270,6 @@ dest_names
 create_dest_dirs()
 
 for (i in 1:length(source_names)) {
-# for (i in 2:2) {
   lines = read_file(source_names[i])
   macros = extract_macros(lines)
   if (!is.null(macros)) {
@@ -292,7 +278,6 @@ for (i in 1:length(source_names)) {
     lines = aaply(lines, 1, process_line)
     lines = aaply(lines, 1, double_single_dollars)
     fix_double_backslashes()
-    add_header()
   }
   write_file(dest_names[i], lines)
 }
