@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Setpoints
+title: Budgets
 parent: Virtual Greenhouse
-nav_order: 3
+nav_order: 6
 ---
-# Setpoints
+# Budgets
 
 Text...

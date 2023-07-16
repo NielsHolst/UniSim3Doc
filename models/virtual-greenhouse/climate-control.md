@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Setpoints
+title: Climate control
 parent: Virtual Greenhouse
-nav_order: 3
+nav_order: 8
 ---
-# Setpoints
+# Climate control
 
 Text...

@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Setpoints
+title: Actuators
 parent: Virtual Greenhouse
-nav_order: 3
+nav_order: 5
 ---
-# Setpoints
+# Actuators
 
 Text...

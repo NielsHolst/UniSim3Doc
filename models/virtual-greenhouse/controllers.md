@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Setpoints
+title: Controllers
 parent: Virtual Greenhouse
-nav_order: 3
+nav_order: 4
 ---
-# Setpoints
+# Controllers
 
 Text...
