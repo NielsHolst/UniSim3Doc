@@ -273,7 +273,7 @@ for (i in 1:length(source_names)) {
   lines = read_file(source_names[i])
   macros = extract_macros(lines)
   if (!is.null(macros)) {
-    discard_lines = 1:(max(macros$LineNumber)+1)
+    discard_lines = ((min(macros$LineNumber)-1)):(max(macros$LineNumber)+1)
     lines = lines[-discard_lines]    
     lines = aaply(lines, 1, process_line)
     lines = aaply(lines, 1, double_single_dollars)
